@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20 лет выпуска · 25 мая 2027</title>
+<style>
+:root{--gold:#f2c46d;--gold2:#ffe3a3;--ink:#f6f1e6;--mut:#b9c3d6;--card:rgba(10,20,42,.62);--line:rgba(242,196,109,.28)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);min-height:100vh;
+background:
+radial-gradient(900px 500px at 15% 8%,rgba(242,196,109,.22),transparent 60%),
+radial-gradient(800px 600px at 90% 20%,rgba(46,160,170,.28),transparent 60%),
+radial-gradient(700px 500px at 50% 100%,rgba(242,196,109,.14),transparent 60%),
+linear-gradient(160deg,#0a1530,#0d2a4a 55%,#0a1a30) fixed;
+padding-bottom:40px}
+body::before{content:"20";position:fixed;right:-2vw;bottom:-6vw;font-size:46vw;font-weight:700;color:rgba(242,196,109,.05);line-height:1;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 16px}
+header{text-align:center;padding:44px 8px 18px}
+.big{font-size:clamp(64px,18vw,128px);line-height:.9;margin:0;font-weight:700;background:linear-gradient(180deg,var(--gold2),var(--gold) 60%,#c58f2e);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{margin:6px 0 4px;font-size:clamp(22px,5.5vw,34px);letter-spacing:.06em;text-transform:uppercase;font-weight:400}
+.date{color:var(--gold2);font-size:clamp(18px,4.5vw,24px)}
+.place{color:var(--mut);margin-top:4px;font-style:italic}
+nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:8px 0 14px;background:linear-gradient(#0a1530ee,#0a153000)}
+nav button{flex:0 0 auto;font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer}
+nav button.on{background:var(--gold);color:#1a1a1a;font-weight:700;border-color:var(--gold)}
+section{display:none}section.on{display:block}
+.card{background:var(--card);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+h2{margin:0 0 10px;font-size:22px;color:var(--gold2);font-weight:400}
+.cd{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cd div{min-width:78px;text-align:center;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:14px;padding:12px 6px}
+.cd b{display:block;font-size:30px;color:var(--gold)}.cd span{font-size:12px;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.n{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center}
+.n i{font-style:normal;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:13px;flex:0 0 auto;color:#10203a;background:var(--gold)}
+.n.f i{background:#f4a9c0}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.stats div{flex:1;min-width:90px;text-align:center;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:14px;padding:10px}
+.stats b{font-size:28px;color:var(--gold);display:block}
+.stats span{font-size:13px;color:var(--mut)}
+ol.t{list-style:none;padding:0;margin:0;border-left:2px solid var(--gold);margin-left:6px}
+ol.t li{padding:0 0 14px 16px;position:relative}
+ol.t li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--gold)}
+ol.t b{color:var(--gold2)}
+ul.p{margin:0;padding-left:20px}ul.p li{margin:6px 0}
+.q{font-size:18px;margin:0 0 10px}
+.opt{display:block;position:relative;margin:7px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:rgba(255,255,255,.05)}
+.opt .bar{position:absolute;inset:0 auto 0 0;background:rgba(242,196,109,.28);width:0;transition:width .5s}
+.opt .row{position:relative;display:flex;gap:10px;align-items:center;padding:10px 12px}
+.opt .row em{margin-left:auto;font-style:normal;color:var(--gold2);white-space:nowrap;font-size:14px}
+.opt input{accent-color:var(--gold);width:18px;height:18px}
+input[type=text],textarea,select{width:100%;font:inherit;color:var(--ink);background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:10px;padding:10px;margin:6px 0}
+select option{color:#111}
+textarea{min-height:90px;resize:vertical}
+.btn{font:inherit;background:var(--gold);color:#1a1a1a;font-weight:700;border:0;border-radius:12px;padding:11px 20px;cursor:pointer;margin-top:6px}
+.small{font-size:13px;color:var(--mut)}
+.oth{font-size:13px;color:var(--mut);margin:4px 2px}
+.idea{border-top:1px solid var(--line);padding:10px 0}.idea:first-child{border:0}
+.warn{background:rgba(242,196,109,.12);border:1px dashed var(--gold);border-radius:12px;padding:10px;font-size:13px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="big">20</p>
+  <h1>лет выпуска</h1>
+  <div class="date">25 мая 2027 года</div>
+  <div class="place">Встреча одноклассников · Актау</div>
+</header>
+<nav id="nav"></nav>
+
+<section id="home" class="on">
+  <div class="card"><h2>До встречи осталось</h2><div class="cd" id="cd"></div></div>
+  <div class="card"><h2>Привет, одноклассники!</h2>
+  <p>Прошло 20 лет. Давайте соберёмся все вместе, вспомним школьные годы и пригласим наших учителей. Заходите во вкладку «Опросы» и выбирайте, как мы проведём этот день, а в «Идеях» пишите свои предложения.</p></div>
+</section>
+
+<section id="cls">
+  <div class="card"><h2>Одноклассники</h2>
+  <div class="stats"><div><b id="sAll"></b><span>всего</span></div><div><b id="sM"></b><span>парней</span></div><div><b id="sF"></b><span>девушек</span></div></div>
+  <div class="grid" id="list"></div></div>
+</section>
+
+<section id="teach">
+  <div class="card"><h2>Наши учителя</h2>
+  <p class="small">Приглашаем всех, кто нас учил. Список можно дополнить: имена добавляются в файле index.html, в массиве TEACHERS.</p>
+  <div class="grid" id="tl"></div></div>
+</section>
+
+<section id="plan">
+  <div class="card"><h2>План встречи</h2>
+  <ol class="t">
+    <li><b>15:00 · Сбор гостей.</b> Фотозона «Тогда и сейчас», бейджи с именами и школьными прозвищами.</li>
+    <li><b>16:00 · Встреча с учителями.</b> Цветы, слова благодарности, общее фото класса.</li>
+    <li><b>17:00 · Банкет.</b> Тосты, видео-поздравления от тех, кто не смог приехать.</li>
+    <li><b>19:00 · Викторина «Помнишь?»</b> Вопросы про школу, песни из 2000-х, старые фото на экране.</li>
+    <li><b>20:30 · Капсула времени.</b> Каждый пишет письмо себе и классу, вскроем через 10 лет.</li>
+    <li><b>21:30 · Танцы и вечер у моря.</b> Плейлист нашего выпуска, свободное общение.</li>
+  </ol></div>
+  <div class="card"><h2>Что ещё можно добавить</h2>
+  <ul class="p">
+    <li>Слайд-шоу из школьных фото: просим всех прислать снимки заранее</li>
+    <li>Общий видеоролик «Как мы изменились за 20 лет»</li>
+    <li>Номинации-шутки: «Самый пунктуальный», «Душа класса»</li>
+    <li>Памятный подарок школе или благотворительный взнос</li>
+    <li>Фотограф и видеооператор на весь вечер</li>
+    <li>Общий чат и фотоальбом, куда все зальют снимки после встречи</li>
+    <li>Сувенир каждому: кружка или магнит с фото класса</li>
+  </ul></div>
+</section>
+
+<section id="polls"><div id="vbox" class="card"></div><div id="pl"></div></section>
+
+<section id="ideas">
+  <div class="card"><h2>Ваши идеи</h2>
+  <select id="iname"></select>
+  <textarea id="itext" placeholder="Напишите свою идею или пожелание…"></textarea>
+  <button class="btn" onclick="addIdea()">Отправить</button></div>
+  <div class="card" id="ilist"></div>
+</section>
+</div>
+
+<script>
+// ===== НАСТРОЙКИ =====
+// Чтобы голоса видели ВСЕ, вставьте адрес Firebase Realtime Database, например:
+// "https://my-project-default-rtdb.europe-west1.firebasedatabase.app"
+// Пока пусто, голоса хранятся только в этом браузере (демо-режим).
+const FIREBASE_URL = "";
+const DATE = new Date("2027-05-25T15:00:00+05:00");
+
+const CLASS = ["Көркембаев Марат","Байталасов Медет","Қожаш Айдын","Ерманов Наурызбек","Қойлыбаев Бағдат","Теміров Кенжебек","Бейсен Өркен","Елжанов Мәлік","Көбегенов Ибрагим","Кенжеқұлова Айгүл","Ізімбергенова Айгүл","Сәдуақасова Жазира","Балықбаева Гүлдана","Меңдіханова Дина","Яева Орынгүл","Нұрбасинова Майя","Тасболатова Гүлназ","Жақсығатова Гүлшат","Өтешева Гаухар","Нуретова Диана"];
+const MALE = 9; // первые 9 в списке: парни
+const TEACHERS = ["Классный руководитель (имя добавить)","Учитель 2 (имя добавить)","Учитель 3 (имя добавить)"];
+
+const POLLS = [
+ {id:"come",q:"Вы сможете приехать?",o:["Да, обязательно!","Скорее да","Пока не знаю","К сожалению, нет"]},
+ {id:"days",q:"Сколько дней отмечаем?",o:["1 день","2 дня","3 дня"]},
+ {id:"sum",q:"Какой взнос с человека комфортен?",o:["20 000 ₸","50 000 ₸","100 000 ₸","Другая сумма"],other:1},
+ {id:"where",q:"Где отмечаем?",o:["В Актау, в ресторане","В Актау, на берегу Каспия","Выезд за город (база отдыха, Кендерли)","За границу (Дубай, Турция)","Другое место"],other:1},
+ {id:"fmt",q:"Какой формат вечера?",o:["Банкет с тостами и программой","Лёгкий фуршет и свободное общение","Пикник и барбекю на природе","Вечеринка с танцами"]},
+ {id:"prog",q:"Что должно быть в программе? (можно несколько)",multi:1,o:["Встреча с учителями","Слайд-шоу и старые фото","Викторина про школу","Капсула времени (письма на 10 лет)","Ведущий / тамада","Фотограф и видеограф","Живая музыка","Экскурсия по школе"]},
+ {id:"fam",q:"Приглашаем с семьями (супруг/супруга, дети)?",o:["Да, с семьями","Только одноклассники","Вечер для своих, а второй день с семьями"]}
+];
+
+// ===== ХРАНИЛИЩЕ =====
+const LS = k=>{try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}};
+const LSset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+async function dbGet(path){
+  if(FIREBASE_URL){try{const r=await fetch(FIREBASE_URL+"/"+path+".json");return (await r.json())||{}}catch(e){return {}}}
+  return LS("db_"+path)||{};
+}
+async function dbPut(path,val){
+  if(FIREBASE_URL){await fetch(FIREBASE_URL+"/"+path+".json",{method:"PUT",body:JSON.stringify(val)});return}
+  LSset("db_"+path,val);
+}
+async function dbPost(path,val){
+  if(FIREBASE_URL){await fetch(FIREBASE_URL+"/"+path+".json",{method:"POST",body:JSON.stringify(val)});return}
+  const cur=LS("db_"+path)||{};cur["k"+Date.now()]=val;LSset("db_"+path,cur);
+}
+
+// ===== ИНТЕРФЕЙС =====
+const TABS=[["home","Главная"],["cls","Одноклассники"],["teach","Учителя"],["plan","План"],["polls","Опросы"],["ideas","Идеи"]];
+const nav=document.getElementById("nav");
+TABS.forEach(([id,t])=>{const b=document.createElement("button");b.textContent=t;b.dataset.id=id;b.onclick=()=>show(id);nav.appendChild(b)});
+function show(id){
+  document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===id));
+  nav.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.id===id));
+  if(id==="polls")renderPolls();if(id==="ideas")loadIdeas();
+  scrollTo(0,0);location.hash=id;
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// Обратный отсчёт
+function tick(){
+  let d=Math.max(0,DATE-new Date()),D=Math.floor(d/864e5),H=Math.floor(d%864e5/36e5),M=Math.floor(d%36e5/6e4),S=Math.floor(d%6e4/1e3);
+  document.getElementById("cd").innerHTML=[[D,"дней"],[H,"часов"],[M,"минут"],[S,"секунд"]].map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
+}
+tick();setInterval(tick,1000);
+
+// Списки
+const ini=n=>n.split(" ").map(w=>w[0]).join("");
+document.getElementById("list").innerHTML=CLASS.map((n,i)=>`<div class="n ${i<MALE?"":"f"}"><i>${ini(n)}</i>${esc(n)}</div>`).join("");
+document.getElementById("sAll").textContent=CLASS.length;
+document.getElementById("sM").textContent=MALE;
+document.getElementById("sF").textContent=CLASS.length-MALE;
+document.getElementById("tl").innerHTML=TEACHERS.map(n=>`<div class="n"><i>★</i>${esc(n)}</div>`).join("");
+document.getElementById("iname").innerHTML='<option value="">Аноним</option>'+CLASS.map((n,i)=>`<option value="${i}">${esc(n)}</option>`).join("");
+
+// Опросы
+let voter=LS("voter")||"";
+document.getElementById("vbox").innerHTML=`<h2>Кто вы?</h2><select id="who" onchange="setVoter(this.value)"><option value="">Выберите своё имя…</option>${CLASS.map((n,i)=>`<option value="${i}">${esc(n)}</option>`).join("")}</select>
+<div class="warn">${FIREBASE_URL?"Один человек может изменить свой голос в любой момент.":"Демо-режим: голоса видны только на этом устройстве. Чтобы собирать голоса от всех, подключите базу (инструкция в README)."}</div>`;
+document.getElementById("who").value=voter;
+function setVoter(v){voter=v;LSset("voter",v);renderPolls()}
+
+async function renderPolls(){
+  const all=await dbGet("votes");
+  document.getElementById("pl").innerHTML=POLLS.map(p=>{
+    const votes=all[p.id]||{},vals=Object.values(votes);
+    const cnt=p.o.map(()=>0),others=[];
+    vals.forEach(v=>{(v.o||[]).forEach(i=>cnt[i]++);if(v.t)others.push(v.t)});
+    const total=vals.length,mine=votes["v"+voter]||{o:[]};
+    return `<div class="card"><p class="q">${esc(p.q)}</p>`+p.o.map((o,i)=>{
+      const pc=total?Math.round(cnt[i]/total*100):0;
+      return `<label class="opt"><div class="bar" style="width:${pc}%"></div><div class="row"><input type="${p.multi?"checkbox":"radio"}" name="${p.id}" value="${i}" ${(mine.o||[]).includes(i)?"checked":""}>${esc(o)}<em>${cnt[i]} · ${pc}%</em></div></label>`}).join("")
+    +(p.other?`<input type="text" id="t_${p.id}" placeholder="Напишите свой вариант…" value="${esc(mine.t||"")}">`:"")
+    +(others.length?`<div class="oth">Свои варианты: ${others.map(esc).join("; ")}</div>`:"")
+    +`<button class="btn" onclick="vote('${p.id}')">Проголосовать</button> <span class="small">Проголосовало: ${total} из ${CLASS.length}</span></div>`;
+  }).join("");
+}
+async function vote(id){
+  if(voter===""){alert("Сначала выберите своё имя вверху страницы");scrollTo(0,0);return}
+  const o=[...document.querySelectorAll(`input[name=${id}]:checked`)].map(x=>+x.value);
+  const t=(document.getElementById("t_"+id)||{}).value||"";
+  if(!o.length&&!t.trim()){alert("Выберите вариант");return}
+  await dbPut(`votes/${id}/v${voter}`,{o,t:t.trim()});
+  renderPolls();
+}
+
+// Идеи
+async function addIdea(){
+  const t=document.getElementById("itext").value.trim(),w=document.getElementById("iname").value;
+  if(!t)return;
+  await dbPost("ideas",{n:w===""?"Аноним":CLASS[w],t,d:new Date().toISOString()});
+  document.getElementById("itext").value="";loadIdeas();
+}
+async function loadIdeas(){
+  const all=Object.values(await dbGet("ideas")).sort((a,b)=>b.d>a.d?1:-1);
+  document.getElementById("ilist").innerHTML=all.length?all.map(i=>`<div class="idea"><b>${esc(i.n)}</b><div>${esc(i.t)}</div></div>`).join(""):'<span class="small">Пока идей нет. Будьте первым!</span>';
+}
+show((location.hash||"#home").slice(1).replace(/[^a-z]/g,"")||"home");
+</script>
+</body>
+</html>
