@@ -58,20 +58,27 @@ textarea{min-height:90px;resize:vertical}
 .oth{font-size:13px;color:var(--mut);margin:4px 2px}
 .idea{border-top:1px solid var(--line);padding:10px 0}.idea:first-child{border:0}
 .warn{background:rgba(242,196,109,.12);border:1px dashed var(--gold);border-radius:12px;padding:10px;font-size:13px;margin-bottom:12px}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:0}
+.mbtn{font:inherit;margin-top:12px;background:rgba(255,255,255,.08);color:var(--gold2);border:1px solid var(--gold);border-radius:999px;padding:9px 18px;cursor:pointer}
+.btn.del{background:transparent;color:var(--mut);border:1px solid var(--line);margin-left:6px}
+.att{text-align:center;margin-top:12px;color:var(--gold2)}
 </style>
 </head>
 <body>
+<canvas id="cf"></canvas>
 <div class="wrap">
 <header>
   <p class="big">20</p>
   <h1>жыл түлектер</h1>
   <div class="date">2027 жылғы 25 мамыр</div>
   <div class="place">Сыныптастар кездесуі · Ақтау</div>
+  <button class="mbtn" id="mbtn">🎵 Музыканы қосу</button>
+  <audio id="au" src="song.mp3" loop preload="none"></audio>
 </header>
 <nav id="nav"></nav>
 
 <section id="home" class="on">
-  <div class="card"><h2>Кездесуге дейін қалды</h2><div class="cd" id="cd"></div></div>
+  <div class="card"><h2>Кездесуге дейін қалды</h2><div class="cd" id="cd"></div><div class="att" id="att"></div></div>
   <div class="card"><h2>Сәлем, сыныптастар!</h2>
   <p>20 жыл өтті. Бәріміз қайта жиналып, мектеп жылдарын еске алайық және ұстаздарымызды шақырайық. «Сауалнамалар» бөліміне кіріп, күнді қалай өткізетінімізді таңдаңдар, ал «Идеялар» бөлімінде өз ұсыныстарыңды жазыңдар.</p></div>
 </section>
@@ -110,7 +117,13 @@ textarea{min-height:90px;resize:vertical}
   </ul></div>
 </section>
 
-<section id="polls"><div id="vbox" class="card"></div><div id="pl"></div></section>
+<section id="polls"><div id="vbox" class="card"></div><div id="pl"></div>
+  <div class="card"><h2>Жаңа сауалнама құру</h2>
+  <input type="text" id="nq" placeholder="Сұрақ, мысалы: Қай айда кездесеміз?">
+  <textarea id="no" placeholder="Нұсқалар: әр жолға біреуден"></textarea>
+  <label class="small"><input type="checkbox" id="nm"> Бірнеше нұсқа таңдауға болады</label><br>
+  <label class="small"><input type="checkbox" id="nt"> «Өз нұсқасы» жолын қосу</label><br>
+  <button class="btn" onclick="createPoll()">Сауалнама қосу</button></div></section>
 
 <section id="ideas">
   <div class="card"><h2>Сіздің идеяларыңыз</h2>
@@ -123,14 +136,15 @@ textarea{min-height:90px;resize:vertical}
 
 <script>
 // ===== БАПТАУЛАР =====
-// Дауыстарды БАРЛЫҒЫ көру үшін Firebase Realtime Database мекенжайын жазыңыз, мысалы:
-// "https://my-project-default-rtdb.europe-west1.firebasedatabase.app"
+// Ортақ сақтау (тіркелусіз, 2FA керек емес): jsonblob.com
+// 1) jsonblob.com ашыңыз, ішіне осыны қойыңыз: {"votes":{},"ideas":{},"polls":[]}
+// 2) Save басыңыз, мекенжайдағы ұзын ID-ді көшіріп, төменге жазыңыз.
 // Бос болса, дауыстар тек осы браузерде сақталады (демо режимі).
-const FIREBASE_URL = "";
+const BLOB_ID = "";
 const DATE = new Date("2027-05-25T15:00:00+05:00");
 
 const CLASS = ["Көркембаев Марат","Байталасов Медет","Қожаш Айдын","Ерманов Наурызбек","Қойлыбаев Бағдат","Теміров Кенжебек","Бейсен Өркен","Елжанов Мәлік","Көбегенов Ибрагим","Кенжеқұлова Айгүл","Ізімбергенова Айгүл","Сәдуақасова Жазира","Балықбаева Гүлдана","Меңдіханова Дина","Яева Орынгүл","Нұрбасинова Майя","Тасболатова Гүлназ","Жақсығатова Гүлшат","Өтешева Гаухар","Нуретова Диана"];
-const MALE = 9; // тізімдегі алғашқы 9 адам: ұлдар
+const MALE = 9;
 const TEACHERS = ["Сынып жетекшісі (аты қосылады)","Мұғалім 2 (аты қосылады)","Мұғалім 3 (аты қосылады)"];
 
 const POLLS = [
@@ -140,25 +154,25 @@ const POLLS = [
  {id:"where",q:"Қайда тойлаймыз?",o:["Ақтауда, мейрамханада","Ақтауда, Каспий жағасында","Қаладан тыс (демалыс базасы, Кендірлі)","Шетелде (Дубай, Түркия)","Басқа жер"],other:1},
  {id:"fmt",q:"Кештің форматы қандай болсын?",o:["Тост пен бағдарламасы бар банкет","Жеңіл фуршет және еркін әңгіме","Табиғатта пикник және барбекю","Билі кеш"]},
  {id:"prog",q:"Бағдарламада не болуы керек? (бірнешеуін таңдауға болады)",multi:1,o:["Ұстаздармен кездесу","Слайд-шоу және ескі суреттер","Мектеп туралы викторина","Уақыт капсуласы (10 жылға хаттар)","Жүргізуші / тамада","Фотограф және бейнеоператор","Тірі музыка","Мектепті аралау"]},
- {id:"fam",q:"Отбасыларымызбен (жұбайы, балалары) шақырамыз ба?",o:["Иә, отбасымен","Тек сыныптастар","Бірінші күн өзіміздікі, екінші күн отбасымен"]}
+ {id:"fam",q:"Отбасыларымызбен (жұбайы, балалары) шақырамыз ба?",o:["Иә, отбасымен","Тек сыныптастар","Бірінші күн өзіміздікі, екінші күн отбасымен"]},
+ {id:"gift",q:"Мектепке не сыйлаймыз?",o:["Естелік сыйлық (тақтайша, ағаш отырғызу)","Мектепке қайырымдылық жарна","Ештеңе, өзіміз ғана жиналамыз"]},
+ {id:"time",q:"Негізгі кеш қашан басталсын?",o:["Күндіз (14:00)","Кешкі (17:00)","Түнгі кеш (20:00)"]}
 ];
 
 // ===== САҚТАУ =====
 const LS = k=>{try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}};
 const LSset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
-async function dbGet(path){
-  if(FIREBASE_URL){try{const r=await fetch(FIREBASE_URL+"/"+path+".json");return (await r.json())||{}}catch(e){return {}}}
-  return LS("db_"+path)||{};
+const API="https://jsonblob.com/api/jsonBlob/", H={"Content-Type":"application/json",Accept:"application/json"};
+const norm=d=>Object.assign({votes:{},ideas:{},polls:[]},d||{});
+async function load(){
+  if(BLOB_ID){try{const r=await fetch(API+BLOB_ID,{headers:H});return norm(await r.json())}catch(e){return norm(null)}}
+  return norm(LS("db"));
 }
-async function dbPut(path,val){
-  if(FIREBASE_URL){await fetch(FIREBASE_URL+"/"+path+".json",{method:"PUT",body:JSON.stringify(val)});return}
-  const parts=path.split("/"),root="db_"+parts[0];let cur=LS(root)||{},o=cur;
-  for(let i=1;i<parts.length-1;i++){o[parts[i]]=o[parts[i]]||{};o=o[parts[i]]}
-  o[parts[parts.length-1]]=val;LSset(root,cur);
-}
-async function dbPost(path,val){
-  if(FIREBASE_URL){await fetch(FIREBASE_URL+"/"+path+".json",{method:"POST",body:JSON.stringify(val)});return}
-  const cur=LS("db_"+path)||{};cur["k"+Date.now()]=val;LSset("db_"+path,cur);
+async function mutate(fn){
+  const d=await load();fn(d);
+  if(BLOB_ID){try{await fetch(API+BLOB_ID,{method:"PUT",headers:H,body:JSON.stringify(d)})}catch(e){alert("Байланыс қатесі, қайталап көріңіз")}}
+  else LSset("db",d);
+  return d;
 }
 
 // ===== ИНТЕРФЕЙС =====
@@ -168,7 +182,7 @@ TABS.forEach(([id,t])=>{const b=document.createElement("button");b.textContent=t
 function show(id){
   document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===id));
   nav.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.id===id));
-  if(id==="polls")renderPolls();if(id==="ideas")loadIdeas();
+  if(id==="polls")renderPolls();if(id==="ideas")loadIdeas();if(id==="home")att();
   scrollTo(0,0);location.hash=id;
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -178,6 +192,10 @@ function tick(){
   document.getElementById("cd").innerHTML=[[D,"күн"],[H,"сағат"],[M,"минут"],[S,"секунд"]].map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
 }
 tick();setInterval(tick,1000);
+async function att(){
+  const d=await load(),v=Object.values(d.votes.come||{}).filter(x=>(x.o||[])[0]===0).length;
+  document.getElementById("att").innerHTML=`Келемін дегендер: <b>${v}</b> / ${CLASS.length}`;
+}
 
 const ini=n=>n.split(" ").map(w=>w[0]).join("");
 document.getElementById("list").innerHTML=CLASS.map((n,i)=>`<div class="n ${i<MALE?"":"f"}"><i>${ini(n)}</i>${esc(n)}</div>`).join("");
@@ -189,23 +207,24 @@ document.getElementById("iname").innerHTML='<option value="">Жасырын</opt
 
 let voter=LS("voter")||"";
 document.getElementById("vbox").innerHTML=`<h2>Сіз кімсіз?</h2><select id="who" onchange="setVoter(this.value)"><option value="">Атыңызды таңдаңыз…</option>${CLASS.map((n,i)=>`<option value="${i}">${esc(n)}</option>`).join("")}</select>
-<div class="warn">${FIREBASE_URL?"Әр адам өз дауысын кез келген уақытта өзгерте алады.":"Демо режимі: дауыстар тек осы құрылғыда көрінеді. Барлығынан дауыс жинау үшін дерекқорды қосу керек."}</div>`;
+<div class="warn">${BLOB_ID?"Әр адам өз дауысын кез келген уақытта өзгерте алады.":"Демо режимі: дауыстар тек осы құрылғыда көрінеді. Барлығынан дауыс жинау үшін ортақ сақтауды қосу керек."}</div>`;
 document.getElementById("who").value=voter;
 function setVoter(v){voter=v;LSset("voter",v);renderPolls()}
 
 async function renderPolls(){
-  const all=await dbGet("votes");
-  document.getElementById("pl").innerHTML=POLLS.map(p=>{
+  const d=await load(),all=d.votes;
+  document.getElementById("pl").innerHTML=POLLS.concat(d.polls).map(p=>{
     const votes=all[p.id]||{},vals=Object.values(votes);
     const cnt=p.o.map(()=>0),others=[];
     vals.forEach(v=>{(v.o||[]).forEach(i=>cnt[i]++);if(v.t)others.push(v.t)});
-    const total=vals.length,mine=votes["v"+voter]||{o:[]};
+    const total=vals.length,mine=votes["v"+voter]||{o:[]},mx=Math.max(1,...cnt);
     return `<div class="card"><p class="q">${esc(p.q)}</p>`+p.o.map((o,i)=>{
       const pc=total?Math.round(cnt[i]/total*100):0;
-      return `<label class="opt"><div class="bar" style="width:${pc}%"></div><div class="row"><input type="${p.multi?"checkbox":"radio"}" name="${p.id}" value="${i}" ${(mine.o||[]).includes(i)?"checked":""}>${esc(o)}<em>${cnt[i]} · ${pc}%</em></div></label>`}).join("")
+      return `<label class="opt"><div class="bar" style="width:${cnt[i]/mx*pc}%"></div><div class="row"><input type="${p.multi?"checkbox":"radio"}" name="${p.id}" value="${i}" ${(mine.o||[]).includes(i)?"checked":""}>${esc(o)}<em>${cnt[i]} · ${pc}%</em></div></label>`}).join("")
     +(p.other?`<input type="text" id="t_${p.id}" placeholder="Өз нұсқаңызды жазыңыз…" value="${esc(mine.t||"")}">`:"")
     +(others.length?`<div class="oth">Өз нұсқалары: ${others.map(esc).join("; ")}</div>`:"")
-    +`<button class="btn" onclick="vote('${p.id}')">Дауыс беру</button> <span class="small">Дауыс берді: ${total} / ${CLASS.length}</span></div>`;
+    +`<button class="btn" onclick="vote('${p.id}')">Дауыс беру</button> <span class="small">Дауыс берді: ${total} / ${CLASS.length}</span>`
+    +(p.id[0]==="c"?` <button class="btn del" onclick="delPoll('${p.id}')">Жою</button>`:"")+`</div>`;
   }).join("");
 }
 async function vote(id){
@@ -213,20 +232,49 @@ async function vote(id){
   const o=[...document.querySelectorAll(`input[name=${id}]:checked`)].map(x=>+x.value);
   const t=(document.getElementById("t_"+id)||{}).value||"";
   if(!o.length&&!t.trim()){alert("Нұсқаны таңдаңыз");return}
-  await dbPut(`votes/${id}/v${voter}`,{o,t:t.trim()});
+  await mutate(d=>{(d.votes[id]=d.votes[id]||{})["v"+voter]={o,t:t.trim()}});
   renderPolls();
+}
+async function createPoll(){
+  const q=document.getElementById("nq").value.trim(),o=document.getElementById("no").value.split("\n").map(s=>s.trim()).filter(Boolean);
+  if(!q||o.length<2){alert("Сұрақты және кемінде 2 нұсқаны (әр жолға біреуден) жазыңыз");return}
+  const p={id:"c"+Date.now(),q,o,multi:document.getElementById("nm").checked?1:0,other:document.getElementById("nt").checked?1:0};
+  await mutate(d=>{d.polls.push(p)});
+  ["nq","no"].forEach(i=>document.getElementById(i).value="");
+  renderPolls();
+}
+async function delPoll(id){
+  if(!confirm("Сауалнаманы жою керек пе?"))return;
+  await mutate(d=>{d.polls=d.polls.filter(p=>p.id!==id);delete d.votes[id]});renderPolls();
 }
 
 async function addIdea(){
   const t=document.getElementById("itext").value.trim(),w=document.getElementById("iname").value;
   if(!t)return;
-  await dbPost("ideas",{n:w===""?"Жасырын":CLASS[w],t,d:new Date().toISOString()});
+  await mutate(d=>{d.ideas["k"+Date.now()]={n:w===""?"Жасырын":CLASS[w],t,d:new Date().toISOString()}});
   document.getElementById("itext").value="";loadIdeas();
 }
 async function loadIdeas(){
-  const all=Object.values(await dbGet("ideas")).sort((a,b)=>b.d>a.d?1:-1);
+  const all=Object.values((await load()).ideas).sort((a,b)=>b.d>a.d?1:-1);
   document.getElementById("ilist").innerHTML=all.length?all.map(i=>`<div class="idea"><b>${esc(i.n)}</b><div>${esc(i.t)}</div></div>`).join(""):'<span class="small">Әзірге идея жоқ. Бірінші болыңыз!</span>';
 }
+
+// Музыка: song.mp3 файлын репозиторийге салыңыз
+const au=document.getElementById("au"),mb=document.getElementById("mbtn");
+const L1="🎵 Музыканы қосу",L2="⏸ Тоқтату";
+mb.onclick=()=>{
+  if(au.paused){au.play().then(()=>mb.textContent=L2).catch(()=>alert("song.mp3 файлы табылмады. Оны index.html жанына репозиторийге салыңыз."))}
+  else{au.pause();mb.textContent=L1}
+};
+
+// Алтын конфетти
+(function(){
+  const c=document.getElementById("cf"),x=c.getContext("2d");let W,Hh,P=[];
+  const rs=()=>{W=c.width=innerWidth;Hh=c.height=innerHeight};rs();addEventListener("resize",rs);
+  for(let i=0;i<45;i++)P.push({x:Math.random()*W,y:Math.random()*Hh,r:2+Math.random()*3,v:.3+Math.random()*.8,s:Math.random()*6});
+  (function f(){x.clearRect(0,0,W,Hh);P.forEach(p=>{p.y+=p.v;p.s+=.02;p.x+=Math.sin(p.s)*.5;if(p.y>Hh){p.y=-5;p.x=Math.random()*W}
+    x.fillStyle="rgba(242,196,109,.55)";x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill()});requestAnimationFrame(f)})();
+})();
 show((location.hash||"#home").slice(1).replace(/[^a-z]/g,"")||"home");
 </script>
 </body>
