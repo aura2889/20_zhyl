@@ -226,11 +226,11 @@ textarea{min-height:90px;resize:vertical}
 <script>
 /* =====================================================================
    ОБЩАЯ БАЗА ГОЛОСОВ — заполните ОДНУ из двух строк (инструкция в README.md)
-   BLOB_ID — номер документа на jsonblob.com (без аккаунта и без 2FA)
+   GAS_URL — адрес веб-приложения Google Apps Script (таблица Google; см. README)
    DB_URL  — адрес Firebase Realtime Database (если нужен)
    Пока обе пустые — демо-режим: данные только на этом устройстве.
    ===================================================================== */
-const BLOB_ID = "01a1813d-99b6-7044-96d8-4a895abb8b8f";
+const GAS_URL = "";
 const DB_URL = "";
 
 /* ---------- ХЕЛПЕРЫ ХРАНЕНИЯ ---------- */
@@ -354,21 +354,21 @@ const SPLIT = [
  [["Резерв","Резерв"],.15]
 ];
 
-/* ---------- ХРАНИЛИЩЕ: Firebase / jsonblob / локально ---------- */
-const MODE = DB_URL ? "fb" : BLOB_ID ? "blob" : "local";
+/* ---------- ХРАНИЛИЩЕ: Google Apps Script (таблица) / Firebase / локально ---------- */
+const MODE = DB_URL ? "fb" : GAS_URL ? "gas" : "local";
 const LOCAL = MODE==="local";
-const JB = "https://jsonblob.com/api/jsonBlob/";
-const JH = {"Content-Type":"application/json",Accept:"application/json"};
 function setPath(t,path,val){
   const p=path.split("/"); let o=t;
   for(let i=0;i<p.length-1;i++){ if(!o[p[i]]||typeof o[p[i]]!=="object") o[p[i]]={}; o=o[p[i]]; }
   if(val===null) delete o[p[p.length-1]]; else o[p[p.length-1]]=val;
 }
 function getPath(t,path){ return path.split("/").reduce((o,k)=>o==null?undefined:o[k],t); }
-const same=(a,b)=>JSON.stringify(a===undefined?null:a)===JSON.stringify(b===undefined?null:b);
 function logW(path,val){
   const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<864e5); w.push({path,val,t:Date.now()}); lsSet("z20w",w.slice(-80));
 }
+const gasGet = ()=>fetch(GAS_URL+(GAS_URL.includes("?")?"&":"?")+"t="+Date.now());
+// POST с телом-строкой (text/plain) — «простой» запрос, браузер не делает предзапрос CORS
+const gasPost = body=>fetch(GAS_URL,{method:"POST",body:JSON.stringify(body)});
 let chain=Promise.resolve();
 const db = {
   async all(){
@@ -378,9 +378,9 @@ const db = {
       if(!r.ok) throw new Error("db "+r.status);
       return (await r.json())||{};
     }
-    const r=await fetch(JB+BLOB_ID,{headers:JH,cache:"no-store"});
-    if(!r.ok) throw new Error("db "+r.status);
-    const d=await r.json(); return d&&typeof d==="object"&&!Array.isArray(d)?d:{};
+    const r=await gasGet(); if(!r.ok) throw new Error("db "+r.status);
+    const d=await r.json(); if(d&&d.ok===false) throw new Error(d.error||"db error");
+    return d&&typeof d==="object"&&!Array.isArray(d)?d:{};
   },
   set(path,val,noLog){
     if(!noLog) logW(path,val);
@@ -389,21 +389,16 @@ const db = {
       return fetch(DB_URL.replace(/\/$/,"")+"/"+path+".json",{method:"PUT",body:JSON.stringify(val)})
         .then(r=>{ if(!r.ok) throw new Error("db "+r.status); });
     }
-    // jsonblob хранит документ целиком: читаем → правим свою ветку → пишем → проверяем, что запись на месте
+    // записи идут по очереди; сервер пишет каждый путь отдельной строкой под блокировкой
     return chain=chain.catch(()=>{}).then(async()=>{
-      for(let n=0;n<3;n++){
-        const cur=await db.all(); setPath(cur,path,val);
-        const r=await fetch(JB+BLOB_ID,{method:"PUT",headers:JH,body:JSON.stringify(cur)});
-        if(!r.ok) throw new Error("db "+r.status);
-        if(same(getPath(await db.all(),path),val)) return;
-      }
-      throw new Error("save failed");
+      const r=await gasPost({path,val}); if(!r.ok) throw new Error("db "+r.status);
+      const j=await r.json(); if(!j.ok) throw new Error(j.error||"save failed");
     });
   }
 };
-// если чужая запись одновременно затёрла нашу — досылаем свои недавние изменения
+// если запись не дошла (нет связи) — досылаем свои недавние изменения при следующей удачной связи
 async function reconcile(){
-  if(MODE!=="blob") return;
+  if(MODE==="local") return;
   const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<864e5); let fixed=false;
   for(const x of w){
     const cur=getPath(S.db,x.path);
@@ -463,27 +458,27 @@ function whoCard(){
 }
 async function runDiag(){
   const L=[], ok=(b,t)=>L.push((b?"✓ ":"✗ ")+t);
-  const nm=MODE==="blob"?"jsonblob":MODE==="fb"?"Firebase":K("жергілікті","локальная");
+  const nm=MODE==="gas"?"Google Apps Script":MODE==="fb"?"Firebase":K("жергілікті","локальная");
   L.push(K("Дерекқор: ","База: ")+nm);
   if(MODE==="local"){ L.push(K("Ортақ база қосылмаған — дауыстар тек осы телефонда.","Общая база не подключена — голоса только на этом телефоне.")); return L.join("\n"); }
   try{
     if(MODE==="fb"){
-      const d=await db.all(); ok(true,K("Оқу: сәтті","Чтение: успешно"));
+      await db.all(); ok(true,K("Оқу: сәтті","Чтение: успешно"));
       await db.set("_ping",Date.now(),true); ok(true,K("Жазу: сәтті","Запись: успешно"));
     }else{
-      const g=await fetch(JB+BLOB_ID,{headers:JH,cache:"no-store"});
+      const g=await gasGet();
       ok(g.ok,`${K("Оқу","Чтение")} (GET): HTTP ${g.status}`);
       if(g.ok){
         const cur=await g.json(); const isObj=cur&&typeof cur==="object"&&!Array.isArray(cur);
-        ok(isObj,K("Құжат пішімі: ","Формат документа: ")+(isObj?"OK":(Array.isArray(cur)?"массив":typeof cur)));
+        ok(isObj,K("Құжат пішімі: ","Формат ответа: ")+(isObj?"OK":(Array.isArray(cur)?"массив":typeof cur)));
         if(isObj){
-          const t=Date.now(); const pr=await fetch(JB+BLOB_ID,{method:"PUT",headers:JH,body:JSON.stringify({...cur,_ping:t})});
-          ok(pr.ok,`${K("Жазу","Запись")} (PUT): HTTP ${pr.status}`);
-          if(pr.ok){ const d2=await (await fetch(JB+BLOB_ID,{headers:JH,cache:"no-store"})).json(); ok(d2&&d2._ping===t,K("Жазылғанды қайта оқу","Повторное чтение записанного")); }
+          const t=Date.now(); const pr=await gasPost({path:"_ping",val:t}); const pj=await pr.json();
+          ok(pr.ok&&pj.ok,`${K("Жазу","Запись")} (POST): `+(pj.ok?"OK":(pj.error||"HTTP "+pr.status)));
+          if(pj.ok){ const d2=await (await gasGet()).json(); ok(d2&&d2._ping===t,K("Жазылғанды қайта оқу","Повторное чтение записанного")); }
         }
       }
     }
-  }catch(e){ ok(false,`${e.message||e} — ${K("интернет жоқ немесе браузер блоктады (CORS)","нет интернета или запрос заблокирован браузером (CORS)")}`); }
+  }catch(e){ ok(false,`${e.message||e} — ${K("интернет жоқ, не скриптке қолжетімділік «Кез келген адам» емес","нет интернета, либо у скрипта доступ не «У всех»")}`); }
   L.push(L.some(x=>x.startsWith("✗"))?K("Қорытынды: дерекқор жұмыс істемей тұр. Осы мәтіннің скриншотын жіберіңіз.","Итог: база не работает. Отправьте скриншот этого текста."):K("Қорытынды: дерекқор жұмыс істейді.","Итог: база работает."));
   return L.join("\n");
 }
