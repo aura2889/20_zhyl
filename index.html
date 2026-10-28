@@ -126,6 +126,11 @@ textarea{min-height:90px;resize:vertical}
 /* PEOPLE */
 .person{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
 .person:last-child{border-bottom:0}
+.person.tap{cursor:pointer;border-radius:12px;padding-left:8px;padding-right:8px}
+.person.me{background:rgba(245,199,106,.12);box-shadow:inset 0 0 0 1px var(--gold)}
+.mark{font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.04em}
+.attpick{padding:8px 4px 12px}
+.attpick h4{margin:0 0 6px;font-size:14px;color:var(--gold2)}
 .av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:15px;color:#0b1030;flex:0 0 auto}
 .av.m{background:linear-gradient(135deg,#bcd7ff,#6aa8ff)}
 .av.f{background:linear-gradient(135deg,#ffd0e6,#ff8fc2)}
@@ -519,22 +524,28 @@ function viewHome(){
 function viewClass(){
   const att=votesOf("attend");
   const lab={yes:[K("Барамын","Буду"),"yes"],likely:[K("Мүмкін","Скорее да"),"likely"],maybe:[K("Білмеймін","Не знаю"),"maybe"],online:[K("Онлайн","Онлайн"),"online"],no:[K("Келмеймін","Не смогу"),"no"]};
-  let list=CLASSMATES.filter(c=>S.filter==="all"||c.g===S.filter)
-    .filter(c=>(c.sn+" "+c.n).toLowerCase().includes(S.q.toLowerCase()));
+  const list=CLASSMATES.filter(c=>S.filter==="all"||c.g===S.filter);
   const m=CLASSMATES.filter(c=>c.g==="m").length, f=CLASSMATES.length-m;
+  const intro=S.me
+    ? whoCard()+(S.cnote?`<div class="note">${K("Басқа адамды таңдау үшін жоғарыдағы «Бұл мен емес» түймесін басыңыз.","Чтобы выбрать другого человека, нажмите выше «Это не я».")}</div>`:"")
+    : `<div class="note">${K("Өз атыңызды басыңыз: сол адам ретінде кіресіз және келетініңізді белгілейсіз.","Нажмите на своё имя: вы войдёте как этот человек и отметите, приедете ли.")}</div>`;
+  const row=c=>{
+    const a=att[c.id]?lab[att[c.id].o]:null, mine=S.me===c.id;
+    const picker=mine&&S.open.att?`<div class="attpick"><h4>${K("Келесіз бе?","Вы придёте?")}</h4><div class="chips">${
+      Object.keys(lab).map(k=>`<button type="button" class="chip ${att[c.id]&&att[c.id].o===k?"on":""}" data-act="att" data-o="${k}">${lab[k][0]}</button>`).join("")}</div></div>`:"";
+    return `<div class="person tap ${mine?"me":""}" data-act="who" data-id="${c.id}"><div class="av ${c.g}">${esc(ini(c))}</div>
+     <div class="pname"><b>${esc(c.sn+" "+c.n)}</b><span>${mine?`<span class="mark">${K("СІЗ","ВЫ")}</span> · `:""}${c.g==="m"?K("ұл","парень"):K("қыз","девушка")}</span></div>
+     ${a?`<span class="badge ${a[1]}">${a[0]}</span>`:`<span class="badge maybe">${K("жауап жоқ","нет ответа")}</span>`}</div>${picker}`;
+  };
   return `<h2>${K("Сыныптастар","Одноклассники")}</h2><p class="sub">${K("2007 жылғы түлектер","Выпуск 2007")} · ${CLASSMATES.length} ${K("адам","человек")} · ${m} ${K("ұл","парней")} · ${f} ${K("қыз","девушек")}</p>
-  <input id="q" placeholder="${K("Аты немесе тегі бойынша іздеу","Поиск по имени или фамилии")}" value="${esc(S.q)}">
+  ${intro}
   <div class="chips">
    <button class="chip ${S.filter==="all"?"on":""}" data-act="filter" data-v="all">${K("Барлығы","Все")} · ${CLASSMATES.length}</button>
    <button class="chip ${S.filter==="m"?"on":""}" data-act="filter" data-v="m">${K("Ұлдар","Парни")} · ${m}</button>
    <button class="chip ${S.filter==="f"?"on":""}" data-act="filter" data-v="f">${K("Қыздар","Девушки")} · ${f}</button>
   </div>
-  <div class="card" style="padding:6px 14px">
-  ${list.length?list.map(c=>{const a=att[c.id]?lab[att[c.id].o]:null;
-    return `<div class="person"><div class="av ${c.g}">${esc(ini(c))}</div>
-     <div class="pname"><b>${esc(c.sn+" "+c.n)}</b><span>${c.g==="m"?K("ұл","парень"):K("қыз","девушка")}</span></div>
-     ${a?`<span class="badge ${a[1]}">${a[0]}</span>`:`<span class="badge maybe">${K("жауап жоқ","нет ответа")}</span>`}</div>`}).join(""):`<div class="empty">${K("Ешкім табылмады","Никого не найдено")}</div>`}
-  </div>`;
+  <div class="card" style="padding:6px 8px">${list.map(row).join("")}</div>
+  <p class="sub" style="text-align:center">${K("Оң жақтағы белгі — «Келесіз бе?» сауалына берілген жауап.","Метка справа — ответ на вопрос «Вы придёте?».")}</p>`;
 }
 
 /* --- Сауалнама --- */
@@ -766,10 +777,21 @@ async function refresh(){
   try{ S.db=await db.all(); await reconcile(); S.err=""; }catch(e){ S.err=String(e.message||e); }
 }
 async function act(a,el){
-  if(a==="tab"){S.tab=el.dataset.v;lsSet("z20tab",S.tab);render();window.scrollTo(0,0);return}
+  if(a==="tab"){S.tab=el.dataset.v;S.cnote=false;lsSet("z20tab",S.tab);render();window.scrollTo(0,0);return}
   if(a==="lang"){setLang(el.dataset.v);return}
   if(a==="trk"){trackClick(+el.dataset.i);return}
   if(a==="filter"){S.filter=el.dataset.v;render();return}
+  if(a==="who"){
+    const id=el.dataset.id;
+    if(S.me===id){S.open.att=!S.open.att;render();return}            // своё имя: открыть/закрыть выбор «Келесіз бе?»
+    if(S.me){S.cnote=true;render();return}                            // уже вошли как другой человек
+    S.me=id; lsSet("z20me",id); S.draft={}; S.open.att=true; S.cnote=false; render(); return;
+  }
+  if(a==="att"){
+    if(!S.me) return;
+    await db.set(`votes/attend/${S.me}`,{o:el.dataset.o,t:Date.now()});
+    S.open.att=false; await refresh(); render(); return;
+  }
   if(a==="unme"){S.me=null;lsSet("z20me",null);S.draft={};render();return}
   if(a==="setme"){
     const v=$("#whoSel").value; if(!v) return alert(K("Тізімнен өзіңізді таңдаңыз","Выберите себя из списка"));
