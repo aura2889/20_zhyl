@@ -49,17 +49,16 @@ p{margin:.4em 0}
 .top{position:sticky;top:0;z-index:5;background:rgba(8,12,38,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
 .top .in{max-width:720px;margin:0 auto;padding:6px 8px 4px}
 .bar1{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
-.mbtn{border:1px solid var(--gold);background:rgba(245,199,106,.12);color:var(--gold2);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.brand{font-family:Georgia,serif;font-size:14px;color:var(--gold2);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .lang{display:flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;flex:0 0 auto}
 .lang button{background:none;border:0;color:var(--muted);padding:7px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;cursor:pointer}
 .lang button.on{background:linear-gradient(180deg,#ffe3a0,#e1a843);color:#2a1a00}
-.player{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:6px 10px 4px;margin-bottom:4px}
-.pt{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.ptitle{font-size:13px;font-weight:600;color:var(--gold2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pc{flex:0 0 auto;white-space:nowrap}
-.pc button{background:none;border:0;color:var(--gold2);font-size:18px;padding:2px 7px;cursor:pointer}
-.ps{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
-.ps input[type=range]{flex:1;min-width:0;width:auto;padding:0;border:0;background:none;accent-color:#e1a843;height:26px;margin:0;box-shadow:none}
+.mus{margin:10px auto 2px;max-width:420px}
+.mrow{display:flex;gap:8px;justify-content:center}
+.mt{flex:1 1 0;min-width:0;border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:99px;padding:7px 8px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mt.on{border-color:var(--gold);background:rgba(245,199,106,.16);color:var(--gold2)}
+.mseek{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.mseek input[type=range]{flex:1;min-width:0;width:auto;padding:0;border:0;background:none;accent-color:#e1a843;height:24px;margin:0;box-shadow:none}
 nav{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
 nav button{background:none;border:0;color:var(--muted);padding:4px 0 3px;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;border-radius:10px;min-width:0}
 nav button i{font-style:normal;font-size:19px;filter:grayscale(.6)}
@@ -214,13 +213,8 @@ textarea{min-height:90px;resize:vertical}
 <canvas id="fx"></canvas>
 <header class="top"><div class="in">
   <div class="bar1">
-    <button class="mbtn" id="mbtn" type="button"></button>
+    <span class="brand" id="brand"></span>
     <div class="lang" id="lang"></div>
-  </div>
-  <div class="player hide" id="pl">
-    <div class="pt"><span class="ptitle" id="ptitle"></span>
-      <span class="pc"><button type="button" id="pprev">⏮</button><button type="button" id="pplay">⏸</button><button type="button" id="pnext">⏭</button></span></div>
-    <div class="ps"><span id="pcur">0:00</span><input type="range" id="pseek" min="0" max="1000" value="0" step="1" disabled><span id="pdur">0:00</span></div>
   </div>
   <nav id="nav"></nav>
 </div></header>
@@ -233,7 +227,7 @@ textarea{min-height:90px;resize:vertical}
    DB_URL  — адрес Firebase Realtime Database (если нужен)
    Пока обе пустые — демо-режим: данные только на этом устройстве.
    ===================================================================== */
-const BLOB_ID = "";
+const BLOB_ID = "01a1813d-99b6-7044-96d8-4a895abb8b8f";
 const DB_URL = "";
 
 /* ---------- ХЕЛПЕРЫ ХРАНЕНИЯ ---------- */
@@ -485,6 +479,7 @@ function viewHome(){
     <div class="big">20</div>
     <div class="yrs">${K("жылдық мерейтой","лет выпуска")}</div>
     <div class="line"></div>
+    <div class="mus" id="mus"></div>
     <div class="date">${K("2027 жылғы 25 мамыр","25 мая 2027")}<small>${K("сейсенбі · Ақтау · 2007 жылғы түлектер","вторник · Актау · выпуск 2007 года")}</small></div>
   </section>
   <div class="count" id="cd"></div>
@@ -678,6 +673,16 @@ function viewAfisha(){
     <div class="sect"><h4>${K("Қандай ән айтамыз?","Какие песни споём?")}</h4>
       ${addRow("sg",K("Әннің аты және орындаушы","Название песни и исполнитель"),K("Қосу","Добавить"))}
       <div style="margin-top:6px">${listItems("sg","s_",K("Әзірше ән ұсынылған жоқ.","Пока нет песен."))}</div></div>
+  </section>
+  <section class="poster">
+    <div class="tag">${K("Сіздің нөміріңіз","Ваш номер")}</div>
+    <div class="ph">${K("ТІЛЕКТЕР","ПОЖЕЛАНИЯ")}</div>
+    <div class="pn">${K("Бағдарламаға тағы не қосамыз?","Что ещё добавим в программу?")}</div>
+    <p>${K("Квизді Наурызбек құрастырады, гитарада жігіттер ойнайды. Ал басқа нөмірлерді кім алады? Өз ұсынысыңызды жазыңыз: қандай нөмір болсын және оны өзіңіз дайындай аласыз ба.","Квиз готовит Наурызбек, на гитаре играют ребята. А кто возьмёт остальные номера? Напишите своё предложение: какой номер хотите и готовы ли подготовить его сами.")}</p>
+    <p class="sub" style="text-align:center">${K("Мысалы: караоке, би, ән байқауы, мектеп туралы естеліктер, бейне-құттықтау, лотерея, фото-көрме…","Например: караоке, танцы, конкурс песен, воспоминания о школе, видео-поздравления, лотерея, фотовыставка…")}</p>
+    <div class="sect"><h4>${K("Өз нөміріңізді ұсыныңыз","Предложите свой номер")}</h4>
+      ${addRow("wish",K("Мысалы: караоке — мен ұйымдастырамын","Например: караоке — организую я"),K("Жіберу","Отправить"))}
+      <div style="margin-top:6px">${listItems("wish","w_",K("Әзірге ұсыныс жоқ. Бірінші болыңыз!","Пока нет предложений. Будьте первым!"))}</div></div>
   </section>`;
 }
 
@@ -685,7 +690,7 @@ function viewAfisha(){
 function render(){
   const v={home:viewHome,class:viewClass,polls:viewPolls,ideas:viewIdeas,plan:viewPlan,teachers:viewTeachers,afisha:viewAfisha}[S.tab]||viewHome;
   $("#app").innerHTML = v()+`<div class="foot">${K("Түлектерге 20 жыл · 2027 жылғы 25 мамыр","20 лет выпуска · 25 мая 2027")}</div>`;
-  renderNav(); tick();
+  renderNav(); renderMusic(); tick();
   const ws=$("#whoSel"); if(ws) ws.onchange=()=>$("#guestBox").classList.toggle("hide",ws.value!=="guest");
   const q=$("#q"); if(q) q.oninput=()=>{S.q=q.value;const pos=q.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(pos,pos)};
   const cf=$("#cFee"),cn=$("#cN");
@@ -708,56 +713,52 @@ function setLang(l){
   renderTop(); render();
 }
 
-/* ---------- МУЗЫКА: song1 (қазақша) → song (на русском), по кругу ---------- */
+/* ---------- МУЗЫКА: две отдельные кнопки (1-музыка / 2-музыка), перемотка только пока играет ---------- */
 const TRACKS=[
- {src:"song1.mp3",n:"Магнитола",tag:["қазақша","на казахском"]},
- {src:"song.mp3",n:"Школа, школа, я скучаю",tag:["орысша","на русском"]}
+ {src:"song1.mp3",n:"Магнитола",btn:["1-музыка · Магнитола","Музыка 1 · Магнитола"]},
+ {src:"song.mp3",n:"Школа, школа, я скучаю",btn:["2-музыка · Школа","Музыка 2 · Школа"]}
 ];
-const au=new Audio(); au.preload="none";
-let ti=0, started=false, drag=false, fails=0;
+const au=new Audio(); au.preload="none"; au.loop=true;
+let ti=0, started=false, drag=false;
 const mm=s=>{if(!isFinite(s)||s<0)return"0:00";s=Math.floor(s);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const isPlaying=()=>started&&!au.paused;
 function renderTop(){
   $("#lang").innerHTML=["kk","ru"].map(l=>`<button type="button" data-act="lang" data-v="${l}" class="${LANG===l?"on":""}">${l==="kk"?"ҚАЗ":"РУС"}</button>`).join("");
-  const playing=started&&!au.paused;
-  $("#mbtn").textContent = !started ? K("🎵 Музыканы қосу","🎵 Включить музыку") : playing ? K("⏸ Тоқтата тұру","⏸ Пауза") : K("▶ Жалғастыру","▶ Продолжить");
-  $("#pl").classList.toggle("hide",!started);
-  $("#pplay").textContent=playing?"⏸":"▶";
-  const t=TRACKS[ti]; $("#ptitle").textContent=`${ti+1}/${TRACKS.length} · ${t.n} (${P(t.tag)})`;
+  $("#brand").textContent=K("Түлектерге 20 жыл","20 лет выпуска");
   renderNav();
 }
-function play(i){
-  ti=((i%TRACKS.length)+TRACKS.length)%TRACKS.length;
-  au.src=TRACKS[ti].src;
-  const sk=$("#pseek"); sk.value=0; sk.disabled=true; $("#pcur").textContent="0:00"; $("#pdur").textContent="0:00";
-  renderTop();
-  return au.play().then(()=>{fails=0}).catch(err=>{
+function renderMusic(){
+  const el=$("#mus"); if(!el) return;
+  const pl=isPlaying(), has=isFinite(au.duration)&&au.duration>0;
+  el.innerHTML=`<div class="mrow">${TRACKS.map((t,i)=>{
+      const on=started&&i===ti;
+      return `<button type="button" class="mt ${on?"on":""}" data-act="trk" data-i="${i}">${on&&pl?"⏸":"▶"} ${esc(P(t.btn))}</button>`}).join("")}</div>
+    <div class="mseek ${pl?"":"hide"}"><span id="pcur">${mm(au.currentTime)}</span>
+      <input type="range" id="pseek" min="0" max="1000" step="1" value="${has?Math.round(au.currentTime/au.duration*1000):0}" ${has?"":"disabled"}>
+      <span id="pdur">${has?mm(au.duration):"0:00"}</span></div>`;
+}
+function playTrack(i){
+  ti=i; started=true; au.src=TRACKS[i].src; renderMusic();
+  return au.play().catch(err=>{
     if(err&&err.name==="AbortError") return;              // трек сменили вручную
-    if(err&&err.name==="NotAllowedError"){started=false;renderTop();return}
-    fails++;                                              // файл не найден — пробуем следующий
-    if(fails>=TRACKS.length){started=false;fails=0;renderTop();alert(K("Музыка файлдары табылмады (song1.mp3, song.mp3)","Файлы музыки не найдены (song1.mp3, song.mp3)"));return}
-    play(ti+1);
+    started=false; renderMusic();
+    if(!(err&&err.name==="NotAllowedError")) alert(K("Музыка файлы табылмады: ","Файл музыки не найден: ")+TRACKS[i].src);
   });
 }
-function toggleMusic(){
-  if(!started){started=true;fails=0;play(0);return}
-  if(au.paused) au.play().catch(()=>{}); else au.pause();
+function trackClick(i){
+  if(started&&i===ti){ if(au.paused) au.play().catch(()=>{}); else au.pause(); return; }   // та же кнопка: пауза / дальше
+  playTrack(i);                                                                              // другая кнопка: включить её трек
 }
-$("#mbtn").onclick=toggleMusic; $("#pplay").onclick=toggleMusic;
-$("#pnext").onclick=()=>play(ti+1);
-$("#pprev").onclick=()=>{ if(au.currentTime>3) au.currentTime=0; else play(ti-1); };
-au.addEventListener("play",renderTop); au.addEventListener("pause",renderTop);
-au.addEventListener("ended",()=>play(ti+1));
-const durUp=()=>{ if(isFinite(au.duration)&&au.duration>0){ $("#pseek").disabled=false; $("#pdur").textContent=mm(au.duration);} };
-au.addEventListener("loadedmetadata",durUp); au.addEventListener("durationchange",durUp);
+["play","pause","loadedmetadata","durationchange"].forEach(e=>au.addEventListener(e,renderMusic));
 au.addEventListener("timeupdate",()=>{
-  if(!drag&&isFinite(au.duration)&&au.duration>0) $("#pseek").value=Math.round(au.currentTime/au.duration*1000);
-  $("#pcur").textContent=mm(au.currentTime);
+  const c=$("#pcur"); if(c) c.textContent=mm(au.currentTime);
+  const sk=$("#pseek"); if(sk&&!drag&&isFinite(au.duration)&&au.duration>0) sk.value=Math.round(au.currentTime/au.duration*1000);
 });
-const sk=$("#pseek");
-sk.addEventListener("pointerdown",()=>{drag=true});
-["pointerup","pointercancel"].forEach(e=>sk.addEventListener(e,()=>{drag=false}));
-sk.addEventListener("input",()=>{
-  if(isFinite(au.duration)&&au.duration>0){ au.currentTime=sk.value/1000*au.duration; $("#pcur").textContent=mm(au.currentTime); }
+document.addEventListener("pointerdown",e=>{ if(e.target.id==="pseek") drag=true; });
+["pointerup","pointercancel"].forEach(ev=>document.addEventListener(ev,()=>{drag=false}));
+document.addEventListener("input",e=>{
+  if(e.target.id!=="pseek"||!(isFinite(au.duration)&&au.duration>0)) return;
+  au.currentTime=e.target.value/1000*au.duration; const c=$("#pcur"); if(c) c.textContent=mm(au.currentTime);
 });
 
 /* ---------- ДЕЙСТВИЯ ---------- */
@@ -767,6 +768,7 @@ async function refresh(){
 async function act(a,el){
   if(a==="tab"){S.tab=el.dataset.v;lsSet("z20tab",S.tab);render();window.scrollTo(0,0);return}
   if(a==="lang"){setLang(el.dataset.v);return}
+  if(a==="trk"){trackClick(+el.dataset.i);return}
   if(a==="filter"){S.filter=el.dataset.v;render();return}
   if(a==="unme"){S.me=null;lsSet("z20me",null);S.draft={};render();return}
   if(a==="setme"){
@@ -827,7 +829,7 @@ document.addEventListener("change",e=>{
   const d=lsGet("z20chk",{}); d[c.dataset.chk]=c.checked; lsSet("z20chk",d);
   c.closest(".chk").classList.toggle("done",c.checked);
 });
-function idle(){const a=document.activeElement;return !(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))}
+function idle(){const a=document.activeElement;return !(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&a.type!=="range")}
 setInterval(async()=>{ if(document.hidden||!idle()||LOCAL) return; await refresh(); render(); },25000);
 
 /* ---------- ФОН: мягкие золотые искры ---------- */
