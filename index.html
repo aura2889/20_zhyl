@@ -231,7 +231,7 @@ textarea{min-height:90px;resize:vertical}
    Пока обе пустые — демо-режим: данные только на этом устройстве.
    ===================================================================== */
 const GAS_URL = "";
-const DB_URL = "";
+const DB_URL = "https://class20-f031a-default-rtdb.firebaseio.com/";
 
 /* ---------- ХЕЛПЕРЫ ХРАНЕНИЯ ---------- */
 function lsGet(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}}
@@ -363,9 +363,12 @@ function setPath(t,path,val){
   if(val===null) delete o[p[p.length-1]]; else o[p[p.length-1]]=val;
 }
 function getPath(t,path){ return path.split("/").reduce((o,k)=>o==null?undefined:o[k],t); }
+// журнал неподтверждённых записей: запись попадает сюда до отправки и удаляется после успешной отправки;
+// если связи не было, она остаётся и досылается позже. Новая запись в тот же путь заменяет старую.
 function logW(path,val){
-  const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<864e5); w.push({path,val,t:Date.now()}); lsSet("z20w",w.slice(-80));
+  const t=Date.now(), w=lsGet("z20w",[]).filter(x=>t-x.t<864e5&&x.path!==path); w.push({path,val,t}); lsSet("z20w",w.slice(-80)); return t;
 }
+function ackW(path,t){ lsSet("z20w",lsGet("z20w",[]).filter(x=>!(x.path===path&&x.t===t))); }
 const gasGet = ()=>fetch(GAS_URL+(GAS_URL.includes("?")?"&":"?")+"t="+Date.now());
 // POST с телом-строкой (text/plain) — «простой» запрос, браузер не делает предзапрос CORS
 const gasPost = body=>fetch(GAS_URL,{method:"POST",body:JSON.stringify(body)});
@@ -382,29 +385,28 @@ const db = {
     const d=await r.json(); if(d&&d.ok===false) throw new Error(d.error||"db error");
     return d&&typeof d==="object"&&!Array.isArray(d)?d:{};
   },
-  set(path,val,noLog){
-    if(!noLog) logW(path,val);
+  // again — метка времени записи из журнала (повторная отправка), иначе новая запись
+  set(path,val,again){
     if(MODE==="local"){ const t=lsGet("z20db",{}); setPath(t,path,val); lsSet("z20db",t); return Promise.resolve(); }
-    if(MODE==="fb"){
-      return fetch(DB_URL.replace(/\/$/,"")+"/"+path+".json",{method:"PUT",body:JSON.stringify(val)})
-        .then(r=>{ if(!r.ok) throw new Error("db "+r.status); });
-    }
-    // записи идут по очереди; сервер пишет каждый путь отдельной строкой под блокировкой
-    return chain=chain.catch(()=>{}).then(async()=>{
-      const r=await gasPost({path,val}); if(!r.ok) throw new Error("db "+r.status);
-      const j=await r.json(); if(!j.ok) throw new Error(j.error||"save failed");
-    });
+    const t=again||logW(path,val);
+    const send = MODE==="fb"
+      ? fetch(DB_URL.replace(/\/$/,"")+"/"+path+".json",{method:"PUT",body:JSON.stringify(val)}).then(r=>{ if(!r.ok) throw new Error("db "+r.status); })
+      : (chain=chain.catch(()=>{}).then(async()=>{        // записи по очереди; сервер пишет каждый путь отдельной строкой под блокировкой
+          const r=await gasPost({path,val}); if(!r.ok) throw new Error("db "+r.status);
+          const j=await r.json(); if(!j.ok) throw new Error(j.error||"save failed");
+        }));
+    return send.then(()=>ackW(path,t));
   }
 };
-// если запись не дошла (нет связи) — досылаем свои недавние изменения при следующей удачной связи
+// досылаем записи, которые не дошли (не было связи); устаревшие и уже отправленные не трогаем
 async function reconcile(){
   if(MODE==="local") return;
-  const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<864e5); let fixed=false;
+  const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<864e5); let sent=false;
   for(const x of w){
-    const cur=getPath(S.db,x.path);
-    if(x.val===null ? cur!=null : cur==null){ await db.set(x.path,x.val,true); fixed=true; }
+    if(!lsGet("z20w",[]).some(y=>y.path===x.path&&y.t===x.t)) continue;   // заменена новой записью
+    await db.set(x.path,x.val,x.t); sent=true;
   }
-  if(fixed) S.db=await db.all();
+  if(sent) S.db=await db.all();
 }
 
 /* ---------- СОСТОЯНИЕ ---------- */
@@ -464,7 +466,7 @@ async function runDiag(){
   try{
     if(MODE==="fb"){
       await db.all(); ok(true,K("Оқу: сәтті","Чтение: успешно"));
-      await db.set("_ping",Date.now(),true); ok(true,K("Жазу: сәтті","Запись: успешно"));
+      const fr=await fetch(DB_URL.replace(/\/$/,"")+"/_ping.json",{method:"PUT",body:JSON.stringify(Date.now())}); ok(fr.ok,K("Жазу","Запись")+" (PUT): HTTP "+fr.status);
     }else{
       const g=await gasGet();
       ok(g.ok,`${K("Оқу","Чтение")} (GET): HTTP ${g.status}`);

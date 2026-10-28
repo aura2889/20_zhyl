@@ -18,7 +18,11 @@
 Settings → Pages → Deploy from a branch → **main** / **(root)** → Save. Сайт: `https://aura2889.github.io/20_zhyl/`.
 Установка на телефон: Android — Chrome → «Добавить на главный экран»; iPhone — Safari → «Поделиться» → «На экран Домой».
 
-## Общие голоса: Google Таблица (один раз, ~10 минут)
+## Общие голоса
+
+**Сейчас подключён Firebase Realtime Database** (`const DB_URL = "https://class20-f031a-default-rtdb.firebaseio.com/";` в `index.html`). Правила базы: `{"rules":{".read":true,".write":"now < 1814313600000"}}` (запись открыта до 30 июня 2027). Проверка: вкладка «Сауал» → **🔧 Базаны тексеру**.
+
+Запасной вариант без Firebase — Google Таблица (если пустой `DB_URL`, используется `GAS_URL`):
 
 GitHub Pages не хранит данные, поэтому общие голоса лежат в Google Таблице, а сайт общается с ней через небольшой скрипт Google (`apps-script/Code.gs`). Пока адрес скрипта не вписан, приложение работает в **демо-режиме** (голоса видны только на своём телефоне).
 
