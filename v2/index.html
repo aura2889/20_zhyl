@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>20 лет выпуска · 25 мая 2027</title>
+<meta name="theme-color" content="#0b1030">
+<meta name="description" content="Встреча одноклассников к 20-летию выпуска — 25 мая 2027, Актау">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="20 лет">
+<style>
+:root{
+  --bg1:#080c26; --bg2:#141a4a; --bg3:#2a1650;
+  --gold:#f5c76a; --gold2:#ffe6a8; --goldd:#c8963a;
+  --text:#f6f3ec; --muted:#b9bddb;
+  --card:rgba(18,24,66,.72); --card2:rgba(255,255,255,.07);
+  --line:rgba(245,199,106,.28);
+  --ok:#6ee7a8; --warn:#ffd166; --bad:#ff8a8a;
+  --m:#6aa8ff; --f:#ff8fc2;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  min-height:100vh;color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.45;
+  background:
+    radial-gradient(900px 600px at 85% -10%, rgba(255,190,90,.22), transparent 60%),
+    radial-gradient(700px 600px at -10% 20%, rgba(120,90,255,.28), transparent 60%),
+    radial-gradient(800px 700px at 50% 120%, rgba(255,120,170,.18), transparent 60%),
+    linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 55%,var(--bg3) 100%);
+  background-attachment:fixed;
+  padding-bottom:calc(84px + env(safe-area-inset-bottom));
+}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px 8px}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;margin:0;font-weight:700}
+h2{font-size:24px;color:var(--gold2);margin:6px 0 4px}
+h3{font-size:18px;color:var(--gold2)}
+p{margin:.4em 0}
+.sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+
+/* HERO */
+.hero{text-align:center;padding:26px 8px 10px}
+.eyebrow{letter-spacing:.32em;font-size:12px;color:var(--gold);text-transform:uppercase}
+.big{
+  font-family:Georgia,"Times New Roman",serif;font-weight:700;line-height:.9;
+  font-size:clamp(120px,36vw,200px);margin:8px 0 0;
+  background:linear-gradient(180deg,#fff6d6 0%,#f5c76a 45%,#b9812a 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 30px rgba(245,199,106,.35));
+}
+.yrs{font-family:Georgia,serif;font-size:clamp(28px,8vw,44px);letter-spacing:.18em;text-transform:uppercase;color:var(--gold2);margin-top:-6px}
+.line{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto;width:80%}
+.date{font-family:Georgia,serif;font-size:clamp(24px,7vw,34px);color:#fff}
+.date small{display:block;font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);letter-spacing:.08em;margin-top:2px}
+
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 6px}
+.count div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 4px;text-align:center}
+.count b{display:block;font-family:Georgia,serif;font-size:28px;color:var(--gold2);font-variant-numeric:tabular-nums}
+.count span{font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--card2);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:12px;text-align:center}
+.stat b{display:block;font-family:Georgia,serif;font-size:30px;color:var(--gold2)}
+.stat span{font-size:12px;color:var(--muted)}
+.stat.m b{color:var(--m)} .stat.f b{color:var(--f)}
+.gbar{display:flex;height:12px;border-radius:99px;overflow:hidden;margin:12px 0 4px;background:#0003}
+.gbar i{display:block;height:100%}
+.gleg{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+
+/* FORMS */
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{
+  width:100%;background:rgba(5,8,30,.65);border:1px solid rgba(245,199,106,.35);border-radius:12px;padding:12px;outline:none
+}
+input::placeholder,textarea::placeholder{color:#8f94bd}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,199,106,.18)}
+select option{background:#141a4a;color:#fff}
+textarea{min-height:90px;resize:vertical}
+.btn{
+  display:inline-block;border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer;
+  background:linear-gradient(180deg,#ffe3a0,#e1a843);color:#2a1a00;
+}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--gold2);border:1px solid var(--line)}
+.btn.sm{padding:8px 12px;font-size:14px}
+.btn[disabled]{opacity:.5}
+.row{display:flex;gap:8px;align-items:center}
+.row>*{flex:1}
+.row>.btn{flex:0 0 auto}
+
+/* CHIPS */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+.chip{border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:99px;padding:8px 14px;font-size:14px;cursor:pointer}
+.chip.on{background:linear-gradient(180deg,#ffe3a0,#e1a843);color:#2a1a00;font-weight:700;border-color:transparent}
+
+/* PEOPLE */
+.person{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
+.person:last-child{border-bottom:0}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:15px;color:#0b1030;flex:0 0 auto}
+.av.m{background:linear-gradient(135deg,#bcd7ff,#6aa8ff)}
+.av.f{background:linear-gradient(135deg,#ffd0e6,#ff8fc2)}
+.av.t{background:linear-gradient(135deg,#ffe9b0,#f5c76a)}
+.pname{flex:1;min-width:0}
+.pname b{display:block;font-weight:600;overflow-wrap:anywhere}
+.pname span{font-size:12px;color:var(--muted)}
+.badge{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.2);white-space:nowrap}
+.badge.yes{color:var(--ok);border-color:#6ee7a866}
+.badge.likely{color:var(--warn);border-color:#ffd16666}
+.badge.maybe{color:var(--muted)}
+.badge.no{color:var(--bad);border-color:#ff8a8a66}
+.badge.online{color:var(--m);border-color:#6aa8ff66}
+
+/* POLLS */
+.poll{padding:0;overflow:hidden}
+.poll>summary{list-style:none;cursor:pointer;padding:16px;display:flex;gap:12px;align-items:flex-start}
+.poll>summary::-webkit-details-marker{display:none}
+.poll .qi{font-size:26px}
+.poll .qt{flex:1}
+.poll .qt b{display:block;font-size:17px;line-height:1.3}
+.poll .qt span{font-size:13px;color:var(--muted)}
+.poll .chev{color:var(--gold);transition:transform .2s;font-size:18px;margin-top:2px}
+.poll[open] .chev{transform:rotate(90deg)}
+.pbody{padding:0 16px 16px}
+.opt{position:relative;display:block;width:100%;text-align:left;margin:8px 0;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(5,8,30,.55);padding:12px 14px;overflow:hidden;cursor:pointer}
+.opt .fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,rgba(245,199,106,.38),rgba(245,199,106,.18));width:0;transition:width .5s}
+.opt .in{position:relative;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.opt .lab{flex:1;overflow-wrap:anywhere}
+.opt .num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--gold2);white-space:nowrap}
+.opt.sel{border-color:var(--gold);box-shadow:0 0 0 2px rgba(245,199,106,.25)}
+.opt.sel .lab::before{content:"✓ ";color:var(--gold)}
+.opt.lead{border-color:rgba(245,199,106,.7)}
+.meta{font-size:13px;color:var(--muted);margin:8px 0}
+.names{font-size:13px;color:var(--muted);margin:6px 0 2px}
+.names summary{cursor:pointer;color:var(--gold)}
+.note{font-size:13px;color:var(--warn);background:rgba(255,209,102,.1);border:1px solid rgba(255,209,102,.3);border-radius:12px;padding:10px 12px;margin:10px 0}
+.pill{display:inline-block;background:var(--card2);border:1px solid rgba(255,255,255,.15);border-radius:99px;padding:3px 10px;margin:3px 4px 0 0;font-size:13px}
+
+/* IDEAS */
+.idea{border-bottom:1px solid rgba(255,255,255,.08);padding:12px 0}
+.idea:last-child{border-bottom:0}
+.idea .by{font-size:12px;color:var(--muted);margin-top:4px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.like{border:1px solid var(--line);background:var(--card2);border-radius:99px;padding:5px 12px;cursor:pointer;font-size:14px}
+.like.on{background:rgba(245,199,106,.25);border-color:var(--gold)}
+
+/* PLAN */
+.tl{position:relative;margin:6px 0 0 6px;padding-left:20px;border-left:2px solid var(--line)}
+.tl .it{position:relative;padding:0 0 16px}
+.tl .it::before{content:"";position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(245,199,106,.2)}
+.tl .tm{font-weight:700;color:var(--gold2);font-variant-numeric:tabular-nums}
+.tl .tt{font-weight:600}
+.tl .td{font-size:14px;color:var(--muted)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer}
+.chk input{width:22px;height:22px;flex:0 0 auto;margin-top:1px;accent-color:#e1a843}
+.chk.done span{text-decoration:line-through;opacity:.55}
+.chk small{display:block;color:var(--muted)}
+.mh{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:14px 0 2px}
+.calc-r{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed rgba(255,255,255,.12)}
+.calc-r:last-child{border:0}
+.calc-r b{font-variant-numeric:tabular-nums;color:var(--gold2)}
+.empty{color:var(--muted);text-align:center;padding:14px 0}
+
+/* NAV */
+nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:5;
+  background:rgba(8,12,38,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+}
+nav .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:2px}
+nav button{background:none;border:0;color:var(--muted);padding:6px 0;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border-radius:12px}
+nav button i{font-style:normal;font-size:22px;filter:grayscale(.6)}
+nav button.on{color:var(--gold2)}
+nav button.on i{filter:none}
+nav button.on::after{content:"";width:18px;height:3px;border-radius:3px;background:var(--gold);margin-top:1px}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:18px 0 4px}
+.hide{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="wrap" id="app"></div>
+<nav><div class="in" id="nav"></div></nav>
+
+<script>
+/* =====================================================================
+   НАСТРОЙКА ОБЩЕЙ БАЗЫ (чтобы голоса видели ВСЕ, а не только ваш телефон)
+   Вставьте сюда адрес Firebase Realtime Database, например:
+   const DB_URL = "https://moi-proekt-default-rtdb.europe-west1.firebasedatabase.app";
+   Пока пусто — приложение работает в демо-режиме (данные только на этом устройстве).
+   Подробная инструкция — в README.md
+   ===================================================================== */
+const DB_URL = "";
+
+/* ---------- ДАННЫЕ ---------- */
+const EVENT = new Date("2027-05-25T00:00:00+05:00");
+// [фамилия, имя, пол]  m = парень, f = девушка
+const CLASSMATES = [
+ ["Көркембаев","Марат","m"],["Байталасов","Медет","m"],["Қожаш","Айдын","m"],["Ерманов","Наурызбек","m"],
+ ["Қойлыбаев","Бағдат","m"],["Теміров","Кенжебек","m"],["Бейсен","Өркен","m"],["Елжанов","Мәлік","m"],
+ ["Көбегенов","Ибрагим","m"],["Кенжеқұлова","Айгүл","f"],["Ізімбергенова","Айгүл","f"],["Сәдуақасова","Жазира","f"],
+ ["Балықбаева","Гүлдана","f"],["Меңдіханова","Дина","f"],["Яева","Орынгүл","f"],["Нұрбасинова","Майя","f"],
+ ["Тасболатова","Гүлназ","f"],["Жақсығатова","Гүлшат","f"],["Өтешева","Гаухар","f"],["Нуретова","Диана","f"]
+].map((c,i)=>({id:"c"+String(i+1).padStart(2,"0"),sn:c[0],n:c[1],g:c[2]}));
+
+const POLLS = [
+ {id:"attend",ic:"🙋",q:"Вы придёте?",hint:"Нужно, чтобы понять масштаб",type:"single",opts:[
+   {id:"yes",l:"Обязательно буду!"},{id:"likely",l:"Скорее да"},{id:"maybe",l:"Пока не знаю"},
+   {id:"online",l:"Подключусь онлайн (живу далеко)"},{id:"no",l:"К сожалению, не смогу"}]},
+ {id:"date",ic:"📅",q:"Какая дата?",hint:"25 мая 2027 — вторник, день последнего звонка",type:"single",opts:[
+   {id:"may25",l:"25 мая (вторник) — ровно в день последнего звонка"},
+   {id:"sat22",l:"Ближайшие выходные раньше: 22–23 мая"},
+   {id:"sat29",l:"Выходные позже: 29–30 мая"}]},
+ {id:"days",ic:"🗓️",q:"Сколько дней отмечаем?",hint:"Выберите комфортный формат",type:"single",opts:[
+   {id:"d1",l:"1 день — торжественный вечер"},
+   {id:"d2",l:"2 дня — вечер + выезд на природу"},
+   {id:"d3",l:"3 дня — мини-путешествие всем классом"}]},
+ {id:"place",ic:"📍",q:"Где отмечаем?",hint:"Город, область или заграница",type:"single",opts:[
+   {id:"aktau",l:"В Актау — ресторан / банкетный зал"},
+   {id:"out",l:"Актау + выезд за город (Каспий, Мангышлак, база отдыха)"},
+   {id:"kz",l:"Другой город Казахстана (Астана, Алматы…)"},
+   {id:"dubai",l:"За границей: Дубай"},
+   {id:"world",l:"За границей: Турция / Грузия / Азербайджан"},
+   {id:"custom",l:"Свой вариант",custom:"text",ph:"Куда бы вы поехали?"}]},
+ {id:"budget",ic:"💰",q:"Взнос с человека",hint:"Какую сумму готовы вложить (₸)",type:"single",opts:[
+   {id:"b20",l:"Около 20 000 ₸"},{id:"b50",l:"Около 50 000 ₸"},{id:"b100",l:"От 100 000 ₸"},
+   {id:"custom",l:"Своя сумма",custom:"number",ph:"Например, 75000"}]},
+ {id:"program",ic:"🎉",q:"Что обязательно в программе?",hint:"Можно выбрать несколько",type:"multi",opts:[
+   {id:"school",l:"Встреча в родной школе, фото на ступенях"},
+   {id:"teachers",l:"Слово учителям и приглашённые педагоги"},
+   {id:"video",l:"Видео-слайдшоу «Мы тогда и сейчас»"},
+   {id:"quiz",l:"Викторина «Что было в 2007 году»"},
+   {id:"capsule",l:"Капсула времени — письма себе на 10 лет"},
+   {id:"retro",l:"Дискотека с музыкой 2000-х"},
+   {id:"photo",l:"Профессиональный фотограф / видеограф"},
+   {id:"nature",l:"Выезд на природу, шашлык, костёр"},
+   {id:"active",l:"Активности: квадроциклы, яхта, спорт"},
+   {id:"gift",l:"Подарок школе / помощь школе"}]},
+ {id:"theme",ic:"👗",q:"Стиль и дресс-код",hint:"Как одеваемся",type:"single",opts:[
+   {id:"retro",l:"Ретро 2007 — стиль выпускного"},
+   {id:"classic",l:"Вечерний — костюмы и платья"},
+   {id:"free",l:"Свободный, главное — настроение"}]},
+ {id:"guests",ic:"👨‍👩‍👧‍👦",q:"Формат гостей",hint:"Только класс или с семьями?",type:"single",opts:[
+   {id:"class",l:"Только одноклассники и учителя"},
+   {id:"spouse",l:"Можно с супругом / супругой"},
+   {id:"family",l:"С семьями, дети — отдельный семейный день"}]},
+ {id:"teachers",ic:"🎓",q:"Приглашаем учителей?",hint:"Кого хотим видеть рядом",type:"single",opts:[
+   {id:"all",l:"Да, всех, кто сможет приехать"},
+   {id:"main",l:"Классного руководителя и самых близких"},
+   {id:"part",l:"Только на торжественную часть"}]}
+];
+
+const PLAN_DAY = [
+ ["10:00","Сбор у родной школы","Общее фото на ступенях, встреча с учителями, прогулка по коридорам и своему кабинету."],
+ ["11:30","Классный час «как в 2007»","Перекличка, кто как изменился, 5 минут слова от каждого: чем занимаюсь, чем горжусь."],
+ ["13:00","Обед и перерыв","Отдых, дорога в ресторан, время переодеться."],
+ ["17:00","Welcome-зона","Фотозона, стена со школьными фото, «капсула времени», бейджи с именами и школьными прозвищами."],
+ ["18:00","Торжественная часть","Видео-слайдшоу «тогда и сейчас», слово учителям и классному руководителю, минута памяти и благодарности."],
+ ["19:00","Ужин и тосты","Свободная рассадка — чтобы пообщаться со всеми. Игра «Угадай по детскому фото»."],
+ ["20:30","Конкурсы и викторина","Викторина «2007 год»: музыка, фильмы, мода, цены. Команды «парни против девушек»."],
+ ["22:00","Дискотека 2000-х","Плейлист, составленный всем классом заранее."],
+ ["23:30","Финал","Запечатываем капсулу времени на 10 лет, общее фото, договариваемся о следующей встрече."]
+];
+const PLAN_EXT = [
+ ["День 0 · вечер накануне","Неформальная встреча для тех, кто приехал заранее: кафе, прогулка по набережной, чай и разговоры."],
+ ["День 1 · 25 мая","Главная программа — как в расписании выше."],
+ ["День 2 · на природе","Выезд за город: шашлык, костёр, спортивные игры, квадроциклы или яхта, вечерняя гитара и общее прощальное фото."]
+];
+const CHECK = [
+ ["Ноябрь 2026","Создать общий чат, собрать контакты всех 20 одноклассников","Кто не в чате — найти через друзей"],
+ ["Декабрь – январь","Пройти опросы: дата, формат, место, бюджет","Результаты видны в приложении"],
+ ["Февраль","Назначить оргкомитет (3–4 человека) и казначея","Единый счёт или Kaspi, отчёт по тратам открытый"],
+ ["Март","Забронировать площадку, договориться с ведущим и фотографом","Для 20 человек + учителя + семьи, если решим"],
+ ["Март","Найти и пригласить учителей, особенно классного руководителя","Заполните вкладку «Учителя»"],
+ ["Апрель","Собрать детские и школьные фото, видео-поздравления от тех, кто не приедет","Из них сделаем слайдшоу"],
+ ["Апрель","Составить плейлист 2000-х и тосты","Каждый присылает 3 песни"],
+ ["Май","Финальный список гостей, рассадка, сценарий, подарки","Напомнить о трансфере и дресс-коде"],
+ ["25 мая 2027","Праздник","Фото, видео, капсула времени"]
+];
+const SPLIT = [["Площадка и банкет",.55],["Фотограф и видео",.10],["Ведущий, музыка, звук",.10],["Декор, подарки учителям, мелочи",.10],["Резерв",.15]];
+
+/* ---------- ХРАНИЛИЩЕ ---------- */
+const LOCAL = !DB_URL;
+function lsGet(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const db = {
+  async all(){
+    if(LOCAL) return lsGet("z20db",{});
+    const r = await fetch(DB_URL.replace(/\/$/,"")+"/.json",{cache:"no-store"});
+    if(!r.ok) throw new Error("db "+r.status);
+    return (await r.json())||{};
+  },
+  async set(path,val){
+    if(LOCAL){
+      const t=lsGet("z20db",{}); const p=path.split("/"); let o=t;
+      for(let i=0;i<p.length-1;i++){o=o[p[i]]=o[p[i]]||{}}
+      if(val===null) delete o[p[p.length-1]]; else o[p[p.length-1]]=val;
+      lsSet("z20db",t); return;
+    }
+    const r = await fetch(DB_URL.replace(/\/$/,"")+"/"+path+".json",{method:"PUT",body:JSON.stringify(val)});
+    if(!r.ok) throw new Error("db "+r.status);
+  }
+};
+
+/* ---------- СОСТОЯНИЕ ---------- */
+const S = {db:{}, me:lsGet("z20me",null), tab:lsGet("z20tab","home"), filter:"all", q:"", draft:{}, open:{}, err:""};
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const fmt = n=>Math.round(n).toLocaleString("ru-RU").replace(/ /g," ");
+const cm = id=>CLASSMATES.find(c=>c.id===id);
+function nameOf(id){
+  const c=cm(id); if(c) return c.sn+" "+c.n;
+  const g=(S.db.guests||{})[id]; return g?g.n+" (гость)":"Гость";
+}
+const votesOf = pid => (S.db.votes||{})[pid]||{};
+
+/* ---------- РЕЗУЛЬТАТЫ ---------- */
+function results(p){
+  const v=votesOf(p.id), ids=Object.keys(v);
+  const by={}; p.opts.forEach(o=>by[o.id]={n:0,who:[],vals:[]});
+  ids.forEach(vid=>{
+    const x=v[vid]; const sel=Array.isArray(x.o)?x.o:[x.o];
+    sel.forEach(o=>{ if(by[o]){by[o].n++;by[o].who.push(vid);
+      if(x.v!=null&&x.v!==""&&sel.length===1) by[o].vals.push({vid,v:x.v}); }});
+  });
+  const max=Math.max(0,...Object.values(by).map(b=>b.n));
+  return {by,total:ids.length,max};
+}
+function leader(p){
+  const r=results(p); if(!r.total||!r.max) return null;
+  const o=p.opts.find(o=>r.by[o.id].n===r.max);
+  return {l:o.l,pct:Math.round(r.max/r.total*100),n:r.max,total:r.total};
+}
+function median(a){const s=[...a].sort((x,y)=>x-y);const m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2}
+
+/* ---------- ВЁРСТКА ---------- */
+const TABS=[["home","🏠","Главная"],["class","👥","Класс"],["polls","🗳️","Опросы"],["ideas","💡","Идеи"],["plan","📋","План"],["teachers","🎓","Учителя"]];
+function renderNav(){
+  $("#nav").innerHTML=TABS.map(t=>`<button data-act="tab" data-v="${t[0]}" class="${S.tab===t[0]?"on":""}"><i>${t[1]}</i>${t[2]}</button>`).join("");
+}
+function whoCard(){
+  if(S.me) return `<div class="card"><div class="row"><div>Вы: <b>${esc(nameOf(S.me))}</b></div><button class="btn ghost sm" data-act="unme">Это не я</button></div></div>`;
+  return `<div class="card"><h3>Кто вы?</h3>
+   <p class="sub">Выберите себя, чтобы голосовать и писать идеи. Одно имя — один голос.</p>
+   <select id="whoSel"><option value="">— выберите из списка —</option>
+   ${CLASSMATES.map(c=>`<option value="${c.id}">${esc(c.sn+" "+c.n)}</option>`).join("")}
+   <option value="guest">Я не из списка (гость / учитель)</option></select>
+   <div id="guestBox" class="hide" style="margin-top:8px"><input id="guestName" placeholder="Ваше имя и фамилия"></div>
+   <div style="margin-top:10px"><button class="btn" data-act="setme">Продолжить</button></div></div>`;
+}
+function dbNote(){
+  let h="";
+  if(LOCAL) h+=`<div class="note">Демо-режим: голоса сохраняются только на этом устройстве. Чтобы все видели общие результаты, подключите базу (см. README в репозитории).</div>`;
+  if(S.err) h+=`<div class="note">Нет связи с базой: ${esc(S.err)}. Попробуйте позже.</div>`;
+  return h;
+}
+
+/* --- Главная --- */
+function viewHome(){
+  const m=CLASSMATES.filter(c=>c.g==="m").length, f=CLASSMATES.length-m;
+  const attend=votesOf("attend"); const yes=Object.values(attend).filter(x=>x.o==="yes"||x.o==="likely").length;
+  const voters=new Set(); Object.values(S.db.votes||{}).forEach(v=>Object.keys(v).forEach(k=>voters.add(k)));
+  const leads=["date","days","place","budget"].map(id=>{const p=POLLS.find(p=>p.id===id);const l=leader(p);
+    return `<div class="calc-r"><span>${p.ic} ${esc(p.q)}</span><b style="text-align:right;max-width:55%">${l?esc(l.l)+` · ${l.pct}%`:"пока нет голосов"}</b></div>`}).join("");
+  return `
+  <section class="hero">
+    <div class="eyebrow">Юбилейная встреча одноклассников</div>
+    <div class="big">20</div>
+    <div class="yrs">лет выпуска</div>
+    <div class="line"></div>
+    <div class="date">25 мая 2027<small>вторник · Актау · выпуск 2007 года</small></div>
+  </section>
+  <div class="count" id="cd"></div>
+  ${S.me?"":whoCard()}
+  <div class="card">
+    <h3>Наш класс</h3>
+    <div class="grid3" style="margin-top:10px">
+      <div class="stat"><b>${CLASSMATES.length}</b><span>одноклассников</span></div>
+      <div class="stat m"><b>${m}</b><span>парней</span></div>
+      <div class="stat f"><b>${f}</b><span>девушек</span></div>
+    </div>
+    <div class="gbar"><i style="width:${m/CLASSMATES.length*100}%;background:var(--m)"></i><i style="width:${f/CLASSMATES.length*100}%;background:var(--f)"></i></div>
+    <div class="gleg"><span>Парни ${Math.round(m/CLASSMATES.length*100)}%</span><span>Девушки ${Math.round(f/CLASSMATES.length*100)}%</span></div>
+  </div>
+  <div class="card">
+    <h3>Как идёт подготовка</h3>
+    <div class="grid" style="margin:10px 0">
+      <div class="stat"><b>${voters.size}</b><span>из ${CLASSMATES.length} уже голосовали</span></div>
+      <div class="stat"><b>${yes}</b><span>скорее всего приедут</span></div>
+    </div>
+    ${leads}
+    <div style="margin-top:12px"><button class="btn" data-act="tab" data-v="polls">Проголосовать</button></div>
+  </div>
+  <div class="card">
+    <h3>Зачем всё это</h3>
+    <p class="sub" style="margin-bottom:0">Двадцать лет прошло с того дня, как мы вышли из школы. Давайте соберёмся: вспомнить, посмеяться и увидеть, кем мы стали. Выберите формат, оставьте идеи и пригласите учителей — решим всё вместе.</p>
+  </div>`;
+}
+
+/* --- Класс --- */
+function viewClass(){
+  const att=votesOf("attend");
+  const lab={yes:["Буду","yes"],likely:["Скорее да","likely"],maybe:["Не знаю","maybe"],online:["Онлайн","online"],no:["Не смогу","no"]};
+  let list=CLASSMATES.filter(c=>S.filter==="all"||c.g===S.filter)
+    .filter(c=>(c.sn+" "+c.n).toLowerCase().includes(S.q.toLowerCase()));
+  const m=CLASSMATES.filter(c=>c.g==="m").length, f=CLASSMATES.length-m;
+  return `<h2>Одноклассники</h2><p class="sub">Выпуск 2007 · ${CLASSMATES.length} человек · ${m} парней · ${f} девушек</p>
+  <input id="q" placeholder="Поиск по имени или фамилии" value="${esc(S.q)}">
+  <div class="chips">
+   <button class="chip ${S.filter==="all"?"on":""}" data-act="filter" data-v="all">Все · ${CLASSMATES.length}</button>
+   <button class="chip ${S.filter==="m"?"on":""}" data-act="filter" data-v="m">Парни · ${m}</button>
+   <button class="chip ${S.filter==="f"?"on":""}" data-act="filter" data-v="f">Девушки · ${f}</button>
+  </div>
+  <div class="card" style="padding:6px 14px">
+  ${list.length?list.map((c,i)=>{const a=att[c.id]?lab[att[c.id].o]:null;
+    return `<div class="person"><div class="av ${c.g}">${esc(c.n[0]+c.sn[0])}</div>
+     <div class="pname"><b>${esc(c.sn+" "+c.n)}</b><span>${c.g==="m"?"парень":"девушка"}</span></div>
+     ${a?`<span class="badge ${a[1]}">${a[0]}</span>`:`<span class="badge maybe">нет ответа</span>`}</div>`}).join(""):`<div class="empty">Никого не найдено</div>`}
+  </div>`;
+}
+
+/* --- Опросы --- */
+function optHTML(p,o,r,showRes,mine,dr){
+  const b=r.by[o.id], pct=r.total?Math.round(b.n/r.total*100):0;
+  const selected = dr.sel.includes(o.id);
+  return `<button class="opt ${selected?"sel":""} ${showRes&&b.n&&b.n===r.max?"lead":""}" data-act="opt" data-p="${p.id}" data-o="${o.id}">
+    ${showRes?`<span class="fill" style="width:${pct}%"></span>`:""}
+    <span class="in"><span class="lab">${esc(o.l)}</span>${showRes?`<span class="num">${b.n} · ${pct}%</span>`:""}</span></button>`;
+}
+function pollHTML(p){
+  const r=results(p), mine=S.me?votesOf(p.id)[S.me]:null;
+  const dr = S.draft[p.id] || (S.draft[p.id]={sel:mine?(Array.isArray(mine.o)?[...mine.o]:[mine.o]):[],v:mine&&mine.v!=null?mine.v:""});
+  const showRes = !!mine || S.open["r_"+p.id];
+  const custom = p.opts.find(o=>o.custom && dr.sel.includes(o.id));
+  let extra="";
+  p.opts.filter(o=>o.custom).forEach(o=>{
+    const vals=r.by[o.id].vals;
+    if(showRes&&vals.length){
+      if(o.custom==="number"){
+        const nums=vals.map(x=>Number(x.v)).filter(n=>n>0);
+        if(nums.length) extra+=`<div class="meta">Свои суммы (${nums.length}): среднее <b>${fmt(nums.reduce((a,b)=>a+b,0)/nums.length)} ₸</b>, медиана <b>${fmt(median(nums))} ₸</b><br>${vals.map(x=>`<span class="pill">${esc(nameOf(x.vid).split(" ")[0])}: ${fmt(Number(x.v))} ₸</span>`).join("")}</div>`;
+      }else extra+=`<div class="meta">Свои варианты:<br>${vals.map(x=>`<span class="pill">${esc(nameOf(x.vid).split(" ")[0])}: ${esc(x.v)}</span>`).join("")}</div>`;
+    }
+  });
+  const who = showRes && r.total ? `<details class="names"><summary>Кто как проголосовал</summary>${p.opts.filter(o=>r.by[o.id].n).map(o=>`<p><b>${esc(o.l)}</b><br>${r.by[o.id].who.map(w=>esc(nameOf(w))).join(", ")}</p>`).join("")}</details>`:"";
+  const lead=leader(p);
+  return `<details class="card poll" data-pid="${p.id}" ${S.open[p.id]?"open":""}>
+    <summary><span class="qi">${p.ic}</span><span class="qt"><b>${esc(p.q)}</b><span>${esc(p.hint)} · голосов: ${r.total}${lead?` · лидирует: ${esc(lead.l.split(" — ")[0])}`:""}</span></span><span class="chev">›</span></summary>
+    <div class="pbody">
+      ${!S.me?`<div class="note">Сначала выберите, кто вы (вверху этой страницы).</div>`:""}
+      ${p.opts.map(o=>optHTML(p,o,r,showRes,mine,dr)).join("")}
+      ${custom?`<input data-draft="${p.id}" type="${custom.custom==="number"?"number":"text"}" inputmode="${custom.custom==="number"?"numeric":"text"}" placeholder="${esc(custom.ph||"")}" value="${esc(dr.v)}">`:""}
+      <div class="row" style="margin-top:10px">
+        ${S.me?`<button class="btn" data-act="save" data-p="${p.id}">${mine?"Изменить голос":"Проголосовать"}</button>`:""}
+        ${!mine?`<button class="btn ghost sm" data-act="peek" data-p="${p.id}">${S.open["r_"+p.id]?"Скрыть результаты":"Смотреть результаты"}</button>`:""}
+      </div>
+      ${p.type==="multi"?`<div class="meta">Можно выбрать несколько вариантов.</div>`:""}
+      ${extra}${who}
+    </div></details>`;
+}
+function viewPolls(){
+  return `<h2>Опросы</h2><p class="sub">Нажмите на вопрос, выберите вариант — и сразу увидите результаты класса.</p>
+  ${dbNote()}${S.me?whoCard():whoCard()}${POLLS.map(pollHTML).join("")}`;
+}
+
+/* --- Идеи --- */
+function viewIdeas(){
+  const ideas=Object.entries(S.db.ideas||{}).map(([id,x])=>({id,...x}));
+  const likes=S.db.likes||{};
+  const cnt=id=>Object.keys(likes["i_"+id]||{}).length;
+  ideas.sort((a,b)=>cnt(b.id)-cnt(a.id)||b.ts-a.ts);
+  return `<h2>Ваши идеи</h2><p class="sub">Что бы вы хотели на встрече? Пишите свободно — самые лайкнутые поднимутся вверх.</p>
+  ${dbNote()}${whoCard()}
+  <div class="card"><textarea id="ideaTxt" placeholder="Например: поехать на Каспий, собрать видео-поздравления от тех, кто не сможет приехать, позвать нашего первого учителя…"></textarea>
+   <div style="margin-top:10px"><button class="btn" data-act="idea">Отправить идею</button></div></div>
+  <div class="card">${ideas.length?ideas.map(i=>`<div class="idea"><div>${esc(i.t).replace(/\n/g,"<br>")}</div>
+    <div class="by"><span>${esc(nameOf(i.by))} · ${new Date(i.ts).toLocaleDateString("ru-RU")}</span>
+    <button class="like ${S.me&&(likes["i_"+i.id]||{})[S.me]?"on":""}" data-act="like" data-k="i_${i.id}">👍 ${cnt(i.id)}</button></div></div>`).join(""):`<div class="empty">Пока нет идей. Будьте первым!</div>`}</div>`;
+}
+
+/* --- План --- */
+function calcHTML(){
+  const c=lsGet("z20calc",{fee:50000,n:20});
+  const total=(+c.fee||0)*(+c.n||0);
+  return `<div class="card"><h3>Калькулятор бюджета</h3>
+   <p class="sub">Подставьте взнос и число гостей — увидите, как распределить деньги.</p>
+   <div class="row"><div><label class="sub">Взнос с человека, ₸</label><input id="cFee" type="number" inputmode="numeric" value="${esc(c.fee)}"></div>
+   <div><label class="sub">Человек (с учителями и семьями)</label><input id="cN" type="number" inputmode="numeric" value="${esc(c.n)}"></div></div>
+   <div id="calcOut" style="margin-top:10px">${calcOut(total)}</div></div>`;
+}
+function calcOut(total){
+  return `<div class="calc-r"><span><b>Общий фонд</b></span><b>${fmt(total)} ₸</b></div>`+
+    SPLIT.map(s=>`<div class="calc-r"><span>${esc(s[0])} · ${Math.round(s[1]*100)}%</span><b>${fmt(total*s[1])} ₸</b></div>`).join("");
+}
+function viewPlan(){
+  const done=lsGet("z20chk",{});
+  return `<h2>План встречи</h2><p class="sub">Базовый сценарий на один день. Если класс выберет 2–3 дня — добавляем блоки ниже.</p>
+  <div class="card"><h3>25 мая 2027 · главный день</h3><div class="tl" style="margin-top:12px">
+   ${PLAN_DAY.map(p=>`<div class="it"><div class="tm">${p[0]}</div><div class="tt">${esc(p[1])}</div><div class="td">${esc(p[2])}</div></div>`).join("")}
+  </div></div>
+  <div class="card"><h3>Если выберем 2–3 дня</h3><div class="tl" style="margin-top:12px">
+   ${PLAN_EXT.map(p=>`<div class="it"><div class="tt">${esc(p[0])}</div><div class="td">${esc(p[1])}</div></div>`).join("")}
+  </div></div>
+  <div class="card"><h3>Подготовка по срокам</h3>
+   ${CHECK.map((c,i)=>`<label class="chk ${done[i]?"done":""}"><input type="checkbox" data-chk="${i}" ${done[i]?"checked":""}><span><b>${esc(c[0])}</b> — ${esc(c[1])}<small>${esc(c[2])}</small></span></label>`).join("")}
+   <div class="meta">Отметки сохраняются на вашем устройстве.</div></div>
+  ${calcHTML()}`;
+}
+
+/* --- Учителя --- */
+function viewTeachers(){
+  const T=Object.entries(S.db.teachers||{}).map(([id,x])=>({id,...x}));
+  const likes=S.db.likes||{}; const cnt=id=>Object.keys(likes["t_"+id]||{}).length;
+  T.sort((a,b)=>cnt(b.id)-cnt(a.id)||a.ts-b.ts);
+  return `<h2>Наши учителя</h2><p class="sub">Впишите тех, кого хотим видеть на встрече: классного руководителя, учителей-предметников, директора. Нажмите 👍 у тех, кого особенно ждём.</p>
+  ${dbNote()}${whoCard()}
+  <div class="card"><h3>Добавить учителя</h3>
+   <div style="margin-top:8px"><input id="tName" placeholder="ФИО учителя"></div>
+   <div style="margin-top:8px"><input id="tRole" placeholder="Предмет или роль (классный руководитель, математика…)"></div>
+   <div style="margin-top:10px"><button class="btn" data-act="teacher">Добавить</button></div></div>
+  <div class="card" style="padding:6px 14px">${T.length?T.map(t=>`<div class="person"><div class="av t">${esc((t.n||"?")[0])}</div>
+   <div class="pname"><b>${esc(t.n)}</b><span>${esc(t.r||"")}${t.r?" · ":""}добавил(а): ${esc(nameOf(t.by).split(" ")[0])}</span></div>
+   <button class="like ${S.me&&(likes["t_"+t.id]||{})[S.me]?"on":""}" data-act="like" data-k="t_${t.id}">👍 ${cnt(t.id)}</button></div>`).join(""):`<div class="empty">Список пока пуст.<br>Вспомните учителей и добавьте их выше.</div>`}</div>`;
+}
+
+/* ---------- РЕНДЕР ---------- */
+function render(){
+  const v={home:viewHome,class:viewClass,polls:viewPolls,ideas:viewIdeas,plan:viewPlan,teachers:viewTeachers}[S.tab]||viewHome;
+  $("#app").innerHTML = v()+`<div class="foot">20 лет выпуска · 25 мая 2027</div>`;
+  renderNav(); tick();
+  const ws=$("#whoSel"); if(ws) ws.onchange=()=>$("#guestBox").classList.toggle("hide",ws.value!=="guest");
+  const q=$("#q"); if(q) q.oninput=()=>{S.q=q.value;const pos=q.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(pos,pos)};
+  const cf=$("#cFee"),cn=$("#cN");
+  if(cf){const up=()=>{lsSet("z20calc",{fee:cf.value,n:cn.value});$("#calcOut").innerHTML=calcOut((+cf.value||0)*(+cn.value||0))};cf.oninput=up;cn.oninput=up}
+  document.querySelectorAll("details.poll").forEach(d=>d.addEventListener("toggle",()=>{S.open[d.dataset.pid]=d.open}));
+  document.querySelectorAll("[data-draft]").forEach(i=>i.oninput=()=>{S.draft[i.dataset.draft].v=i.value});
+}
+function tick(){
+  const el=$("#cd"); if(!el) return;
+  let d=EVENT-new Date(); if(d<0) d=0;
+  const D=Math.floor(d/864e5),H=Math.floor(d/36e5)%24,M=Math.floor(d/6e4)%60,Sx=Math.floor(d/1e3)%60;
+  el.innerHTML=[[D,"дней"],[H,"часов"],[M,"минут"],[Sx,"секунд"]].map(x=>`<div><b>${String(x[0]).padStart(2,"0")}</b><span>${x[1]}</span></div>`).join("");
+}
+setInterval(tick,1000);
+
+/* ---------- ДЕЙСТВИЯ ---------- */
+async function refresh(){
+  try{ S.db=await db.all(); S.err=""; }catch(e){ S.err=String(e.message||e); }
+}
+async function act(a,el){
+  if(a==="tab"){S.tab=el.dataset.v;lsSet("z20tab",S.tab);render();window.scrollTo(0,0);return}
+  if(a==="filter"){S.filter=el.dataset.v;render();return}
+  if(a==="unme"){S.me=null;lsSet("z20me",null);S.draft={};render();return}
+  if(a==="setme"){
+    const v=$("#whoSel").value; if(!v) return alert("Выберите себя из списка");
+    if(v==="guest"){
+      const n=$("#guestName").value.trim(); if(!n) return alert("Введите имя");
+      const id="g_"+uid(); await db.set("guests/"+id,{n}); S.me=id;
+    }else S.me=v;
+    lsSet("z20me",S.me); S.draft={}; await refresh(); render(); return;
+  }
+  if(a==="opt"){
+    const p=POLLS.find(p=>p.id===el.dataset.p), o=el.dataset.o;
+    if(!S.me){window.scrollTo({top:0,behavior:"smooth"});return}
+    const dr=S.draft[p.id]||(S.draft[p.id]={sel:[],v:""});
+    if(p.type==="multi") dr.sel=dr.sel.includes(o)?dr.sel.filter(x=>x!==o):[...dr.sel,o]; else dr.sel=[o];
+    S.open[p.id]=true; render(); return;
+  }
+  if(a==="peek"){S.open["r_"+el.dataset.p]=!S.open["r_"+el.dataset.p];S.open[el.dataset.p]=true;render();return}
+  if(a==="save"){
+    const p=POLLS.find(p=>p.id===el.dataset.p), dr=S.draft[p.id];
+    if(!dr||!dr.sel.length) return alert("Выберите вариант");
+    const co=p.opts.find(o=>o.custom&&dr.sel.includes(o.id));
+    if(co&&!String(dr.v).trim()) return alert("Впишите свой вариант");
+    if(co&&co.custom==="number"&&!(Number(dr.v)>0)) return alert("Введите сумму числом");
+    const val={o:p.type==="multi"?dr.sel:dr.sel[0],t:Date.now()};
+    if(co&&p.type==="single") val.v=co.custom==="number"?Number(dr.v):String(dr.v).trim();
+    try{ await db.set(`votes/${p.id}/${S.me}`,val); S.open[p.id]=true; await refresh(); S.err=""; }
+    catch(e){ S.err=String(e.message||e); }
+    render(); return;
+  }
+  if(a==="idea"){
+    if(!S.me) return alert("Сначала выберите, кто вы");
+    const t=$("#ideaTxt").value.trim(); if(!t) return;
+    await db.set("ideas/"+uid(),{t,by:S.me,ts:Date.now()}); await refresh(); render(); return;
+  }
+  if(a==="teacher"){
+    if(!S.me) return alert("Сначала выберите, кто вы");
+    const n=$("#tName").value.trim(); if(!n) return alert("Введите ФИО");
+    await db.set("teachers/"+uid(),{n,r:$("#tRole").value.trim(),by:S.me,ts:Date.now()}); await refresh(); render(); return;
+  }
+  if(a==="like"){
+    if(!S.me) return alert("Сначала выберите, кто вы");
+    const k=el.dataset.k, on=((S.db.likes||{})[k]||{})[S.me];
+    await db.set(`likes/${k}/${S.me}`,on?null:true); await refresh(); render(); return;
+  }
+}
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-act]"); if(!el) return;
+  e.preventDefault(); act(el.dataset.act,el).catch(err=>{S.err=String(err.message||err);render()});
+});
+document.addEventListener("change",e=>{
+  const c=e.target.closest("[data-chk]"); if(!c) return;
+  const d=lsGet("z20chk",{}); d[c.dataset.chk]=c.checked; lsSet("z20chk",d);
+  c.closest(".chk").classList.toggle("done",c.checked);
+});
+function idle(){const a=document.activeElement;return !(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))}
+setInterval(async()=>{ if(document.hidden||!idle()||LOCAL) return; await refresh(); render(); },25000);
+
+/* ---------- ФОН: мягкие золотые искры ---------- */
+(function(){
+  const c=$("#fx"), x=c.getContext("2d"); let W,H,P=[];
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  function size(){W=c.width=innerWidth;H=c.height=innerHeight;P=Array.from({length:Math.min(46,Math.floor(W*H/22000))},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.4,s:Math.random()*.25+.05,a:Math.random()*6.28}))}
+  size(); addEventListener("resize",size);
+  (function loop(){
+    x.clearRect(0,0,W,H);
+    P.forEach(p=>{p.y-=p.s;p.a+=.02;if(p.y<-4){p.y=H+4;p.x=Math.random()*W}
+      x.globalAlpha=.25+.35*Math.abs(Math.sin(p.a));x.fillStyle="#ffd98a";x.beginPath();x.arc(p.x,p.y,p.r,0,6.28);x.fill()});
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ---------- СТАРТ ---------- */
+render();
+refresh().then(render);
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>

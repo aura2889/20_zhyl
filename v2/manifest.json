@@ -1,0 +1,16 @@
+{
+  "name": "20 лет выпуска · 25 мая 2027",
+  "short_name": "20 лет",
+  "description": "Встреча одноклассников к 20-летию выпуска — 25 мая 2027, Актау",
+  "lang": "ru",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080c26",
+  "theme_color": "#0b1030",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
