@@ -367,7 +367,7 @@ function setPath(t,path,val){
 function getPath(t,path){ return path.split("/").reduce((o,k)=>o==null?undefined:o[k],t); }
 const same=(a,b)=>JSON.stringify(a===undefined?null:a)===JSON.stringify(b===undefined?null:b);
 function logW(path,val){
-  const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<6e5); w.push({path,val,t:Date.now()}); lsSet("z20w",w.slice(-40));
+  const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<864e5); w.push({path,val,t:Date.now()}); lsSet("z20w",w.slice(-80));
 }
 let chain=Promise.resolve();
 const db = {
@@ -404,7 +404,7 @@ const db = {
 // если чужая запись одновременно затёрла нашу — досылаем свои недавние изменения
 async function reconcile(){
   if(MODE!=="blob") return;
-  const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<6e5); let fixed=false;
+  const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<864e5); let fixed=false;
   for(const x of w){
     const cur=getPath(S.db,x.path);
     if(x.val===null ? cur!=null : cur==null){ await db.set(x.path,x.val,true); fixed=true; }
@@ -460,6 +460,32 @@ function whoCard(){
    <option value="guest">${K("Мен тізімде жоқпын (қонақ / ұстаз)","Я не из списка (гость / учитель)")}</option></select>
    <div id="guestBox" class="hide" style="margin-top:8px"><input id="guestName" placeholder="${K("Аты-жөніңіз","Ваше имя и фамилия")}"></div>
    <div style="margin-top:10px"><button class="btn" data-act="setme">${K("Жалғастыру","Продолжить")}</button></div></div>`;
+}
+async function runDiag(){
+  const L=[], ok=(b,t)=>L.push((b?"✓ ":"✗ ")+t);
+  const nm=MODE==="blob"?"jsonblob":MODE==="fb"?"Firebase":K("жергілікті","локальная");
+  L.push(K("Дерекқор: ","База: ")+nm);
+  if(MODE==="local"){ L.push(K("Ортақ база қосылмаған — дауыстар тек осы телефонда.","Общая база не подключена — голоса только на этом телефоне.")); return L.join("\n"); }
+  try{
+    if(MODE==="fb"){
+      const d=await db.all(); ok(true,K("Оқу: сәтті","Чтение: успешно"));
+      await db.set("_ping",Date.now(),true); ok(true,K("Жазу: сәтті","Запись: успешно"));
+    }else{
+      const g=await fetch(JB+BLOB_ID,{headers:JH,cache:"no-store"});
+      ok(g.ok,`${K("Оқу","Чтение")} (GET): HTTP ${g.status}`);
+      if(g.ok){
+        const cur=await g.json(); const isObj=cur&&typeof cur==="object"&&!Array.isArray(cur);
+        ok(isObj,K("Құжат пішімі: ","Формат документа: ")+(isObj?"OK":(Array.isArray(cur)?"массив":typeof cur)));
+        if(isObj){
+          const t=Date.now(); const pr=await fetch(JB+BLOB_ID,{method:"PUT",headers:JH,body:JSON.stringify({...cur,_ping:t})});
+          ok(pr.ok,`${K("Жазу","Запись")} (PUT): HTTP ${pr.status}`);
+          if(pr.ok){ const d2=await (await fetch(JB+BLOB_ID,{headers:JH,cache:"no-store"})).json(); ok(d2&&d2._ping===t,K("Жазылғанды қайта оқу","Повторное чтение записанного")); }
+        }
+      }
+    }
+  }catch(e){ ok(false,`${e.message||e} — ${K("интернет жоқ немесе браузер блоктады (CORS)","нет интернета или запрос заблокирован браузером (CORS)")}`); }
+  L.push(L.some(x=>x.startsWith("✗"))?K("Қорытынды: дерекқор жұмыс істемей тұр. Осы мәтіннің скриншотын жіберіңіз.","Итог: база не работает. Отправьте скриншот этого текста."):K("Қорытынды: дерекқор жұмыс істейді.","Итог: база работает."));
+  return L.join("\n");
 }
 function dbNote(){
   let h="";
@@ -572,7 +598,8 @@ function pollHTML(p){
   return `<details class="card poll" data-pid="${p.id}" ${S.open[p.id]?"open":""}>
     <summary><span class="qi">${p.ic}</span><span class="qt"><b>${esc(P(p.q))}</b><span>${esc(P(p.hint))} · ${K("дауыс","голосов")}: ${r.total}${lead?` · ${K("көш бастап тұр","лидирует")}: ${esc(lead.l.split(" — ")[0])}`:""}</span></span><span class="chev">›</span></summary>
     <div class="pbody">
-      ${!S.me?`<div class="note">${K("Алдымен кім екеніңізді таңдаңыз (осы беттің жоғарғы жағында).","Сначала выберите, кто вы (вверху этой страницы).")}</div>`:""}
+      ${!S.me?`<div class="note"><b>${K("Алдымен өзіңізді таңдаңыз:","Сначала выберите себя:")}</b>
+        <select data-whoin style="margin-top:8px"><option value="">${K("— тізімнен таңдаңыз —","— выберите из списка —")}</option>${CLASSMATES.map(c=>`<option value="${c.id}">${esc(c.sn+" "+c.n)}</option>`).join("")}</select></div>`:""}
       ${p.opts.map(o=>optHTML(p,o,r,showRes,dr)).join("")}
       ${custom?`<input data-draft="${p.id}" type="${custom.custom==="number"?"number":"text"}" inputmode="${custom.custom==="number"?"numeric":"text"}" placeholder="${esc(P(custom.ph||["",""]))}" value="${esc(dr.v)}">`:""}
       <div class="row" style="margin-top:10px">
@@ -580,12 +607,15 @@ function pollHTML(p){
         ${!mine?`<button class="btn ghost sm" data-act="peek" data-p="${p.id}">${S.open["r_"+p.id]?K("Нәтижені жасыру","Скрыть результаты"):K("Нәтижені көру","Смотреть результаты")}</button>`:""}
       </div>
       ${p.type==="multi"?`<div class="meta">${K("Бірнеше нұсқа таңдауға болады.","Можно выбрать несколько вариантов.")}</div>`:""}
+      ${S.err?dbNote():""}
       ${extra}${who}
     </div></details>`;
 }
 function viewPolls(){
   return `<h2>${K("Сауалнамалар","Опросы")}</h2><p class="sub">${K("Сұрақты басыңыз, нұсқаны таңдаңыз — сыныптың нәтижесін бірден көресіз.","Нажмите на вопрос, выберите вариант — и сразу увидите результаты класса.")}</p>
-  ${dbNote()}${whoCard()}${POLLS.map(pollHTML).join("")}`;
+  ${dbNote()}${whoCard()}
+  ${LOCAL?"":`<div class="row" style="margin:6px 0 10px"><button class="btn ghost sm" data-act="diag">🔧 ${K("Базаны тексеру","Проверить базу")}</button></div>${S.diag?`<div class="note" style="white-space:pre-line">${esc(S.diag)}</div>`:""}`}
+  ${POLLS.map(pollHTML).join("")}`;
 }
 
 /* --- Универсальный список с лайками (идеи, вопросы квиза, песни) --- */
@@ -777,6 +807,7 @@ async function act(a,el){
     if(!LOCAL) refresh().then(()=>{ if(S.tab===el.dataset.v&&idle()) render(); });   // подтянуть свежие ответы других при входе на вкладку
     return}
   if(a==="lang"){setLang(el.dataset.v);return}
+  if(a==="diag"){ S.diag=K("Тексеріліп жатыр…","Проверяю…"); render(); S.diag=await runDiag(); render(); return }
   if(a==="trk"){trackClick(+el.dataset.i);return}
   if(a==="filter"){S.filter=el.dataset.v;render();return}
   if(a==="who"){
@@ -811,7 +842,7 @@ async function act(a,el){
     const val={o:p.type==="multi"?dr.sel:dr.sel[0],t:Date.now()};
     if(co&&p.type==="single") val.v=co.custom==="number"?Number(dr.v):String(dr.v).trim();
     try{ await db.set(`votes/${p.id}/${S.me}`,val); S.open[p.id]=true; await refresh(); S.err=""; }
-    catch(e){ S.err=String(e.message||e); }
+    catch(e){ S.err=String(e.message||e); S.open[p.id]=true; setPath(S.db,`votes/${p.id}/${S.me}`,val); }   // показываем голос у себя, досылаем при следующей связи
     render(); return;
   }
   if(a==="idea"){
@@ -840,6 +871,8 @@ document.addEventListener("click",e=>{
   e.preventDefault(); act(el.dataset.act,el).catch(err=>{S.err=String(err.message||err);render()});
 });
 document.addEventListener("change",e=>{
+  const w=e.target.closest("[data-whoin]");
+  if(w){ if(w.value){ S.me=w.value; lsSet("z20me",S.me); S.draft={}; render(); } return; }
   const c=e.target.closest("[data-chk]"); if(!c) return;
   const d=lsGet("z20chk",{}); d[c.dataset.chk]=c.checked; lsSet("z20chk",d);
   c.closest(".chk").classList.toggle("done",c.checked);
