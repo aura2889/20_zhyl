@@ -777,7 +777,9 @@ async function refresh(){
   try{ S.db=await db.all(); await reconcile(); S.err=""; }catch(e){ S.err=String(e.message||e); }
 }
 async function act(a,el){
-  if(a==="tab"){S.tab=el.dataset.v;S.cnote=false;lsSet("z20tab",S.tab);render();window.scrollTo(0,0);return}
+  if(a==="tab"){S.tab=el.dataset.v;S.cnote=false;lsSet("z20tab",S.tab);render();window.scrollTo(0,0);
+    if(!LOCAL) refresh().then(()=>{ if(S.tab===el.dataset.v&&idle()) render(); });   // подтянуть свежие ответы других при входе на вкладку
+    return}
   if(a==="lang"){setLang(el.dataset.v);return}
   if(a==="trk"){trackClick(+el.dataset.i);return}
   if(a==="filter"){S.filter=el.dataset.v;render();return}
@@ -790,6 +792,7 @@ async function act(a,el){
   if(a==="att"){
     if(!S.me) return;
     await db.set(`votes/attend/${S.me}`,{o:el.dataset.o,t:Date.now()});
+    delete S.draft.attend;                                           // опрос «Келесіз бе?» должен показать новый ответ, а не старый черновик
     S.open.att=false; await refresh(); render(); return;
   }
   if(a==="unme"){S.me=null;lsSet("z20me",null);S.draft={};render();return}
