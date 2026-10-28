@@ -2,280 +2,855 @@
 <html lang="kk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Түлектерге 20 жыл · 2027 жылғы 25 мамыр</title>
+<meta name="theme-color" content="#0b1030">
+<meta name="description" content="Сыныптастардың 20 жылдық мерейтойлық кездесуі — 2027 жылғы 25 мамыр, Ақтау">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="20 жыл">
 <style>
-:root{--gold:#f2c46d;--gold2:#ffe3a3;--ink:#f6f1e6;--mut:#b9c3d6;--card:rgba(10,20,42,.62);--line:rgba(242,196,109,.28)}
-*{box-sizing:border-box}
-html,body{margin:0}
-body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);min-height:100vh;
-background:
-radial-gradient(900px 500px at 15% 8%,rgba(242,196,109,.22),transparent 60%),
-radial-gradient(800px 600px at 90% 20%,rgba(46,160,170,.28),transparent 60%),
-radial-gradient(700px 500px at 50% 100%,rgba(242,196,109,.14),transparent 60%),
-linear-gradient(160deg,#0a1530,#0d2a4a 55%,#0a1a30) fixed;
-padding-bottom:40px}
-body::before{content:"20";position:fixed;right:-2vw;bottom:-6vw;font-size:46vw;font-weight:700;color:rgba(242,196,109,.05);line-height:1;pointer-events:none;z-index:0}
-.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 16px}
-header{text-align:center;padding:44px 8px 18px}
-.big{font-size:clamp(64px,18vw,128px);line-height:.9;margin:0;font-weight:700;background:linear-gradient(180deg,var(--gold2),var(--gold) 60%,#c58f2e);-webkit-background-clip:text;background-clip:text;color:transparent}
-h1{margin:6px 0 4px;font-size:clamp(22px,5.5vw,34px);letter-spacing:.06em;text-transform:uppercase;font-weight:400}
-.date{color:var(--gold2);font-size:clamp(18px,4.5vw,24px)}
-.place{color:var(--mut);margin-top:4px;font-style:italic}
-nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:8px 0 14px;background:linear-gradient(#0a1530ee,#0a153000)}
-nav button{flex:0 0 auto;font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer}
-nav button.on{background:var(--gold);color:#1a1a1a;font-weight:700;border-color:var(--gold)}
-section{display:none}section.on{display:block}
-.card{background:var(--card);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
-h2{margin:0 0 10px;font-size:22px;color:var(--gold2);font-weight:400}
-.cd{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.cd div{min-width:78px;text-align:center;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:14px;padding:12px 6px}
-.cd b{display:block;font-size:30px;color:var(--gold)}.cd span{font-size:12px;color:var(--mut)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
-.n{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center}
-.n i{font-style:normal;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:13px;flex:0 0 auto;color:#10203a;background:var(--gold)}
-.n.f i{background:#f4a9c0}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.stats div{flex:1;min-width:90px;text-align:center;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:14px;padding:10px}
-.stats b{font-size:28px;color:var(--gold);display:block}
-.stats span{font-size:13px;color:var(--mut)}
-ol.t{list-style:none;padding:0;margin:0;border-left:2px solid var(--gold);margin-left:6px}
-ol.t li{padding:0 0 14px 16px;position:relative}
-ol.t li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--gold)}
-ol.t b{color:var(--gold2)}
-ul.p{margin:0;padding-left:20px}ul.p li{margin:6px 0}
-.q{font-size:18px;margin:0 0 10px}
-.opt{display:block;position:relative;margin:7px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:rgba(255,255,255,.05)}
-.opt .bar{position:absolute;inset:0 auto 0 0;background:rgba(242,196,109,.28);width:0;transition:width .5s}
-.opt .row{position:relative;display:flex;gap:10px;align-items:center;padding:10px 12px}
-.opt .row em{margin-left:auto;font-style:normal;color:var(--gold2);white-space:nowrap;font-size:14px}
-.opt input{accent-color:var(--gold);width:18px;height:18px}
-input[type=text],textarea,select{width:100%;font:inherit;color:var(--ink);background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:10px;padding:10px;margin:6px 0}
-select option{color:#111}
+:root{
+  --bg1:#080c26; --bg2:#141a4a; --bg3:#2a1650;
+  --gold:#f5c76a; --gold2:#ffe6a8; --goldd:#c8963a;
+  --text:#f6f3ec; --muted:#b9bddb;
+  --card:rgba(18,24,66,.72); --card2:rgba(255,255,255,.07);
+  --line:rgba(245,199,106,.28);
+  --ok:#6ee7a8; --warn:#ffd166; --bad:#ff8a8a;
+  --m:#6aa8ff; --f:#ff8fc2;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  min-height:100vh;color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.45;
+  background:
+    radial-gradient(900px 600px at 85% -10%, rgba(255,190,90,.22), transparent 60%),
+    radial-gradient(700px 600px at -10% 20%, rgba(120,90,255,.28), transparent 60%),
+    radial-gradient(800px 700px at 50% 120%, rgba(255,120,170,.18), transparent 60%),
+    linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 55%,var(--bg3) 100%);
+  background-attachment:fixed;
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
+}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:12px 16px 8px}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;margin:0;font-weight:700}
+h2{font-size:24px;color:var(--gold2);margin:6px 0 4px}
+h3{font-size:18px;color:var(--gold2)}
+p{margin:.4em 0}
+.sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+
+/* TOP BAR: музыка, язык, вкладки */
+.top{position:sticky;top:0;z-index:5;background:rgba(8,12,38,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.top .in{max-width:720px;margin:0 auto;padding:6px 8px 4px}
+.bar1{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.mbtn{border:1px solid var(--gold);background:rgba(245,199,106,.12);color:var(--gold2);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.lang{display:flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;flex:0 0 auto}
+.lang button{background:none;border:0;color:var(--muted);padding:7px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;cursor:pointer}
+.lang button.on{background:linear-gradient(180deg,#ffe3a0,#e1a843);color:#2a1a00}
+.player{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:6px 10px 4px;margin-bottom:4px}
+.pt{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ptitle{font-size:13px;font-weight:600;color:var(--gold2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc{flex:0 0 auto;white-space:nowrap}
+.pc button{background:none;border:0;color:var(--gold2);font-size:18px;padding:2px 7px;cursor:pointer}
+.ps{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ps input[type=range]{flex:1;min-width:0;width:auto;padding:0;border:0;background:none;accent-color:#e1a843;height:26px;margin:0;box-shadow:none}
+nav{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+nav button{background:none;border:0;color:var(--muted);padding:4px 0 3px;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;border-radius:10px;min-width:0}
+nav button i{font-style:normal;font-size:19px;filter:grayscale(.6)}
+nav button span{max-width:100%;overflow:hidden;white-space:nowrap}
+nav button.on{color:var(--gold2);background:rgba(245,199,106,.12)}
+nav button.on i{filter:none}
+
+/* HERO */
+.hero{text-align:center;padding:18px 8px 10px}
+.eyebrow{letter-spacing:.28em;font-size:12px;color:var(--gold);text-transform:uppercase}
+.big{
+  font-family:Georgia,"Times New Roman",serif;font-weight:700;line-height:.9;
+  font-size:clamp(120px,36vw,200px);margin:8px 0 0;
+  background:linear-gradient(180deg,#fff6d6 0%,#f5c76a 45%,#b9812a 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 30px rgba(245,199,106,.35));
+}
+.yrs{font-family:Georgia,serif;font-size:clamp(24px,7vw,40px);letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);margin-top:-6px}
+.line{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto;width:80%}
+.date{font-family:Georgia,serif;font-size:clamp(24px,7vw,34px);color:#fff}
+.date small{display:block;font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);letter-spacing:.06em;margin-top:2px}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 6px}
+.count div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 4px;text-align:center}
+.count b{display:block;font-family:Georgia,serif;font-size:28px;color:var(--gold2);font-variant-numeric:tabular-nums}
+.count span{font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--card2);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:12px;text-align:center}
+.stat b{display:block;font-family:Georgia,serif;font-size:30px;color:var(--gold2)}
+.stat span{font-size:12px;color:var(--muted)}
+.stat.m b{color:var(--m)} .stat.f b{color:var(--f)}
+.gbar{display:flex;height:12px;border-radius:99px;overflow:hidden;margin:12px 0 4px;background:#0003}
+.gbar i{display:block;height:100%}
+.gleg{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+
+/* FORMS */
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{
+  width:100%;background:rgba(5,8,30,.65);border:1px solid rgba(245,199,106,.35);border-radius:12px;padding:12px;outline:none
+}
+input::placeholder,textarea::placeholder{color:#8f94bd}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,199,106,.18)}
+select option{background:#141a4a;color:#fff}
 textarea{min-height:90px;resize:vertical}
-.btn{font:inherit;background:var(--gold);color:#1a1a1a;font-weight:700;border:0;border-radius:12px;padding:11px 20px;cursor:pointer;margin-top:6px}
-.small{font-size:13px;color:var(--mut)}
-.oth{font-size:13px;color:var(--mut);margin:4px 2px}
-.idea{border-top:1px solid var(--line);padding:10px 0}.idea:first-child{border:0}
-.warn{background:rgba(242,196,109,.12);border:1px dashed var(--gold);border-radius:12px;padding:10px;font-size:13px;margin-bottom:12px}
-#cf{position:fixed;inset:0;pointer-events:none;z-index:0}
-.mbtn{font:inherit;margin-top:12px;background:rgba(255,255,255,.08);color:var(--gold2);border:1px solid var(--gold);border-radius:999px;padding:9px 18px;cursor:pointer}
-.btn.del{background:transparent;color:var(--mut);border:1px solid var(--line);margin-left:6px}
-.att{text-align:center;margin-top:12px;color:var(--gold2)}
+.btn{
+  display:inline-block;border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer;
+  background:linear-gradient(180deg,#ffe3a0,#e1a843);color:#2a1a00;
+}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--gold2);border:1px solid var(--line)}
+.btn.sm{padding:8px 12px;font-size:14px}
+.btn[disabled]{opacity:.5}
+.row{display:flex;gap:8px;align-items:center}
+.row>*{flex:1}
+.row>.btn{flex:0 0 auto}
+
+/* CHIPS */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+.chip{border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:99px;padding:8px 14px;font-size:14px;cursor:pointer}
+.chip.on{background:linear-gradient(180deg,#ffe3a0,#e1a843);color:#2a1a00;font-weight:700;border-color:transparent}
+
+/* PEOPLE */
+.person{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
+.person:last-child{border-bottom:0}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:15px;color:#0b1030;flex:0 0 auto}
+.av.m{background:linear-gradient(135deg,#bcd7ff,#6aa8ff)}
+.av.f{background:linear-gradient(135deg,#ffd0e6,#ff8fc2)}
+.av.t{background:linear-gradient(135deg,#ffe9b0,#f5c76a)}
+.pname{flex:1;min-width:0}
+.pname b{display:block;font-weight:600;overflow-wrap:anywhere}
+.pname span{font-size:12px;color:var(--muted)}
+.badge{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.2);white-space:nowrap}
+.badge.yes{color:var(--ok);border-color:#6ee7a866}
+.badge.likely{color:var(--warn);border-color:#ffd16666}
+.badge.maybe{color:var(--muted)}
+.badge.no{color:var(--bad);border-color:#ff8a8a66}
+.badge.online{color:var(--m);border-color:#6aa8ff66}
+
+/* POLLS */
+.poll{padding:0;overflow:hidden}
+.poll>summary{list-style:none;cursor:pointer;padding:16px;display:flex;gap:12px;align-items:flex-start}
+.poll>summary::-webkit-details-marker{display:none}
+.poll .qi{font-size:26px}
+.poll .qt{flex:1}
+.poll .qt b{display:block;font-size:17px;line-height:1.3}
+.poll .qt span{font-size:13px;color:var(--muted)}
+.poll .chev{color:var(--gold);transition:transform .2s;font-size:18px;margin-top:2px}
+.poll[open] .chev{transform:rotate(90deg)}
+.pbody{padding:0 16px 16px}
+.opt{position:relative;display:block;width:100%;text-align:left;margin:8px 0;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(5,8,30,.55);padding:12px 14px;overflow:hidden;cursor:pointer}
+.opt .fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,rgba(245,199,106,.38),rgba(245,199,106,.18));width:0;transition:width .5s}
+.opt .in{position:relative;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.opt .lab{flex:1;overflow-wrap:anywhere}
+.opt .num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--gold2);white-space:nowrap}
+.opt.sel{border-color:var(--gold);box-shadow:0 0 0 2px rgba(245,199,106,.25)}
+.opt.sel .lab::before{content:"✓ ";color:var(--gold)}
+.opt.lead{border-color:rgba(245,199,106,.7)}
+.meta{font-size:13px;color:var(--muted);margin:8px 0}
+.names{font-size:13px;color:var(--muted);margin:6px 0 2px}
+.names summary{cursor:pointer;color:var(--gold)}
+.note{font-size:13px;color:var(--warn);background:rgba(255,209,102,.1);border:1px solid rgba(255,209,102,.3);border-radius:12px;padding:10px 12px;margin:10px 0}
+.pill{display:inline-block;background:var(--card2);border:1px solid rgba(255,255,255,.15);border-radius:99px;padding:3px 10px;margin:3px 4px 0 0;font-size:13px}
+
+/* IDEAS */
+.idea{border-bottom:1px solid rgba(255,255,255,.08);padding:12px 0}
+.idea:last-child{border-bottom:0}
+.idea .by{font-size:12px;color:var(--muted);margin-top:4px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.like{border:1px solid var(--line);background:var(--card2);border-radius:99px;padding:5px 12px;cursor:pointer;font-size:14px}
+.like.on{background:rgba(245,199,106,.25);border-color:var(--gold)}
+
+/* AFISHA */
+.poster{position:relative;border:2px solid var(--gold);border-radius:20px;padding:22px 16px 16px;margin:14px 0;background:linear-gradient(160deg,rgba(245,199,106,.18),rgba(18,24,66,.82) 55%);text-align:center;overflow:hidden}
+.poster::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);border-radius:15px;pointer-events:none}
+.poster .tag{letter-spacing:.3em;font-size:11px;color:var(--gold);text-transform:uppercase}
+.poster .ph{font-family:Georgia,serif;font-weight:700;font-size:clamp(40px,12vw,58px);line-height:1;margin:8px 0 4px;background:linear-gradient(180deg,#fff6d6,#f5c76a 55%,#b9812a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.poster .pn{font-size:18px;color:#fff;font-family:Georgia,serif;margin:2px 0 6px}
+.poster p{color:var(--text);font-size:14.5px;text-align:left}
+.resp{display:inline-flex;gap:10px;align-items:center;background:rgba(5,8,30,.55);border:1px solid var(--gold);border-radius:99px;padding:6px 16px 6px 6px;margin:8px 0}
+.resp .av{width:36px;height:36px;font-size:13px}
+.resp small{display:block;font-size:11px;color:var(--muted);text-align:left}
+.resp b{font-size:15px;display:block;text-align:left}
+.gtr{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.gtr .g{display:flex;align-items:center;gap:8px;background:rgba(5,8,30,.55);border:1px solid var(--line);border-radius:99px;padding:5px 14px 5px 5px;font-size:14px}
+.gtr .g .av{width:30px;height:30px;font-size:12px}
+.poster .sect{text-align:left;margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.poster .sect h4{margin:0 0 8px;font-size:15px;color:var(--gold2)}
+
+/* PLAN */
+.tl{position:relative;margin:6px 0 0 6px;padding-left:20px;border-left:2px solid var(--line)}
+.tl .it{position:relative;padding:0 0 16px}
+.tl .it::before{content:"";position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(245,199,106,.2)}
+.tl .tm{font-weight:700;color:var(--gold2);font-variant-numeric:tabular-nums}
+.tl .tt{font-weight:600}
+.tl .td{font-size:14px;color:var(--muted)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer}
+.chk input{width:22px;height:22px;flex:0 0 auto;margin-top:1px;accent-color:#e1a843;padding:0}
+.chk.done span{text-decoration:line-through;opacity:.55}
+.chk small{display:block;color:var(--muted)}
+.calc-r{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed rgba(255,255,255,.12)}
+.calc-r:last-child{border:0}
+.calc-r b{font-variant-numeric:tabular-nums;color:var(--gold2);text-align:right}
+.empty{color:var(--muted);text-align:center;padding:14px 0}
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:18px 0 4px}
+.hide{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<canvas id="cf"></canvas>
-<div class="wrap">
-<header>
-  <p class="big">20</p>
-  <h1>жыл түлектер</h1>
-  <div class="date">2027 жылғы 25 мамыр</div>
-  <div class="place">Сыныптастар кездесуі · Ақтау</div>
-  <button class="mbtn" id="mbtn">🎵 Музыканы қосу</button>
-  <audio id="au" src="song.mp3" loop preload="none"></audio>
-</header>
-<nav id="nav"></nav>
-
-<section id="home" class="on">
-  <div class="card"><h2>Кездесуге дейін қалды</h2><div class="cd" id="cd"></div><div class="att" id="att"></div></div>
-  <div class="card"><h2>Сәлем, сыныптастар!</h2>
-  <p>20 жыл өтті. Бәріміз қайта жиналып, мектеп жылдарын еске алайық және ұстаздарымызды шақырайық. «Сауалнамалар» бөліміне кіріп, күнді қалай өткізетінімізді таңдаңдар, ал «Идеялар» бөлімінде өз ұсыныстарыңды жазыңдар.</p></div>
-</section>
-
-<section id="cls">
-  <div class="card"><h2>Сыныптастар</h2>
-  <div class="stats"><div><b id="sAll"></b><span>барлығы</span></div><div><b id="sM"></b><span>ұл</span></div><div><b id="sF"></b><span>қыз</span></div></div>
-  <div class="grid" id="list"></div></div>
-</section>
-
-<section id="teach">
-  <div class="card"><h2>Біздің ұстаздар</h2>
-  <p class="small">Бізді оқытқан барлық ұстаздарымызды шақырамыз. Тізімді толықтыруға болады: аттары index.html файлындағы TEACHERS тізімінде өзгертіледі.</p>
-  <div class="grid" id="tl"></div></div>
-</section>
-
-<section id="plan">
-  <div class="card"><h2>Кездесу жоспары</h2>
-  <ol class="t">
-    <li><b>15:00 · Қонақтарды қарсы алу.</b> «Сол кез және қазір» фотоаймағы, есімі мен мектептегі лақап аты жазылған бейджиктер.</li>
-    <li><b>16:00 · Ұстаздармен кездесу.</b> Гүл, алғыс сөздер, сыныптың ортақ суреті.</li>
-    <li><b>17:00 · Банкет.</b> Тост, келе алмағандардан бейнеқұттықтаулар.</li>
-    <li><b>19:00 · «Есіңде ме?» викториналары.</b> Мектеп туралы сұрақтар, 2000-жылдардағы әндер, экрандағы ескі суреттер.</li>
-    <li><b>20:30 · Уақыт капсуласы.</b> Әрқайсысы өзіне және сыныпқа хат жазады, 10 жылдан кейін ашамыз.</li>
-    <li><b>21:30 · Би және теңіз жағасындағы кеш.</b> Біздің түлектер плейлисі, еркін араласу.</li>
-  </ol></div>
-  <div class="card"><h2>Тағы не қосуға болады</h2>
-  <ul class="p">
-    <li>Мектеп суреттерінен слайд-шоу: бәрінен суреттерді алдын ала жіберуін сұраймыз</li>
-    <li>«20 жылда қалай өзгердік» атты ортақ бейнеролик</li>
-    <li>Әзіл номинациялар: «Ең уақытылы», «Сыныптың жаны»</li>
-    <li>Мектепке естелік сыйлық немесе қайырымдылық жарна</li>
-    <li>Кеш бойы фотограф пен бейнеоператор</li>
-    <li>Кездесуден кейін суреттер салатын ортақ чат пен фотоальбом</li>
-    <li>Әрқайсысына сый: сынып суреті түсірілген кружка немесе магнит</li>
-  </ul></div>
-</section>
-
-<section id="polls"><div id="vbox" class="card"></div><div id="pl"></div>
-  <div class="card"><h2>Жаңа сауалнама құру</h2>
-  <input type="text" id="nq" placeholder="Сұрақ, мысалы: Қай айда кездесеміз?">
-  <textarea id="no" placeholder="Нұсқалар: әр жолға біреуден"></textarea>
-  <label class="small"><input type="checkbox" id="nm"> Бірнеше нұсқа таңдауға болады</label><br>
-  <label class="small"><input type="checkbox" id="nt"> «Өз нұсқасы» жолын қосу</label><br>
-  <button class="btn" onclick="createPoll()">Сауалнама қосу</button></div></section>
-
-<section id="ideas">
-  <div class="card"><h2>Сіздің идеяларыңыз</h2>
-  <select id="iname"></select>
-  <textarea id="itext" placeholder="Өз идеяңызды немесе тілегіңізді жазыңыз…"></textarea>
-  <button class="btn" onclick="addIdea()">Жіберу</button></div>
-  <div class="card" id="ilist"></div>
-</section>
-</div>
+<canvas id="fx"></canvas>
+<header class="top"><div class="in">
+  <div class="bar1">
+    <button class="mbtn" id="mbtn" type="button"></button>
+    <div class="lang" id="lang"></div>
+  </div>
+  <div class="player hide" id="pl">
+    <div class="pt"><span class="ptitle" id="ptitle"></span>
+      <span class="pc"><button type="button" id="pprev">⏮</button><button type="button" id="pplay">⏸</button><button type="button" id="pnext">⏭</button></span></div>
+    <div class="ps"><span id="pcur">0:00</span><input type="range" id="pseek" min="0" max="1000" value="0" step="1" disabled><span id="pdur">0:00</span></div>
+  </div>
+  <nav id="nav"></nav>
+</div></header>
+<div class="wrap" id="app"></div>
 
 <script>
-// ===== БАПТАУЛАР =====
-// Ортақ сақтау (тіркелусіз, 2FA керек емес): jsonblob.com
-// 1) jsonblob.com ашыңыз, ішіне осыны қойыңыз: {"votes":{},"ideas":{},"polls":[]}
-// 2) Save басыңыз, мекенжайдағы ұзын ID-ді көшіріп, төменге жазыңыз.
-// Бос болса, дауыстар тек осы браузерде сақталады (демо режимі).
+/* =====================================================================
+   ОБЩАЯ БАЗА ГОЛОСОВ — заполните ОДНУ из двух строк (инструкция в README.md)
+   BLOB_ID — номер документа на jsonblob.com (без аккаунта и без 2FA)
+   DB_URL  — адрес Firebase Realtime Database (если нужен)
+   Пока обе пустые — демо-режим: данные только на этом устройстве.
+   ===================================================================== */
 const BLOB_ID = "";
-const DATE = new Date("2027-05-25T15:00:00+05:00");
+const DB_URL = "";
 
-const CLASS = ["Көркембаев Марат","Байталасов Медет","Қожаш Айдын","Ерманов Наурызбек","Қойлыбаев Бағдат","Теміров Кенжебек","Бейсен Өркен","Елжанов Мәлік","Көбегенов Ибрагим","Кенжеқұлова Айгүл","Ізімбергенова Айгүл","Сәдуақасова Жазира","Балықбаева Гүлдана","Меңдіханова Дина","Яева Орынгүл","Нұрбасинова Майя","Тасболатова Гүлназ","Жақсығатова Гүлшат","Өтешева Гаухар","Нуретова Диана"];
-const MALE = 9;
-const TEACHERS = ["Сынып жетекшісі (аты қосылады)","Мұғалім 2 (аты қосылады)","Мұғалім 3 (аты қосылады)"];
+/* ---------- ХЕЛПЕРЫ ХРАНЕНИЯ ---------- */
+function lsGet(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
+/* ---------- ЯЗЫК: основной — казахский ---------- */
+let LANG = lsGet("z20lang","kk")==="ru" ? "ru" : "kk";
+const K = (kk,ru)=>LANG==="kk"?kk:ru;
+const P = a=>a[LANG==="kk"?0:1];
+
+/* ---------- ДАННЫЕ ---------- */
+const EVENT = new Date("2027-05-25T00:00:00+05:00");
+// [фамилия, имя, пол]  m = парень, f = девушка
+const CLASSMATES = [
+ ["Көркембаев","Марат","m"],["Байталасов","Медет","m"],["Қожаш","Айдын","m"],["Ерманов","Наурызбек","m"],
+ ["Қойлыбаев","Бағдат","m"],["Теміров","Кенжебек","m"],["Бейсен","Өркен","m"],["Елжанов","Мәлік","m"],
+ ["Көбегенов","Ибрагим","m"],["Кенжеқұлова","Айгүл","f"],["Ізімбергенова","Айгүл","f"],["Сәдуақасова","Жазира","f"],
+ ["Балықбаева","Гүлдана","f"],["Меңдіханова","Дина","f"],["Яева","Орынгүл","f"],["Нұрбасинова","Майя","f"],
+ ["Тасболатова","Гүлназ","f"],["Жақсығатова","Гүлшат","f"],["Өтешева","Гаухар","f"],["Нуретова","Диана","f"]
+].map((c,i)=>({id:"c"+String(i+1).padStart(2,"0"),sn:c[0],n:c[1],g:c[2]}));
+const QUIZ_BOSS = "c04";                              // Ерманов Наурызбек — ответственный за квиз
+const GUITAR = ["c08","c05","c02","c07","c06"];       // Мәлік, Бағдат, Медет, Өркен, Кенжебек
+
+/* пары [казахский, русский] */
 const POLLS = [
- {id:"come",q:"Келе аласыз ба?",o:["Иә, міндетті түрде!","Бәлкім, иә","Әзірге білмеймін","Өкінішке қарай, жоқ"]},
- {id:"days",q:"Неше күн тойлаймыз?",o:["1 күн","2 күн","3 күн"]},
- {id:"sum",q:"Бір адамға қандай жарна ыңғайлы?",o:["20 000 ₸","50 000 ₸","100 000 ₸","Басқа сома"],other:1},
- {id:"where",q:"Қайда тойлаймыз?",o:["Ақтауда, мейрамханада","Ақтауда, Каспий жағасында","Қаладан тыс (демалыс базасы, Кендірлі)","Шетелде (Дубай, Түркия)","Басқа жер"],other:1},
- {id:"fmt",q:"Кештің форматы қандай болсын?",o:["Тост пен бағдарламасы бар банкет","Жеңіл фуршет және еркін әңгіме","Табиғатта пикник және барбекю","Билі кеш"]},
- {id:"prog",q:"Бағдарламада не болуы керек? (бірнешеуін таңдауға болады)",multi:1,o:["Ұстаздармен кездесу","Слайд-шоу және ескі суреттер","Мектеп туралы викторина","Уақыт капсуласы (10 жылға хаттар)","Жүргізуші / тамада","Фотограф және бейнеоператор","Тірі музыка","Мектепті аралау"]},
- {id:"fam",q:"Отбасыларымызбен (жұбайы, балалары) шақырамыз ба?",o:["Иә, отбасымен","Тек сыныптастар","Бірінші күн өзіміздікі, екінші күн отбасымен"]},
- {id:"gift",q:"Мектепке не сыйлаймыз?",o:["Естелік сыйлық (тақтайша, ағаш отырғызу)","Мектепке қайырымдылық жарна","Ештеңе, өзіміз ғана жиналамыз"]},
- {id:"time",q:"Негізгі кеш қашан басталсын?",o:["Күндіз (14:00)","Кешкі (17:00)","Түнгі кеш (20:00)"]}
+ {id:"attend",ic:"🙋",q:["Келесіз бе?","Вы придёте?"],hint:["Көлемін түсіну үшін керек","Нужно, чтобы понять масштаб"],type:"single",opts:[
+   {id:"yes",l:["Міндетті түрде боламын!","Обязательно буду!"]},
+   {id:"likely",l:["Мүмкін барамын","Скорее да"]},
+   {id:"maybe",l:["Әзірге білмеймін","Пока не знаю"]},
+   {id:"online",l:["Онлайн қосыламын (алыста тұрамын)","Подключусь онлайн (живу далеко)"]},
+   {id:"no",l:["Өкінішке қарай, келе алмаймын","К сожалению, не смогу"]}]},
+ {id:"date",ic:"📅",q:["Қай күні?","Какая дата?"],hint:["25 мамыр 2027 — сейсенбі, соңғы қоңырау күні","25 мая 2027 — вторник, день последнего звонка"],type:"single",opts:[
+   {id:"may25",l:["25 мамыр (сейсенбі) — дәл соңғы қоңырау күні","25 мая (вторник) — ровно в день последнего звонка"]},
+   {id:"sat22",l:["Одан бұрынғы демалыс: 22–23 мамыр","Ближайшие выходные раньше: 22–23 мая"]},
+   {id:"sat29",l:["Одан кейінгі демалыс: 29–30 мамыр","Выходные позже: 29–30 мая"]}]},
+ {id:"days",ic:"🗓️",q:["Қанша күн тойлаймыз?","Сколько дней отмечаем?"],hint:["Ыңғайлы форматты таңдаңыз","Выберите комфортный формат"],type:"single",opts:[
+   {id:"d1",l:["1 күн — салтанатты кеш","1 день — торжественный вечер"]},
+   {id:"d2",l:["2 күн — кеш + табиғатқа шығу","2 дня — вечер + выезд на природу"]},
+   {id:"d3",l:["3 күн — бүкіл сыныппен шағын саяхат","3 дня — мини-путешествие всем классом"]}]},
+ {id:"place",ic:"📍",q:["Қайда тойлаймыз?","Где отмечаем?"],hint:["Қала, облыс немесе шетел","Город, область или заграница"],type:"single",opts:[
+   {id:"aktau",l:["Ақтауда — мейрамхана / банкет залы","В Актау — ресторан / банкетный зал"]},
+   {id:"out",l:["Ақтау + қаладан тыс жерге шығу (Каспий, Маңғыстау, демалыс базасы)","Актау + выезд за город (Каспий, Мангышлак, база отдыха)"]},
+   {id:"kz",l:["Қазақстанның басқа қаласы (Астана, Алматы…)","Другой город Казахстана (Астана, Алматы…)"]},
+   {id:"dubai",l:["Шетелде: Дубай","За границей: Дубай"]},
+   {id:"world",l:["Шетелде: Түркия / Грузия / Әзербайжан","За границей: Турция / Грузия / Азербайджан"]},
+   {id:"custom",l:["Өз нұсқам","Свой вариант"],custom:"text",ph:["Қайда барар едіңіз?","Куда бы вы поехали?"]}]},
+ {id:"budget",ic:"💰",q:["Бір адамнан жарна","Взнос с человека"],hint:["Қанша сома салуға дайынсыз (₸)","Какую сумму готовы вложить (₸)"],type:"single",opts:[
+   {id:"b20",l:["Шамамен 20 000 ₸","Около 20 000 ₸"]},
+   {id:"b50",l:["Шамамен 50 000 ₸","Около 50 000 ₸"]},
+   {id:"b100",l:["100 000 ₸-дан бастап","От 100 000 ₸"]},
+   {id:"custom",l:["Өз сомам","Своя сумма"],custom:"number",ph:["Мысалы, 75000","Например, 75000"]}]},
+ {id:"program",ic:"🎉",q:["Бағдарламада не міндетті?","Что обязательно в программе?"],hint:["Бірнешеуін таңдауға болады","Можно выбрать несколько"],type:"multi",opts:[
+   {id:"school",l:["Туған мектепте кездесу, баспалдақта суретке түсу","Встреча в родной школе, фото на ступенях"]},
+   {id:"teachers",l:["Ұстаздарға сөз және шақырылған ұстаздар","Слово учителям и приглашённые педагоги"]},
+   {id:"video",l:["«Сол кезде және қазір» бейне-слайдшоуы","Видео-слайдшоу «Тогда и сейчас»"]},
+   {id:"quiz",l:["Квиз «Біз 2007 жылы»","Квиз «Мы в 2007-м»"]},
+   {id:"guitar",l:["Гитарамен ән кеші","Песни под гитару"]},
+   {id:"capsule",l:["Уақыт капсуласы — өзімізге 10 жылдан соң хат","Капсула времени — письма себе на 10 лет"]},
+   {id:"retro",l:["2000-жылдардың музыкасымен дискотека","Дискотека с музыкой 2000-х"]},
+   {id:"wall",l:["Фото-қабырға: мектеп және балалық суреттер","Фотостена: школьные и детские фото"]},
+   {id:"photo",l:["Кәсіби фотограф / бейнеоператор","Профессиональный фотограф / видеограф"]},
+   {id:"nature",l:["Табиғатқа шығу, шашлык, алау","Выезд на природу, шашлык, костёр"]},
+   {id:"active",l:["Белсенді демалыс: квадроцикл, яхта, спорт","Активности: квадроциклы, яхта, спорт"]},
+   {id:"gift",l:["Мектепке сыйлық / көмек","Подарок школе / помощь школе"]}]},
+ {id:"quizTopic",ic:"🎯",q:["Квиз тақырыптары қандай болсын?","Какие темы для квиза?"],hint:["Наурызбекке бағыт береміз · бірнешеуін таңдауға болады","Подскажем Наурызбеку · можно несколько"],type:"multi",opts:[
+   {id:"school",l:["Мектеп жылдары мен ұстаздар","Школьные годы и учителя"]},
+   {id:"music",l:["2000-жылдардағы музыка мен фильмдер","Музыка и фильмы 2000-х"]},
+   {id:"who",l:["Біздің сынып: «кім кім?»","Наш класс: «кто есть кто»"]},
+   {id:"home",l:["Қазақстан, Ақтау және мұнай","Казахстан, Актау и нефть"]},
+   {id:"logic",l:["Логика мен қызықты ғылым","Логика и занимательная наука"]},
+   {id:"photo",l:["Суреті бойынша тап","Угадай по фото"]}]},
+ {id:"theme",ic:"👗",q:["Киім стилі","Стиль и дресс-код"],hint:["Қалай киінеміз","Как одеваемся"],type:"single",opts:[
+   {id:"retro",l:["Ретро 2007 — түлектер кешінің стилі","Ретро 2007 — стиль выпускного"]},
+   {id:"classic",l:["Кешкі стиль — костюм мен көйлек","Вечерний — костюмы и платья"]},
+   {id:"free",l:["Еркін, басты нәрсе — көңіл-күй","Свободный, главное — настроение"]}]},
+ {id:"guests",ic:"👨‍👩‍👧‍👦",q:["Қонақтар форматы","Формат гостей"],hint:["Тек сынып па, әлде отбасымен бе?","Только класс или с семьями?"],type:"single",opts:[
+   {id:"class",l:["Тек сыныптастар мен ұстаздар","Только одноклассники и учителя"]},
+   {id:"spouse",l:["Жұбайымен келуге болады","Можно с супругом / супругой"]},
+   {id:"family",l:["Отбасымен, балалар үшін бөлек отбасылық күн","С семьями, дети — отдельный семейный день"]}]},
+ {id:"teachers",ic:"🎓",q:["Ұстаздарды шақырамыз ба?","Приглашаем учителей?"],hint:["Кімді қасымыздан көргіміз келеді","Кого хотим видеть рядом"],type:"single",opts:[
+   {id:"all",l:["Иә, келе алатын барлығын","Да, всех, кто сможет приехать"]},
+   {id:"main",l:["Сынып жетекшісін және ең жақындарын","Классного руководителя и самых близких"]},
+   {id:"part",l:["Тек салтанатты бөлімге","Только на торжественную часть"]}]}
 ];
 
-// ===== САҚТАУ =====
-const LS = k=>{try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}};
-const LSset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
-const API="https://jsonblob.com/api/jsonBlob/", H={"Content-Type":"application/json",Accept:"application/json"};
-const norm=d=>Object.assign({votes:{},ideas:{},polls:[]},d||{});
-async function load(){
-  if(BLOB_ID){try{const r=await fetch(API+BLOB_ID,{headers:H});return norm(await r.json())}catch(e){return norm(null)}}
-  return norm(LS("db"));
-}
-async function mutate(fn){
-  const d=await load();fn(d);
-  if(BLOB_ID){try{await fetch(API+BLOB_ID,{method:"PUT",headers:H,body:JSON.stringify(d)})}catch(e){alert("Байланыс қатесі, қайталап көріңіз")}}
-  else LSset("db",d);
-  return d;
-}
+const PLAN_DAY = [
+ ["10:00",["Туған мектептің алдына жиналу","Сбор у родной школы"],["Баспалдақта ортақ сурет, ұстаздармен кездесу, дәліз бен өз кабинетімізді аралау.","Общее фото на ступенях, встреча с учителями, прогулка по коридорам и своему кабинету."]],
+ ["11:30",["«2007 жылғыдай» сынып сағаты","Классный час «как в 2007»"],["Аты-жөнін атау, кім қалай өзгерді, әрқайсысынан 5 минут сөз: немен айналысамын, немен мақтанамын.","Перекличка, кто как изменился, 5 минут слова от каждого: чем занимаюсь, чем горжусь."]],
+ ["13:00",["Түскі ас және үзіліс","Обед и перерыв"],["Демалыс, мейрамханаға жол, киім ауыстыруға уақыт.","Отдых, дорога в ресторан, время переодеться."]],
+ ["17:00",["Қарсы алу аймағы","Welcome-зона"],["Фотоаймақ, мектеп суреттерінің қабырғасы, «уақыт капсуласы», есімі мен мектептегі лақап аты жазылған бейджиктер.","Фотозона, стена со школьными фото, «капсула времени», бейджи с именами и школьными прозвищами."]],
+ ["18:00",["Салтанатты бөлім","Торжественная часть"],["«Сол кезде және қазір» бейне-слайдшоуы, ұстаздар мен сынып жетекшісіне алғыс сөз, еске алу минуты.","Видео-слайдшоу «тогда и сейчас», слово учителям и классному руководителю, минута памяти и благодарности."]],
+ ["19:00",["Кешкі ас және тост","Ужин и тосты"],["Бәрімен сөйлесу үшін еркін отыру. «Балалық суретінен тап» ойыны.","Свободная рассадка — чтобы пообщаться со всеми. Игра «Угадай по детскому фото»."]],
+ ["20:30",["Квиз","Квиз"],["Наурызбек Ермановтың квизі: музыка, фильм, сән, баға. «Ұлдар — қыздарға қарсы» командалары.","Квиз Наурызбека Ерманова: музыка, фильмы, мода, цены. Команды «парни против девушек»."]],
+ ["21:30",["Гитарамен ән кеші","Песни под гитару"],["Мәлік, Бағдат, Медет, Өркен, Кенжебек гитара тартады, бәріміз қосыла айтамыз.","Мәлік, Бағдат, Медет, Өркен и Кенжебек играют на гитаре, поём все вместе."]],
+ ["22:30",["2000-жылдар дискотекасы","Дискотека 2000-х"],["Бүкіл сынып алдын ала құрастырған плейлист.","Плейлист, составленный всем классом заранее."]],
+ ["23:30",["Қорытынды","Финал"],["Уақыт капсуласын 10 жылға жабамыз, ортақ сурет, келесі кездесуді келісеміз.","Запечатываем капсулу времени на 10 лет, общее фото, договариваемся о следующей встрече."]]
+];
+const PLAN_EXT = [
+ [["0-күн · алдыңғы кеш","День 0 · вечер накануне"],["Ертерек келгендер үшін бейресми кездесу: кафе, жағалауда серуен, шай мен әңгіме.","Неформальная встреча для тех, кто приехал заранее: кафе, прогулка по набережной, чай и разговоры."]],
+ [["1-күн · 25 мамыр","День 1 · 25 мая"],["Басты бағдарлама — жоғарыдағы кесте бойынша.","Главная программа — как в расписании выше."]],
+ [["2-күн · табиғатта","День 2 · на природе"],["Қаладан тыс шығу: шашлык, алау, спорттық ойындар, квадроцикл немесе яхта, кешкі гитара және ортақ қоштасу суреті.","Выезд за город: шашлык, костёр, спортивные игры, квадроциклы или яхта, вечерняя гитара и общее прощальное фото."]]
+];
+const CHECK = [
+ [["2026 жылғы қараша","Ноябрь 2026"],["Ортақ чат ашып, 20 сыныптастың байланысын жинау","Создать общий чат, собрать контакты всех 20 одноклассников"],["Чатта жоқтарды достары арқылы табамыз","Кто не в чате — найти через друзей"]],
+ [["Желтоқсан – қаңтар","Декабрь – январь"],["Сауалнамадан өту: күн, формат, орын, жарна","Пройти опросы: дата, формат, место, бюджет"],["Нәтиже қосымшада көрінеді","Результаты видны в приложении"]],
+ [["Ақпан","Февраль"],["Ұйымдастыру комитетін (3–4 адам) және қазынашыны тағайындау","Назначить оргкомитет (3–4 человека) и казначея"],["Бір шот немесе Kaspi, шығын есебі ашық","Единый счёт или Kaspi, отчёт по тратам открытый"]],
+ [["Наурыз","Март"],["Алаңды брондау, жүргізуші мен фотографпен келісу","Забронировать площадку, договориться с ведущим и фотографом"],["20 адам + ұстаздар + отбасы, егер солай шешсек","Для 20 человек + учителя + семьи, если решим"]],
+ [["Наурыз","Март"],["Ұстаздарды тауып, шақыру, әсіресе сынып жетекшісін","Найти и пригласить учителей, особенно классного руководителя"],["«Ұстаздар» бетін толтырыңыздар","Заполните вкладку «Учителя»"]],
+ [["Сәуір","Апрель"],["Балалық және мектеп суреттерін, келе алмағандардан бейне-құттықтау жинау","Собрать детские и школьные фото, видео-поздравления от тех, кто не приедет"],["Слайдшоуға пайдаланамыз","Из них сделаем слайдшоу"]],
+ [["Сәуір","Апрель"],["Квизді дайындау (жауапты — Наурызбек Ерманов), гитарашылар репертуарын жаттайды","Подготовить квиз (ответственный — Наурызбек Ерманов), гитаристы разучивают репертуар"],["Сұрақтар мен әндерді «Афиша» бетіне жазуға болады","Вопросы и песни можно писать во вкладке «Афиша»"]],
+ [["Сәуір","Апрель"],["2000-жылдардың плейлисін және тосттарды құрастыру","Составить плейлист 2000-х и тосты"],["Әрқайсысы 3 ән жібереді","Каждый присылает 3 песни"]],
+ [["Мамыр","Май"],["Қонақтардың соңғы тізімі, отырғызу, сценарий, сыйлықтар","Финальный список гостей, рассадка, сценарий, подарки"],["Трансфер мен киім туралы еске салу","Напомнить о трансфере и дресс-коде"]],
+ [["2027 жылғы 25 мамыр","25 мая 2027"],["Мереке","Праздник"],["Фото, бейне, уақыт капсуласы","Фото, видео, капсула времени"]]
+];
+const SPLIT = [
+ [["Алаң және банкет","Площадка и банкет"],.55],
+ [["Фотограф және бейне","Фотограф и видео"],.10],
+ [["Жүргізуші, музыка, дыбыс","Ведущий, музыка, звук"],.10],
+ [["Безендіру, ұстаздарға сыйлық, ұсақ-түйек","Декор, подарки учителям, мелочи"],.10],
+ [["Резерв","Резерв"],.15]
+];
 
-// ===== ИНТЕРФЕЙС =====
-const TABS=[["home","Басты бет"],["cls","Сыныптастар"],["teach","Ұстаздар"],["plan","Жоспар"],["polls","Сауалнамалар"],["ideas","Идеялар"]];
-const nav=document.getElementById("nav");
-TABS.forEach(([id,t])=>{const b=document.createElement("button");b.textContent=t;b.dataset.id=id;b.onclick=()=>show(id);nav.appendChild(b)});
-function show(id){
-  document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===id));
-  nav.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.id===id));
-  if(id==="polls")renderPolls();if(id==="ideas")loadIdeas();if(id==="home")att();
-  scrollTo(0,0);location.hash=id;
+/* ---------- ХРАНИЛИЩЕ: Firebase / jsonblob / локально ---------- */
+const MODE = DB_URL ? "fb" : BLOB_ID ? "blob" : "local";
+const LOCAL = MODE==="local";
+const JB = "https://jsonblob.com/api/jsonBlob/";
+const JH = {"Content-Type":"application/json",Accept:"application/json"};
+function setPath(t,path,val){
+  const p=path.split("/"); let o=t;
+  for(let i=0;i<p.length-1;i++){ if(!o[p[i]]||typeof o[p[i]]!=="object") o[p[i]]={}; o=o[p[i]]; }
+  if(val===null) delete o[p[p.length-1]]; else o[p[p.length-1]]=val;
 }
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-
-function tick(){
-  let d=Math.max(0,DATE-new Date()),D=Math.floor(d/864e5),H=Math.floor(d%864e5/36e5),M=Math.floor(d%36e5/6e4),S=Math.floor(d%6e4/1e3);
-  document.getElementById("cd").innerHTML=[[D,"күн"],[H,"сағат"],[M,"минут"],[S,"секунд"]].map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
+function getPath(t,path){ return path.split("/").reduce((o,k)=>o==null?undefined:o[k],t); }
+const same=(a,b)=>JSON.stringify(a===undefined?null:a)===JSON.stringify(b===undefined?null:b);
+function logW(path,val){
+  const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<6e5); w.push({path,val,t:Date.now()}); lsSet("z20w",w.slice(-40));
 }
-tick();setInterval(tick,1000);
-async function att(){
-  const d=await load(),v=Object.values(d.votes.come||{}).filter(x=>(x.o||[])[0]===0).length;
-  document.getElementById("att").innerHTML=`Келемін дегендер: <b>${v}</b> / ${CLASS.length}`;
-}
-
-const ini=n=>n.split(" ").map(w=>w[0]).join("");
-document.getElementById("list").innerHTML=CLASS.map((n,i)=>`<div class="n ${i<MALE?"":"f"}"><i>${ini(n)}</i>${esc(n)}</div>`).join("");
-document.getElementById("sAll").textContent=CLASS.length;
-document.getElementById("sM").textContent=MALE;
-document.getElementById("sF").textContent=CLASS.length-MALE;
-document.getElementById("tl").innerHTML=TEACHERS.map(n=>`<div class="n"><i>★</i>${esc(n)}</div>`).join("");
-document.getElementById("iname").innerHTML='<option value="">Жасырын</option>'+CLASS.map((n,i)=>`<option value="${i}">${esc(n)}</option>`).join("");
-
-let voter=LS("voter")||"";
-document.getElementById("vbox").innerHTML=`<h2>Сіз кімсіз?</h2><select id="who" onchange="setVoter(this.value)"><option value="">Атыңызды таңдаңыз…</option>${CLASS.map((n,i)=>`<option value="${i}">${esc(n)}</option>`).join("")}</select>
-<div class="warn">${BLOB_ID?"Әр адам өз дауысын кез келген уақытта өзгерте алады.":"Демо режимі: дауыстар тек осы құрылғыда көрінеді. Барлығынан дауыс жинау үшін ортақ сақтауды қосу керек."}</div>`;
-document.getElementById("who").value=voter;
-function setVoter(v){voter=v;LSset("voter",v);renderPolls()}
-
-async function renderPolls(){
-  const d=await load(),all=d.votes;
-  document.getElementById("pl").innerHTML=POLLS.concat(d.polls).map(p=>{
-    const votes=all[p.id]||{},vals=Object.values(votes);
-    const cnt=p.o.map(()=>0),others=[];
-    vals.forEach(v=>{(v.o||[]).forEach(i=>cnt[i]++);if(v.t)others.push(v.t)});
-    const total=vals.length,mine=votes["v"+voter]||{o:[]},mx=Math.max(1,...cnt);
-    return `<div class="card"><p class="q">${esc(p.q)}</p>`+p.o.map((o,i)=>{
-      const pc=total?Math.round(cnt[i]/total*100):0;
-      return `<label class="opt"><div class="bar" style="width:${cnt[i]/mx*pc}%"></div><div class="row"><input type="${p.multi?"checkbox":"radio"}" name="${p.id}" value="${i}" ${(mine.o||[]).includes(i)?"checked":""}>${esc(o)}<em>${cnt[i]} · ${pc}%</em></div></label>`}).join("")
-    +(p.other?`<input type="text" id="t_${p.id}" placeholder="Өз нұсқаңызды жазыңыз…" value="${esc(mine.t||"")}">`:"")
-    +(others.length?`<div class="oth">Өз нұсқалары: ${others.map(esc).join("; ")}</div>`:"")
-    +`<button class="btn" onclick="vote('${p.id}')">Дауыс беру</button> <span class="small">Дауыс берді: ${total} / ${CLASS.length}</span>`
-    +(p.id[0]==="c"?` <button class="btn del" onclick="delPoll('${p.id}')">Жою</button>`:"")+`</div>`;
-  }).join("");
-}
-async function vote(id){
-  if(voter===""){alert("Алдымен беттің жоғарғы жағынан атыңызды таңдаңыз");scrollTo(0,0);return}
-  const o=[...document.querySelectorAll(`input[name=${id}]:checked`)].map(x=>+x.value);
-  const t=(document.getElementById("t_"+id)||{}).value||"";
-  if(!o.length&&!t.trim()){alert("Нұсқаны таңдаңыз");return}
-  await mutate(d=>{(d.votes[id]=d.votes[id]||{})["v"+voter]={o,t:t.trim()}});
-  renderPolls();
-}
-async function createPoll(){
-  const q=document.getElementById("nq").value.trim(),o=document.getElementById("no").value.split("\n").map(s=>s.trim()).filter(Boolean);
-  if(!q||o.length<2){alert("Сұрақты және кемінде 2 нұсқаны (әр жолға біреуден) жазыңыз");return}
-  const p={id:"c"+Date.now(),q,o,multi:document.getElementById("nm").checked?1:0,other:document.getElementById("nt").checked?1:0};
-  await mutate(d=>{d.polls.push(p)});
-  ["nq","no"].forEach(i=>document.getElementById(i).value="");
-  renderPolls();
-}
-async function delPoll(id){
-  if(!confirm("Сауалнаманы жою керек пе?"))return;
-  await mutate(d=>{d.polls=d.polls.filter(p=>p.id!==id);delete d.votes[id]});renderPolls();
-}
-
-async function addIdea(){
-  const t=document.getElementById("itext").value.trim(),w=document.getElementById("iname").value;
-  if(!t)return;
-  await mutate(d=>{d.ideas["k"+Date.now()]={n:w===""?"Жасырын":CLASS[w],t,d:new Date().toISOString()}});
-  document.getElementById("itext").value="";loadIdeas();
-}
-async function loadIdeas(){
-  const all=Object.values((await load()).ideas).sort((a,b)=>b.d>a.d?1:-1);
-  document.getElementById("ilist").innerHTML=all.length?all.map(i=>`<div class="idea"><b>${esc(i.n)}</b><div>${esc(i.t)}</div></div>`).join(""):'<span class="small">Әзірге идея жоқ. Бірінші болыңыз!</span>';
-}
-
-// Музыка: song.mp3 файлын репозиторийге салыңыз
-const au=document.getElementById("au"),mb=document.getElementById("mbtn");
-const L1="🎵 Музыканы қосу",L2="⏸ Тоқтату";
-mb.onclick=()=>{
-  if(au.paused){au.play().then(()=>mb.textContent=L2).catch(()=>alert("song.mp3 файлы табылмады. Оны index.html жанына репозиторийге салыңыз."))}
-  else{au.pause();mb.textContent=L1}
+let chain=Promise.resolve();
+const db = {
+  async all(){
+    if(MODE==="local") return lsGet("z20db",{});
+    if(MODE==="fb"){
+      const r=await fetch(DB_URL.replace(/\/$/,"")+"/.json",{cache:"no-store"});
+      if(!r.ok) throw new Error("db "+r.status);
+      return (await r.json())||{};
+    }
+    const r=await fetch(JB+BLOB_ID,{headers:JH,cache:"no-store"});
+    if(!r.ok) throw new Error("db "+r.status);
+    const d=await r.json(); return d&&typeof d==="object"&&!Array.isArray(d)?d:{};
+  },
+  set(path,val,noLog){
+    if(!noLog) logW(path,val);
+    if(MODE==="local"){ const t=lsGet("z20db",{}); setPath(t,path,val); lsSet("z20db",t); return Promise.resolve(); }
+    if(MODE==="fb"){
+      return fetch(DB_URL.replace(/\/$/,"")+"/"+path+".json",{method:"PUT",body:JSON.stringify(val)})
+        .then(r=>{ if(!r.ok) throw new Error("db "+r.status); });
+    }
+    // jsonblob хранит документ целиком: читаем → правим свою ветку → пишем → проверяем, что запись на месте
+    return chain=chain.catch(()=>{}).then(async()=>{
+      for(let n=0;n<3;n++){
+        const cur=await db.all(); setPath(cur,path,val);
+        const r=await fetch(JB+BLOB_ID,{method:"PUT",headers:JH,body:JSON.stringify(cur)});
+        if(!r.ok) throw new Error("db "+r.status);
+        if(same(getPath(await db.all(),path),val)) return;
+      }
+      throw new Error("save failed");
+    });
+  }
 };
+// если чужая запись одновременно затёрла нашу — досылаем свои недавние изменения
+async function reconcile(){
+  if(MODE!=="blob") return;
+  const w=lsGet("z20w",[]).filter(x=>Date.now()-x.t<6e5); let fixed=false;
+  for(const x of w){
+    const cur=getPath(S.db,x.path);
+    if(x.val===null ? cur!=null : cur==null){ await db.set(x.path,x.val,true); fixed=true; }
+  }
+  if(fixed) S.db=await db.all();
+}
 
-// Алтын конфетти
+/* ---------- СОСТОЯНИЕ ---------- */
+const S = {db:{}, me:lsGet("z20me",null), tab:lsGet("z20tab","home"), filter:"all", q:"", draft:{}, open:{}, err:""};
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const fmt = n=>Math.round(n).toLocaleString("ru-RU");
+const cm = id=>CLASSMATES.find(c=>c.id===id);
+const ini = c=>c.n[0]+c.sn[0];
+function nameOf(id){
+  const c=cm(id); if(c) return c.sn+" "+c.n;
+  const g=(S.db.guests||{})[id]; return g?g.n+" "+K("(қонақ)","(гость)"):K("Қонақ","Гость");
+}
+const votesOf = pid => (S.db.votes||{})[pid]||{};
+const locale = ()=>"ru-RU";   // дд.мм.гггг для обоих языков
+
+/* ---------- РЕЗУЛЬТАТЫ ---------- */
+function results(p){
+  const v=votesOf(p.id), ids=Object.keys(v);
+  const by={}; p.opts.forEach(o=>by[o.id]={n:0,who:[],vals:[]});
+  ids.forEach(vid=>{
+    const x=v[vid]; const sel=Array.isArray(x.o)?x.o:[x.o];
+    sel.forEach(o=>{ if(by[o]){by[o].n++;by[o].who.push(vid);
+      if(x.v!=null&&x.v!==""&&sel.length===1) by[o].vals.push({vid,v:x.v}); }});
+  });
+  const max=Math.max(0,...Object.values(by).map(b=>b.n));
+  return {by,total:ids.length,max};
+}
+function leader(p){
+  const r=results(p); if(!r.total||!r.max) return null;
+  const o=p.opts.find(o=>r.by[o.id].n===r.max);
+  return {l:P(o.l),pct:Math.round(r.max/r.total*100),n:r.max,total:r.total};
+}
+function median(a){const s=[...a].sort((x,y)=>x-y);const m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2}
+
+/* ---------- ВЁРСТКА ---------- */
+const TABS=[["home","🏠",["Басты","Главная"]],["class","👥",["Сынып","Класс"]],["polls","🗳️",["Сауал","Опросы"]],["ideas","💡",["Идеялар","Идеи"]],["plan","📋",["Жоспар","План"]],["teachers","🎓",["Ұстаздар","Учителя"]],["afisha","🎸",["Афиша","Афиша"]]];
+function renderNav(){
+  $("#nav").innerHTML=TABS.map(t=>`<button type="button" data-act="tab" data-v="${t[0]}" class="${S.tab===t[0]?"on":""}"><i>${t[1]}</i><span>${esc(P(t[2]))}</span></button>`).join("");
+}
+function whoCard(){
+  if(S.me) return `<div class="card"><div class="row"><div>${K("Сіз","Вы")}: <b>${esc(nameOf(S.me))}</b></div><button class="btn ghost sm" data-act="unme">${K("Бұл мен емес","Это не я")}</button></div></div>`;
+  return `<div class="card"><h3>${K("Сіз кімсіз?","Кто вы?")}</h3>
+   <p class="sub">${K("Дауыс беру және идея жазу үшін тізімнен өзіңізді таңдаңыз. Бір есім — бір дауыс.","Выберите себя, чтобы голосовать и писать идеи. Одно имя — один голос.")}</p>
+   <select id="whoSel"><option value="">${K("— тізімнен таңдаңыз —","— выберите из списка —")}</option>
+   ${CLASSMATES.map(c=>`<option value="${c.id}">${esc(c.sn+" "+c.n)}</option>`).join("")}
+   <option value="guest">${K("Мен тізімде жоқпын (қонақ / ұстаз)","Я не из списка (гость / учитель)")}</option></select>
+   <div id="guestBox" class="hide" style="margin-top:8px"><input id="guestName" placeholder="${K("Аты-жөніңіз","Ваше имя и фамилия")}"></div>
+   <div style="margin-top:10px"><button class="btn" data-act="setme">${K("Жалғастыру","Продолжить")}</button></div></div>`;
+}
+function dbNote(){
+  let h="";
+  if(LOCAL) h+=`<div class="note">${K("Демо-режим: дауыстар тек осы құрылғыда сақталады. Бәрі ортақ нәтижені көру үшін базаны қосыңыз (репозиторийдегі README-ді қараңыз).","Демо-режим: голоса сохраняются только на этом устройстве. Чтобы все видели общие результаты, подключите базу (см. README в репозитории).")}</div>`;
+  if(S.err) h+=`<div class="note">${K("Базамен байланыс жоқ: ","Нет связи с базой: ")}${esc(S.err)}. ${K("Кейінірек қайталап көріңіз.","Попробуйте позже.")}</div>`;
+  return h;
+}
+
+/* --- Басты --- */
+function viewHome(){
+  const m=CLASSMATES.filter(c=>c.g==="m").length, f=CLASSMATES.length-m;
+  const attend=votesOf("attend"); const yes=Object.values(attend).filter(x=>x.o==="yes"||x.o==="likely").length;
+  const voters=new Set(); Object.values(S.db.votes||{}).forEach(v=>Object.keys(v).forEach(k=>voters.add(k)));
+  const leads=["date","days","place","budget"].map(id=>{const p=POLLS.find(p=>p.id===id);const l=leader(p);
+    return `<div class="calc-r"><span>${p.ic} ${esc(P(p.q))}</span><b style="max-width:55%">${l?esc(l.l)+` · ${l.pct}%`:K("әзірше дауыс жоқ","пока нет голосов")}</b></div>`}).join("");
+  const boss=cm(QUIZ_BOSS);
+  return `
+  <section class="hero">
+    <div class="eyebrow">${K("Сыныптастардың мерейтойлық кездесуі","Юбилейная встреча одноклассников")}</div>
+    <div class="big">20</div>
+    <div class="yrs">${K("жылдық мерейтой","лет выпуска")}</div>
+    <div class="line"></div>
+    <div class="date">${K("2027 жылғы 25 мамыр","25 мая 2027")}<small>${K("сейсенбі · Ақтау · 2007 жылғы түлектер","вторник · Актау · выпуск 2007 года")}</small></div>
+  </section>
+  <div class="count" id="cd"></div>
+  ${S.me?"":whoCard()}
+  <div class="card">
+    <h3>${K("Біздің сынып","Наш класс")}</h3>
+    <div class="grid3" style="margin-top:10px">
+      <div class="stat"><b>${CLASSMATES.length}</b><span>${K("сыныптас","одноклассников")}</span></div>
+      <div class="stat m"><b>${m}</b><span>${K("ұл","парней")}</span></div>
+      <div class="stat f"><b>${f}</b><span>${K("қыз","девушек")}</span></div>
+    </div>
+    <div class="gbar"><i style="width:${m/CLASSMATES.length*100}%;background:var(--m)"></i><i style="width:${f/CLASSMATES.length*100}%;background:var(--f)"></i></div>
+    <div class="gleg"><span>${K("Ұлдар","Парни")} ${Math.round(m/CLASSMATES.length*100)}%</span><span>${K("Қыздар","Девушки")} ${Math.round(f/CLASSMATES.length*100)}%</span></div>
+  </div>
+  <div class="card">
+    <h3>${K("Дайындық қалай жүріп жатыр","Как идёт подготовка")}</h3>
+    <div class="grid" style="margin:10px 0">
+      <div class="stat"><b>${voters.size}</b><span>${K(`${CLASSMATES.length}-ден дауыс бергені`,`из ${CLASSMATES.length} уже голосовали`)}</span></div>
+      <div class="stat"><b>${yes}</b><span>${K("келуі мүмкін","скорее всего приедут")}</span></div>
+    </div>
+    ${leads}
+    <div style="margin-top:12px"><button class="btn" data-act="tab" data-v="polls">${K("Дауыс беру","Проголосовать")}</button></div>
+  </div>
+  <div class="card">
+    <h3>${K("Кеш афишасы","Афиша вечера")}</h3>
+    <div class="calc-r"><span>🎯 ${K("Квиз","Квиз")}</span><b>${esc(boss.n+" "+boss.sn)}</b></div>
+    <div class="calc-r"><span>🎸 ${K("Гитарамен ән","Песни под гитару")}</span><b style="max-width:60%">${GUITAR.map(id=>esc(cm(id).n)).join(", ")}</b></div>
+    <div style="margin-top:12px"><button class="btn ghost" data-act="tab" data-v="afisha">${K("Афишаны ашу","Открыть афишу")}</button></div>
+  </div>
+  <div class="card">
+    <h3>${K("Бұл не үшін","Зачем всё это")}</h3>
+    <p class="sub" style="margin-bottom:0">${K("Мектепті бітіргенімізге жиырма жыл болды. Қайта жиналып, бір-бірімізді көрейік, мектеп жылдарын еске алып, ұстаздарымызды шақырайық. Форматты бірге таңдаймыз: сауалнамаға қатысып, идеяларыңызды жазыңыздар.","Двадцать лет прошло с того дня, как мы вышли из школы. Давайте соберёмся: вспомнить, посмеяться и увидеть, кем мы стали. Выберите формат, оставьте идеи и пригласите учителей — решим всё вместе.")}</p>
+  </div>`;
+}
+
+/* --- Сынып --- */
+function viewClass(){
+  const att=votesOf("attend");
+  const lab={yes:[K("Барамын","Буду"),"yes"],likely:[K("Мүмкін","Скорее да"),"likely"],maybe:[K("Білмеймін","Не знаю"),"maybe"],online:[K("Онлайн","Онлайн"),"online"],no:[K("Келмеймін","Не смогу"),"no"]};
+  let list=CLASSMATES.filter(c=>S.filter==="all"||c.g===S.filter)
+    .filter(c=>(c.sn+" "+c.n).toLowerCase().includes(S.q.toLowerCase()));
+  const m=CLASSMATES.filter(c=>c.g==="m").length, f=CLASSMATES.length-m;
+  return `<h2>${K("Сыныптастар","Одноклассники")}</h2><p class="sub">${K("2007 жылғы түлектер","Выпуск 2007")} · ${CLASSMATES.length} ${K("адам","человек")} · ${m} ${K("ұл","парней")} · ${f} ${K("қыз","девушек")}</p>
+  <input id="q" placeholder="${K("Аты немесе тегі бойынша іздеу","Поиск по имени или фамилии")}" value="${esc(S.q)}">
+  <div class="chips">
+   <button class="chip ${S.filter==="all"?"on":""}" data-act="filter" data-v="all">${K("Барлығы","Все")} · ${CLASSMATES.length}</button>
+   <button class="chip ${S.filter==="m"?"on":""}" data-act="filter" data-v="m">${K("Ұлдар","Парни")} · ${m}</button>
+   <button class="chip ${S.filter==="f"?"on":""}" data-act="filter" data-v="f">${K("Қыздар","Девушки")} · ${f}</button>
+  </div>
+  <div class="card" style="padding:6px 14px">
+  ${list.length?list.map(c=>{const a=att[c.id]?lab[att[c.id].o]:null;
+    return `<div class="person"><div class="av ${c.g}">${esc(ini(c))}</div>
+     <div class="pname"><b>${esc(c.sn+" "+c.n)}</b><span>${c.g==="m"?K("ұл","парень"):K("қыз","девушка")}</span></div>
+     ${a?`<span class="badge ${a[1]}">${a[0]}</span>`:`<span class="badge maybe">${K("жауап жоқ","нет ответа")}</span>`}</div>`}).join(""):`<div class="empty">${K("Ешкім табылмады","Никого не найдено")}</div>`}
+  </div>`;
+}
+
+/* --- Сауалнама --- */
+function optHTML(p,o,r,showRes,dr){
+  const b=r.by[o.id], pct=r.total?Math.round(b.n/r.total*100):0;
+  const selected = dr.sel.includes(o.id);
+  return `<button type="button" class="opt ${selected?"sel":""} ${showRes&&b.n&&b.n===r.max?"lead":""}" data-act="opt" data-p="${p.id}" data-o="${o.id}">
+    ${showRes?`<span class="fill" style="width:${pct}%"></span>`:""}
+    <span class="in"><span class="lab">${esc(P(o.l))}</span>${showRes?`<span class="num">${b.n} · ${pct}%</span>`:""}</span></button>`;
+}
+function pollHTML(p){
+  const r=results(p), mine=S.me?votesOf(p.id)[S.me]:null;
+  const dr = S.draft[p.id] || (S.draft[p.id]={sel:mine?(Array.isArray(mine.o)?[...mine.o]:[mine.o]):[],v:mine&&mine.v!=null?mine.v:""});
+  const showRes = !!mine || S.open["r_"+p.id];
+  const custom = p.opts.find(o=>o.custom && dr.sel.includes(o.id));
+  let extra="";
+  p.opts.filter(o=>o.custom).forEach(o=>{
+    const vals=r.by[o.id].vals;
+    if(showRes&&vals.length){
+      if(o.custom==="number"){
+        const nums=vals.map(x=>Number(x.v)).filter(n=>n>0);
+        if(nums.length) extra+=`<div class="meta">${K("Өз сомалары","Свои суммы")} (${nums.length}): ${K("орташа","среднее")} <b>${fmt(nums.reduce((a,b)=>a+b,0)/nums.length)} ₸</b>, ${K("медиана","медиана")} <b>${fmt(median(nums))} ₸</b><br>${vals.map(x=>`<span class="pill">${esc(nameOf(x.vid).split(" ")[0])}: ${fmt(Number(x.v))} ₸</span>`).join("")}</div>`;
+      }else extra+=`<div class="meta">${K("Өз нұсқалары","Свои варианты")}:<br>${vals.map(x=>`<span class="pill">${esc(nameOf(x.vid).split(" ")[0])}: ${esc(x.v)}</span>`).join("")}</div>`;
+    }
+  });
+  const who = showRes && r.total ? `<details class="names"><summary>${K("Кім қалай дауыс берді","Кто как проголосовал")}</summary>${p.opts.filter(o=>r.by[o.id].n).map(o=>`<p><b>${esc(P(o.l))}</b><br>${r.by[o.id].who.map(w=>esc(nameOf(w))).join(", ")}</p>`).join("")}</details>`:"";
+  const lead=leader(p);
+  return `<details class="card poll" data-pid="${p.id}" ${S.open[p.id]?"open":""}>
+    <summary><span class="qi">${p.ic}</span><span class="qt"><b>${esc(P(p.q))}</b><span>${esc(P(p.hint))} · ${K("дауыс","голосов")}: ${r.total}${lead?` · ${K("көш бастап тұр","лидирует")}: ${esc(lead.l.split(" — ")[0])}`:""}</span></span><span class="chev">›</span></summary>
+    <div class="pbody">
+      ${!S.me?`<div class="note">${K("Алдымен кім екеніңізді таңдаңыз (осы беттің жоғарғы жағында).","Сначала выберите, кто вы (вверху этой страницы).")}</div>`:""}
+      ${p.opts.map(o=>optHTML(p,o,r,showRes,dr)).join("")}
+      ${custom?`<input data-draft="${p.id}" type="${custom.custom==="number"?"number":"text"}" inputmode="${custom.custom==="number"?"numeric":"text"}" placeholder="${esc(P(custom.ph||["",""]))}" value="${esc(dr.v)}">`:""}
+      <div class="row" style="margin-top:10px">
+        ${S.me?`<button class="btn" data-act="save" data-p="${p.id}">${mine?K("Дауысты өзгерту","Изменить голос"):K("Дауыс беру","Проголосовать")}</button>`:""}
+        ${!mine?`<button class="btn ghost sm" data-act="peek" data-p="${p.id}">${S.open["r_"+p.id]?K("Нәтижені жасыру","Скрыть результаты"):K("Нәтижені көру","Смотреть результаты")}</button>`:""}
+      </div>
+      ${p.type==="multi"?`<div class="meta">${K("Бірнеше нұсқа таңдауға болады.","Можно выбрать несколько вариантов.")}</div>`:""}
+      ${extra}${who}
+    </div></details>`;
+}
+function viewPolls(){
+  return `<h2>${K("Сауалнамалар","Опросы")}</h2><p class="sub">${K("Сұрақты басыңыз, нұсқаны таңдаңыз — сыныптың нәтижесін бірден көресіз.","Нажмите на вопрос, выберите вариант — и сразу увидите результаты класса.")}</p>
+  ${dbNote()}${whoCard()}${POLLS.map(pollHTML).join("")}`;
+}
+
+/* --- Универсальный список с лайками (идеи, вопросы квиза, песни) --- */
+function listItems(coll,pref,emptyTxt){
+  const items=Object.entries(S.db[coll]||{}).map(([id,x])=>({id,...x}));
+  const likes=S.db.likes||{}; const cnt=id=>Object.keys(likes[pref+id]||{}).length;
+  items.sort((a,b)=>cnt(b.id)-cnt(a.id)||b.ts-a.ts);
+  return items.length?items.map(i=>`<div class="idea"><div>${esc(i.t).replace(/\n/g,"<br>")}</div>
+    <div class="by"><span>${esc(nameOf(i.by))} · ${new Date(i.ts).toLocaleDateString(locale())}</span>
+    <button class="like ${S.me&&(likes[pref+i.id]||{})[S.me]?"on":""}" data-act="like" data-k="${pref}${i.id}">👍 ${cnt(i.id)}</button></div></div>`).join(""):`<div class="empty">${emptyTxt}</div>`;
+}
+function addRow(coll,ph,btn){
+  return `<div class="row"><input data-in="${coll}" maxlength="200" placeholder="${esc(ph)}"><button class="btn sm" data-act="add" data-c="${coll}">${btn}</button></div>`;
+}
+
+/* --- Идеялар --- */
+function viewIdeas(){
+  return `<h2>${K("Сіздердің идеяларыңыз","Ваши идеи")}</h2><p class="sub">${K("Кездесуде не болғанын қалайсыз? Еркін жазыңыз — ең көп ұнатылғандар жоғарыға көтеріледі.","Что бы вы хотели на встрече? Пишите свободно — самые лайкнутые поднимутся вверх.")}</p>
+  ${dbNote()}${whoCard()}
+  <div class="card"><textarea id="ideaTxt" placeholder="${K("Мысалы: Каспийге шығу, келе алмағандардан бейне-құттықтау жинау, бірінші мұғалімімізді шақыру…","Например: поехать на Каспий, собрать видео-поздравления от тех, кто не сможет приехать, позвать нашего первого учителя…")}"></textarea>
+   <div style="margin-top:10px"><button class="btn" data-act="idea">${K("Идеяны жіберу","Отправить идею")}</button></div></div>
+  <div class="card">${listItems("ideas","i_",K("Әзірге идея жоқ. Бірінші болыңыз!","Пока нет идей. Будьте первым!"))}</div>`;
+}
+
+/* --- Жоспар --- */
+function calcHTML(){
+  const c=lsGet("z20calc",{fee:50000,n:20});
+  const total=(+c.fee||0)*(+c.n||0);
+  return `<div class="card"><h3>${K("Бюджет калькуляторы","Калькулятор бюджета")}</h3>
+   <p class="sub">${K("Жарна мен қонақ санын қойыңыз — ақшаның қалай бөлінетінін көресіз.","Подставьте взнос и число гостей — увидите, как распределить деньги.")}</p>
+   <div class="row"><div><label class="sub">${K("Бір адамнан жарна, ₸","Взнос с человека, ₸")}</label><input id="cFee" type="number" inputmode="numeric" value="${esc(c.fee)}"></div>
+   <div><label class="sub">${K("Адам саны (ұстаздар мен отбасымен)","Человек (с учителями и семьями)")}</label><input id="cN" type="number" inputmode="numeric" value="${esc(c.n)}"></div></div>
+   <div id="calcOut" style="margin-top:10px">${calcOut(total)}</div></div>`;
+}
+function calcOut(total){
+  return `<div class="calc-r"><span><b>${K("Жалпы қор","Общий фонд")}</b></span><b>${fmt(total)} ₸</b></div>`+
+    SPLIT.map(s=>`<div class="calc-r"><span>${esc(P(s[0]))} · ${Math.round(s[1]*100)}%</span><b>${fmt(total*s[1])} ₸</b></div>`).join("");
+}
+function viewPlan(){
+  const done=lsGet("z20chk",{});
+  return `<h2>${K("Кездесу жоспары","План встречи")}</h2><p class="sub">${K("Бір күндік негізгі сценарий. Егер сынып 2–3 күнді таңдаса, төмендегі блоктарды қосамыз.","Базовый сценарий на один день. Если класс выберет 2–3 дня — добавляем блоки ниже.")}</p>
+  <div class="card"><h3>${K("2027 жылғы 25 мамыр · басты күн","25 мая 2027 · главный день")}</h3><div class="tl" style="margin-top:12px">
+   ${PLAN_DAY.map(p=>`<div class="it"><div class="tm">${p[0]}</div><div class="tt">${esc(P(p[1]))}</div><div class="td">${esc(P(p[2]))}</div></div>`).join("")}
+  </div></div>
+  <div class="card"><h3>${K("2–3 күн таңдасақ","Если выберем 2–3 дня")}</h3><div class="tl" style="margin-top:12px">
+   ${PLAN_EXT.map(p=>`<div class="it"><div class="tt">${esc(P(p[0]))}</div><div class="td">${esc(P(p[1]))}</div></div>`).join("")}
+  </div></div>
+  <div class="card"><h3>${K("Мерзім бойынша дайындық","Подготовка по срокам")}</h3>
+   ${CHECK.map((c,i)=>`<label class="chk ${done[i]?"done":""}"><input type="checkbox" data-chk="${i}" ${done[i]?"checked":""}><span><b>${esc(P(c[0]))}</b> — ${esc(P(c[1]))}<small>${esc(P(c[2]))}</small></span></label>`).join("")}
+   <div class="meta">${K("Белгілер тек сіздің құрылғыңызда сақталады.","Отметки сохраняются на вашем устройстве.")}</div></div>
+  ${calcHTML()}`;
+}
+
+/* --- Ұстаздар --- */
+function viewTeachers(){
+  const T=Object.entries(S.db.teachers||{}).map(([id,x])=>({id,...x}));
+  const likes=S.db.likes||{}; const cnt=id=>Object.keys(likes["t_"+id]||{}).length;
+  T.sort((a,b)=>cnt(b.id)-cnt(a.id)||a.ts-b.ts);
+  return `<h2>${K("Біздің ұстаздар","Наши учителя")}</h2><p class="sub">${K("Кездесуде көргіміз келетін ұстаздарды жазыңыз: сынып жетекшісі, пән мұғалімдері, директор. Ерекше күтетіндерге 👍 басыңыз.","Впишите тех, кого хотим видеть на встрече: классного руководителя, учителей-предметников, директора. Нажмите 👍 у тех, кого особенно ждём.")}</p>
+  ${dbNote()}${whoCard()}
+  <div class="card"><h3>${K("Ұстаз қосу","Добавить учителя")}</h3>
+   <div style="margin-top:8px"><input id="tName" placeholder="${K("Ұстаздың аты-жөні","ФИО учителя")}"></div>
+   <div style="margin-top:8px"><input id="tRole" placeholder="${K("Пәні немесе қызметі (сынып жетекшісі, математика…)","Предмет или роль (классный руководитель, математика…)")}"></div>
+   <div style="margin-top:10px"><button class="btn" data-act="teacher">${K("Қосу","Добавить")}</button></div></div>
+  <div class="card" style="padding:6px 14px">${T.length?T.map(t=>`<div class="person"><div class="av t">${esc((t.n||"?")[0])}</div>
+   <div class="pname"><b>${esc(t.n)}</b><span>${esc(t.r||"")}${t.r?" · ":""}${K("қосқан","добавил(а)")}: ${esc(nameOf(t.by).split(" ")[0])}</span></div>
+   <button class="like ${S.me&&(likes["t_"+t.id]||{})[S.me]?"on":""}" data-act="like" data-k="t_${t.id}">👍 ${cnt(t.id)}</button></div>`).join(""):`<div class="empty">${K("Тізім әзірше бос.","Список пока пуст.")}<br>${K("Ұстаздарды еске түсіріп, жоғарыдан қосыңыз.","Вспомните учителей и добавьте их выше.")}</div>`}</div>`;
+}
+
+/* --- Афиша: квиз Наурызбека + гитаристы --- */
+function viewAfisha(){
+  const boss=cm(QUIZ_BOSS); const days=Math.max(0,Math.ceil((EVENT-new Date())/864e5));
+  return `<h2>${K("Афиша","Афиша")}</h2><p class="sub">${K("Кештің басты нөмірлері — дайындық бүгіннен басталады!","Главные номера вечера — готовиться начинаем уже сегодня!")}</p>
+  ${dbNote()}${whoCard()}
+  <section class="poster">
+    <div class="tag">${K("Міндетті нөмір","Обязательный номер")}</div>
+    <div class="ph">${K("КВИЗ","КВИЗ")}</div>
+    <div class="pn">${K("«Біз 2007 жылы»","«Мы в 2007-м»")}</div>
+    <div class="resp"><div class="av m">${esc(ini(boss))}</div><div><small>${K("Жауапты","Ответственный")}</small><b>${esc(boss.n+" "+boss.sn)}</b></div></div>
+    <p>${K("Наурызбек квизді өте жақсы құрастырады, сондықтан бұл біздің кештің міндетті нөмірі. Наурызбек, сұрақтарды әдемі, қызықты етіп дайындай бер! Ал сыныптастар төмендегі жолға тақырып пен сұрақ ұсына алады: ең көп 👍 жинағаны жоғарыға шығады.","Наурызбек отлично делает квизы, поэтому это обязательный номер вечера. Наурызбек, подготовь вопросы красиво и интересно! А одноклассники могут предложить темы и вопросы в поле ниже: набравшие больше всего 👍 поднимутся вверх.")}</p>
+    <div class="sect"><h4>${K("Квизге тақырып немесе сұрақ ұсыныңыз","Предложите тему или вопрос для квиза")}</h4>
+      ${addRow("qz",K("Мысалы: 2007 жылы қандай ән №1 болды?","Например: какая песня была №1 в 2007-м?"),K("Жіберу","Отправить"))}
+      <div style="margin-top:6px">${listItems("qz","q_",K("Әзірге ұсыныс жоқ.","Пока нет предложений."))}</div></div>
+  </section>
+  <section class="poster">
+    <div class="tag">${K("Кеш бағдарламасы","Программа вечера")}</div>
+    <div class="ph">${K("ГИТАРА","ГИТАРА")}</div>
+    <div class="pn">${K("Гитарамен ән кеші","Песни под гитару")}</div>
+    <div class="gtr">${GUITAR.map(id=>{const c=cm(id);return `<div class="g"><div class="av m">${esc(ini(c))}</div>${esc(c.n+" "+c.sn)}</div>`}).join("")}</div>
+    <p>${K("Мектепте гитарада ойнаған жігіттер — кездесуде қайтадан гитара алып, бәрімізге ән айтатын уақыт келді! Дайындық бүгіннен басталады: саусақ үйренбей қалған шығар, бірақ бірер кештен кейін бәрі есіңе түседі.","В школе они играли на гитаре, и на встрече пора снова взять её в руки и спеть для всех. Готовиться начинаем с сегодняшнего дня: пальцы могли отвыкнуть, но пары вечеров хватит, чтобы всё вспомнить.")}</p>
+    <p class="sub" style="text-align:center;margin-top:8px">${K(`Кездесуге дейін ${days} күн — дайындалуға уақыт жеткілікті. Тізімде жоқ, бірақ гитарада ойнайсыз ба? Өзіңіз де қосылыңыз!`,`До встречи ${days} дн. — времени на подготовку достаточно. Нет в списке, но играете на гитаре? Присоединяйтесь!`)}</p>
+    <div class="sect"><h4>${K("Қандай ән айтамыз?","Какие песни споём?")}</h4>
+      ${addRow("sg",K("Әннің аты және орындаушы","Название песни и исполнитель"),K("Қосу","Добавить"))}
+      <div style="margin-top:6px">${listItems("sg","s_",K("Әзірше ән ұсынылған жоқ.","Пока нет песен."))}</div></div>
+  </section>`;
+}
+
+/* ---------- РЕНДЕР ---------- */
+function render(){
+  const v={home:viewHome,class:viewClass,polls:viewPolls,ideas:viewIdeas,plan:viewPlan,teachers:viewTeachers,afisha:viewAfisha}[S.tab]||viewHome;
+  $("#app").innerHTML = v()+`<div class="foot">${K("Түлектерге 20 жыл · 2027 жылғы 25 мамыр","20 лет выпуска · 25 мая 2027")}</div>`;
+  renderNav(); tick();
+  const ws=$("#whoSel"); if(ws) ws.onchange=()=>$("#guestBox").classList.toggle("hide",ws.value!=="guest");
+  const q=$("#q"); if(q) q.oninput=()=>{S.q=q.value;const pos=q.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(pos,pos)};
+  const cf=$("#cFee"),cn=$("#cN");
+  if(cf){const up=()=>{lsSet("z20calc",{fee:cf.value,n:cn.value});$("#calcOut").innerHTML=calcOut((+cf.value||0)*(+cn.value||0))};cf.oninput=up;cn.oninput=up}
+  document.querySelectorAll("details.poll").forEach(d=>d.addEventListener("toggle",()=>{S.open[d.dataset.pid]=d.open}));
+  document.querySelectorAll("[data-draft]").forEach(i=>i.oninput=()=>{S.draft[i.dataset.draft].v=i.value});
+}
+function tick(){
+  const el=$("#cd"); if(!el) return;
+  let d=EVENT-new Date(); if(d<0) d=0;
+  const D=Math.floor(d/864e5),H=Math.floor(d/36e5)%24,M=Math.floor(d/6e4)%60,Sx=Math.floor(d/1e3)%60;
+  el.innerHTML=[[D,K("күн","дней")],[H,K("сағат","часов")],[M,K("минут","минут")],[Sx,K("секунд","секунд")]].map(x=>`<div><b>${String(x[0]).padStart(2,"0")}</b><span>${x[1]}</span></div>`).join("");
+}
+setInterval(tick,1000);
+
+function setLang(l){
+  LANG=l==="ru"?"ru":"kk"; lsSet("z20lang",LANG);
+  document.documentElement.lang=LANG;
+  document.title=K("Түлектерге 20 жыл · 2027 жылғы 25 мамыр","20 лет выпуска · 25 мая 2027");
+  renderTop(); render();
+}
+
+/* ---------- МУЗЫКА: song1 (қазақша) → song (на русском), по кругу ---------- */
+const TRACKS=[
+ {src:"song1.mp3",n:"Магнитола",tag:["қазақша","на казахском"]},
+ {src:"song.mp3",n:"Школа, школа, я скучаю",tag:["орысша","на русском"]}
+];
+const au=new Audio(); au.preload="none";
+let ti=0, started=false, drag=false, fails=0;
+const mm=s=>{if(!isFinite(s)||s<0)return"0:00";s=Math.floor(s);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+function renderTop(){
+  $("#lang").innerHTML=["kk","ru"].map(l=>`<button type="button" data-act="lang" data-v="${l}" class="${LANG===l?"on":""}">${l==="kk"?"ҚАЗ":"РУС"}</button>`).join("");
+  const playing=started&&!au.paused;
+  $("#mbtn").textContent = !started ? K("🎵 Музыканы қосу","🎵 Включить музыку") : playing ? K("⏸ Тоқтата тұру","⏸ Пауза") : K("▶ Жалғастыру","▶ Продолжить");
+  $("#pl").classList.toggle("hide",!started);
+  $("#pplay").textContent=playing?"⏸":"▶";
+  const t=TRACKS[ti]; $("#ptitle").textContent=`${ti+1}/${TRACKS.length} · ${t.n} (${P(t.tag)})`;
+  renderNav();
+}
+function play(i){
+  ti=((i%TRACKS.length)+TRACKS.length)%TRACKS.length;
+  au.src=TRACKS[ti].src;
+  const sk=$("#pseek"); sk.value=0; sk.disabled=true; $("#pcur").textContent="0:00"; $("#pdur").textContent="0:00";
+  renderTop();
+  return au.play().then(()=>{fails=0}).catch(err=>{
+    if(err&&err.name==="AbortError") return;              // трек сменили вручную
+    if(err&&err.name==="NotAllowedError"){started=false;renderTop();return}
+    fails++;                                              // файл не найден — пробуем следующий
+    if(fails>=TRACKS.length){started=false;fails=0;renderTop();alert(K("Музыка файлдары табылмады (song1.mp3, song.mp3)","Файлы музыки не найдены (song1.mp3, song.mp3)"));return}
+    play(ti+1);
+  });
+}
+function toggleMusic(){
+  if(!started){started=true;fails=0;play(0);return}
+  if(au.paused) au.play().catch(()=>{}); else au.pause();
+}
+$("#mbtn").onclick=toggleMusic; $("#pplay").onclick=toggleMusic;
+$("#pnext").onclick=()=>play(ti+1);
+$("#pprev").onclick=()=>{ if(au.currentTime>3) au.currentTime=0; else play(ti-1); };
+au.addEventListener("play",renderTop); au.addEventListener("pause",renderTop);
+au.addEventListener("ended",()=>play(ti+1));
+const durUp=()=>{ if(isFinite(au.duration)&&au.duration>0){ $("#pseek").disabled=false; $("#pdur").textContent=mm(au.duration);} };
+au.addEventListener("loadedmetadata",durUp); au.addEventListener("durationchange",durUp);
+au.addEventListener("timeupdate",()=>{
+  if(!drag&&isFinite(au.duration)&&au.duration>0) $("#pseek").value=Math.round(au.currentTime/au.duration*1000);
+  $("#pcur").textContent=mm(au.currentTime);
+});
+const sk=$("#pseek");
+sk.addEventListener("pointerdown",()=>{drag=true});
+["pointerup","pointercancel"].forEach(e=>sk.addEventListener(e,()=>{drag=false}));
+sk.addEventListener("input",()=>{
+  if(isFinite(au.duration)&&au.duration>0){ au.currentTime=sk.value/1000*au.duration; $("#pcur").textContent=mm(au.currentTime); }
+});
+
+/* ---------- ДЕЙСТВИЯ ---------- */
+async function refresh(){
+  try{ S.db=await db.all(); await reconcile(); S.err=""; }catch(e){ S.err=String(e.message||e); }
+}
+async function act(a,el){
+  if(a==="tab"){S.tab=el.dataset.v;lsSet("z20tab",S.tab);render();window.scrollTo(0,0);return}
+  if(a==="lang"){setLang(el.dataset.v);return}
+  if(a==="filter"){S.filter=el.dataset.v;render();return}
+  if(a==="unme"){S.me=null;lsSet("z20me",null);S.draft={};render();return}
+  if(a==="setme"){
+    const v=$("#whoSel").value; if(!v) return alert(K("Тізімнен өзіңізді таңдаңыз","Выберите себя из списка"));
+    if(v==="guest"){
+      const n=$("#guestName").value.trim(); if(!n) return alert(K("Аты-жөніңізді жазыңыз","Введите имя"));
+      const id="g_"+uid(); await db.set("guests/"+id,{n}); S.me=id;
+    }else S.me=v;
+    lsSet("z20me",S.me); S.draft={}; await refresh(); render(); return;
+  }
+  if(a==="opt"){
+    const p=POLLS.find(p=>p.id===el.dataset.p), o=el.dataset.o;
+    if(!S.me){window.scrollTo({top:0,behavior:"smooth"});return}
+    const dr=S.draft[p.id]||(S.draft[p.id]={sel:[],v:""});
+    if(p.type==="multi") dr.sel=dr.sel.includes(o)?dr.sel.filter(x=>x!==o):[...dr.sel,o]; else dr.sel=[o];
+    S.open[p.id]=true; render(); return;
+  }
+  if(a==="peek"){S.open["r_"+el.dataset.p]=!S.open["r_"+el.dataset.p];S.open[el.dataset.p]=true;render();return}
+  if(a==="save"){
+    const p=POLLS.find(p=>p.id===el.dataset.p), dr=S.draft[p.id];
+    if(!dr||!dr.sel.length) return alert(K("Нұсқаны таңдаңыз","Выберите вариант"));
+    const co=p.opts.find(o=>o.custom&&dr.sel.includes(o.id));
+    if(co&&!String(dr.v).trim()) return alert(K("Өз нұсқаңызды жазыңыз","Впишите свой вариант"));
+    if(co&&co.custom==="number"&&!(Number(dr.v)>0)) return alert(K("Соманы санмен енгізіңіз","Введите сумму числом"));
+    const val={o:p.type==="multi"?dr.sel:dr.sel[0],t:Date.now()};
+    if(co&&p.type==="single") val.v=co.custom==="number"?Number(dr.v):String(dr.v).trim();
+    try{ await db.set(`votes/${p.id}/${S.me}`,val); S.open[p.id]=true; await refresh(); S.err=""; }
+    catch(e){ S.err=String(e.message||e); }
+    render(); return;
+  }
+  if(a==="idea"){
+    if(!S.me) return alert(K("Алдымен кім екеніңізді таңдаңыз","Сначала выберите, кто вы"));
+    const t=$("#ideaTxt").value.trim(); if(!t) return;
+    await db.set("ideas/"+uid(),{t,by:S.me,ts:Date.now()}); await refresh(); render(); return;
+  }
+  if(a==="add"){
+    if(!S.me) return alert(K("Алдымен кім екеніңізді таңдаңыз","Сначала выберите, кто вы"));
+    const c=el.dataset.c, inp=document.querySelector(`[data-in="${c}"]`); const t=inp?inp.value.trim():""; if(!t) return;
+    await db.set(c+"/"+uid(),{t,by:S.me,ts:Date.now()}); await refresh(); render(); return;
+  }
+  if(a==="teacher"){
+    if(!S.me) return alert(K("Алдымен кім екеніңізді таңдаңыз","Сначала выберите, кто вы"));
+    const n=$("#tName").value.trim(); if(!n) return alert(K("Аты-жөнін енгізіңіз","Введите ФИО"));
+    await db.set("teachers/"+uid(),{n,r:$("#tRole").value.trim(),by:S.me,ts:Date.now()}); await refresh(); render(); return;
+  }
+  if(a==="like"){
+    if(!S.me) return alert(K("Алдымен кім екеніңізді таңдаңыз","Сначала выберите, кто вы"));
+    const k=el.dataset.k, on=((S.db.likes||{})[k]||{})[S.me];
+    await db.set(`likes/${k}/${S.me}`,on?null:true); await refresh(); render(); return;
+  }
+}
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-act]"); if(!el) return;
+  e.preventDefault(); act(el.dataset.act,el).catch(err=>{S.err=String(err.message||err);render()});
+});
+document.addEventListener("change",e=>{
+  const c=e.target.closest("[data-chk]"); if(!c) return;
+  const d=lsGet("z20chk",{}); d[c.dataset.chk]=c.checked; lsSet("z20chk",d);
+  c.closest(".chk").classList.toggle("done",c.checked);
+});
+function idle(){const a=document.activeElement;return !(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))}
+setInterval(async()=>{ if(document.hidden||!idle()||LOCAL) return; await refresh(); render(); },25000);
+
+/* ---------- ФОН: мягкие золотые искры ---------- */
 (function(){
-  const c=document.getElementById("cf"),x=c.getContext("2d");let W,Hh,P=[];
-  const rs=()=>{W=c.width=innerWidth;Hh=c.height=innerHeight};rs();addEventListener("resize",rs);
-  for(let i=0;i<45;i++)P.push({x:Math.random()*W,y:Math.random()*Hh,r:2+Math.random()*3,v:.3+Math.random()*.8,s:Math.random()*6});
-  (function f(){x.clearRect(0,0,W,Hh);P.forEach(p=>{p.y+=p.v;p.s+=.02;p.x+=Math.sin(p.s)*.5;if(p.y>Hh){p.y=-5;p.x=Math.random()*W}
-    x.fillStyle="rgba(242,196,109,.55)";x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill()});requestAnimationFrame(f)})();
+  const c=$("#fx"), x=c.getContext("2d"); let W,H,P2=[];
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  function size(){W=c.width=innerWidth;H=c.height=innerHeight;P2=Array.from({length:Math.min(46,Math.floor(W*H/22000))},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.4,s:Math.random()*.25+.05,a:Math.random()*6.28}))}
+  size(); addEventListener("resize",size);
+  (function loop(){
+    x.clearRect(0,0,W,H);
+    P2.forEach(p=>{p.y-=p.s;p.a+=.02;if(p.y<-4){p.y=H+4;p.x=Math.random()*W}
+      x.globalAlpha=.25+.35*Math.abs(Math.sin(p.a));x.fillStyle="#ffd98a";x.beginPath();x.arc(p.x,p.y,p.r,0,6.28);x.fill()});
+    requestAnimationFrame(loop);
+  })();
 })();
-show((location.hash||"#home").slice(1).replace(/[^a-z]/g,"")||"home");
+
+/* ---------- СТАРТ ---------- */
+document.documentElement.lang=LANG;
+document.title=K("Түлектерге 20 жыл · 2027 жылғы 25 мамыр","20 лет выпуска · 25 мая 2027");
+renderTop();
+render();
+refresh().then(render);
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
 </html>
