@@ -600,6 +600,9 @@ const POLLS = [
    {id:"part",l:["Тек салтанатты бөлімге","Только на торжественную часть"]}]}
 ];
 
+/* в каждый опрос, где ещё нет своего варианта, добавляем «Өз нұсқам / Свой вариант» с полем для текста */
+POLLS.forEach(p=>{ if(!p.opts.some(o=>o.custom)) p.opts.push({id:"custom",l:["Өз нұсқам","Свой вариант"],custom:"text",ph:["Өз нұсқаңызды жазыңыз","Впишите свой вариант"]}); });
+
 const PLAN_DAY = [
  ["10:00",["Туған мектептің алдына жиналу","Сбор у родной школы"],["Баспалдақта ортақ сурет, ұстаздармен кездесу, дәліз бен өз кабинетімізді аралау.","Общее фото на ступенях, встреча с учителями, прогулка по коридорам и своему кабинету."]],
  ["11:30",["«2007 жылғыдай» сынып сағаты","Классный час «как в 2007»"],["Аты-жөнін атау, кім қалай өзгерді, әрқайсысынан 5 минут сөз: немен айналысамын, немен мақтанамын.","Перекличка, кто как изменился, 5 минут слова от каждого: чем занимаюсь, чем горжусь."]],
@@ -714,7 +717,8 @@ function results(p){
   ids.forEach(vid=>{
     const x=v[vid]; const sel=Array.isArray(x.o)?x.o:[x.o];
     sel.forEach(o=>{ if(by[o]){by[o].n++;by[o].who.push(vid);
-      if(x.v!=null&&x.v!==""&&sel.length===1) by[o].vals.push({vid,v:x.v}); }});
+      const po=p.opts.find(q=>q.id===o);
+      if(x.v!=null&&x.v!==""&&po&&po.custom) by[o].vals.push({vid,v:x.v}); }});
   });
   const max=Math.max(0,...Object.values(by).map(b=>b.n));
   return {by,total:ids.length,max};
@@ -827,7 +831,7 @@ function viewHome(){
 /* --- Сынып --- */
 function viewClass(){
   const att=votesOf("attend");
-  const lab={yes:[K("Барамын","Буду"),"yes"],likely:[K("Мүмкін","Скорее да"),"likely"],maybe:[K("Білмеймін","Не знаю"),"maybe"],online:[K("Онлайн","Онлайн"),"online"],no:[K("Келмеймін","Не смогу"),"no"]};
+  const lab={yes:[K("Барамын","Буду"),"yes"],likely:[K("Мүмкін","Скорее да"),"likely"],maybe:[K("Білмеймін","Не знаю"),"maybe"],online:[K("Онлайн","Онлайн"),"online"],no:[K("Келмеймін","Не смогу"),"no"],custom:[K("Басқа","Другое","Other"),"maybe"]};
   const list=CLASSMATES.filter(c=>S.filter==="all"||c.g===S.filter);
   const m=CLASSMATES.filter(c=>c.g==="m").length, f=CLASSMATES.length-m;
   const intro=S.me
@@ -1139,7 +1143,7 @@ async function act(a,el){
     if(co&&!String(dr.v).trim()) return alert(K("Өз нұсқаңызды жазыңыз","Впишите свой вариант"));
     if(co&&co.custom==="number"&&!(Number(dr.v)>0)) return alert(K("Соманы санмен енгізіңіз","Введите сумму числом"));
     const val={o:p.type==="multi"?dr.sel:dr.sel[0],t:Date.now()};
-    if(co&&p.type==="single") val.v=co.custom==="number"?Number(dr.v):String(dr.v).trim();
+    if(co) val.v=co.custom==="number"?Number(dr.v):String(dr.v).trim();
     try{ await db.set(`votes/${p.id}/${S.me}`,val); S.open[p.id]=true; await refresh(); S.err=""; }
     catch(e){ S.err=String(e.message||e); S.open[p.id]=true; setPath(S.db,`votes/${p.id}/${S.me}`,val); }   // показываем голос у себя, досылаем при следующей связи
     render(); return;

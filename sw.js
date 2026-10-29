@@ -1,7 +1,7 @@
 /* Network-first: свежая версия при наличии сети, кэш — когда связи нет.
    Музыку (mp3), запросы с Range, чужие домены и не-GET не трогаем:
    иначе перемотка трека и голоса в базе ломаются. */
-const CACHE = "z20-v4";
+const CACHE = "z20-v5";
 const FILES = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
