@@ -243,9 +243,287 @@ function lsGet(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.pa
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
 /* ---------- ЯЗЫК: основной — казахский ---------- */
-let LANG = lsGet("z20lang","kk")==="ru" ? "ru" : "kk";
-const K = (kk,ru)=>LANG==="kk"?kk:ru;
-const P = a=>a[LANG==="kk"?0:1];
+const LANGS = ["kk","ru","en"], LANG_LABEL = {kk:"ҚАЗ",ru:"РУС",en:"ENG"};
+let LANG = LANGS.includes(lsGet("z20lang","kk")) ? lsGet("z20lang","kk") : "kk";
+// Английский: словарь по русскому тексту (kk/ru-пары остаются как есть; нет перевода — показываем русский)
+const EN = {
+"(гость)": "(guest)",
+"Гость": "Guest",
+"Вы": "You",
+"Это не я": "Not me",
+"Кто вы?": "Who are you?",
+"Выберите себя, чтобы голосовать и писать идеи. Одно имя — один голос.": "Pick yourself to vote and post ideas. One name — one vote.",
+"— выберите из списка —": "— choose from the list —",
+"Я не из списка (гость / учитель)": "I'm not on the list (guest / teacher)",
+"Ваше имя и фамилия": "Your first and last name",
+"Продолжить": "Continue",
+"локальная": "local",
+"База: ": "Database: ",
+"Общая база не подключена — голоса только на этом телефоне.": "No shared database connected — votes are stored on this phone only.",
+"Чтение: успешно": "Read: success",
+"Запись": "Write",
+"Чтение": "Read",
+"Формат ответа: ": "Response format: ",
+"Повторное чтение записанного": "Re-reading the saved value",
+"нет интернета, либо у скрипта доступ не «У всех»": "no internet, or the script's access is not set to \"Anyone\"",
+"Итог: база не работает. Отправьте скриншот этого текста.": "Result: the database is not working. Send a screenshot of this text.",
+"Итог: база работает.": "Result: the database works.",
+"Демо-режим: голоса сохраняются только на этом устройстве. Чтобы все видели общие результаты, подключите базу (см. README в репозитории).": "Demo mode: votes are saved on this device only. To let everyone see shared results, connect the database (see README in the repository).",
+"Нет связи с базой: ": "No connection to the database: ",
+"Попробуйте позже.": "Please try again later.",
+"пока нет голосов": "no votes yet",
+"Юбилейная встреча одноклассников": "Class reunion anniversary",
+"лет выпуска": "years since graduation",
+"25 мая 2027": "May 25, 2027",
+"вторник · Актау · выпуск 2007 года": "Tuesday · Aktau · class of 2007",
+"Наш класс": "Our class",
+"одноклассников": "classmates",
+"парней": "boys",
+"девушек": "girls",
+"Парни": "Boys",
+"Девушки": "Girls",
+"Как идёт подготовка": "Preparation progress",
+"скорее всего приедут": "will most likely come",
+"Проголосовать": "Vote",
+"Афиша вечера": "Evening poster",
+"Квиз": "Quiz",
+"Песни под гитару": "Guitar songs",
+"Открыть афишу": "Open the poster",
+"Зачем всё это": "Why all this",
+"Двадцать лет прошло с того дня, как мы вышли из школы. Давайте соберёмся: вспомнить, посмеяться и увидеть, кем мы стали. Выберите формат, оставьте идеи и пригласите учителей — решим всё вместе.": "Twenty years have passed since we left school. Let's get together to remember, laugh and see who we've become. Choose the format, leave your ideas and invite the teachers — we'll decide everything together.",
+"Буду": "I'll be there",
+"Скорее да": "Probably",
+"Не знаю": "Not sure",
+"Онлайн": "Online",
+"Не смогу": "Can't come",
+"Чтобы выбрать другого человека, нажмите выше «Это не я».": "To choose a different person, tap \"Not me\" above.",
+"Нажмите на своё имя — вы войдёте как этот человек. Приедете ли, отметите во вкладке «Опросы».": "Tap your name — you'll sign in as that person. Say whether you're coming in the \"Polls\" tab.",
+"ВЫ": "YOU",
+"парень": "boy",
+"девушка": "girl",
+"Одноклассники": "Classmates",
+"Выпуск 2007": "Class of 2007",
+"человек": "people",
+"Все": "All",
+"Метка справа — ответ на вопрос «Вы придёте?» (видна у тех, кто уже ответил).": "The badge on the right is the answer to \"Will you come?\" (shown for those who have already answered).",
+"Свои суммы": "Custom amounts",
+"среднее": "average",
+"медиана": "median",
+"Свои варианты": "Custom answers",
+"Кто как проголосовал": "Who voted how",
+"голосов": "votes",
+"лидирует": "leading",
+"Сначала выберите себя:": "First choose yourself:",
+"Изменить голос": "Change vote",
+"Скрыть результаты": "Hide results",
+"Смотреть результаты": "View results",
+"Можно выбрать несколько вариантов.": "You can choose several options.",
+"Опросы": "Polls",
+"Нажмите на вопрос, выберите вариант — и сразу увидите результаты класса.": "Tap a question, choose an option — and instantly see the class results.",
+"Проверить базу": "Check database",
+"Ваши идеи": "Your ideas",
+"Что бы вы хотели на встрече? Пишите свободно — самые лайкнутые поднимутся вверх.": "What would you like at the reunion? Write freely — the most liked ones rise to the top.",
+"Например: поехать на Каспий, собрать видео-поздравления от тех, кто не сможет приехать, позвать нашего первого учителя…": "For example: a trip to the Caspian, collecting video greetings from those who can't come, inviting our first teacher…",
+"Отправить идею": "Submit idea",
+"Пока нет идей. Будьте первым!": "No ideas yet. Be the first!",
+"Калькулятор бюджета": "Budget calculator",
+"Подставьте взнос и число гостей — увидите, как распределить деньги.": "Enter the contribution and the number of guests — see how to split the money.",
+"Взнос с человека, ₸": "Contribution per person, ₸",
+"Человек (с учителями и семьями)": "People (with teachers and families)",
+"Общий фонд": "Total fund",
+"План встречи": "Reunion plan",
+"Базовый сценарий на один день. Если класс выберет 2–3 дня — добавляем блоки ниже.": "A basic one-day scenario. If the class chooses 2–3 days, we add the blocks below.",
+"25 мая 2027 · главный день": "May 25, 2027 · main day",
+"Если выберем 2–3 дня": "If we choose 2–3 days",
+"Подготовка по срокам": "Preparation timeline",
+"Отметки сохраняются на вашем устройстве.": "Checkmarks are saved on your device.",
+"Наши учителя": "Our teachers",
+"Впишите тех, кого хотим видеть на встрече: классного руководителя, учителей-предметников, директора. Нажмите 👍 у тех, кого особенно ждём.": "Add the people we want to see at the reunion: the homeroom teacher, subject teachers, the principal. Tap 👍 for those we especially look forward to.",
+"Добавить учителя": "Add a teacher",
+"ФИО учителя": "Teacher's full name",
+"Предмет или роль (классный руководитель, математика…)": "Subject or role (homeroom teacher, math…)",
+"Добавить": "Add",
+"добавил(а)": "added by",
+"Список пока пуст.": "The list is empty for now.",
+"Вспомните учителей и добавьте их выше.": "Think of the teachers and add them above.",
+"Афиша": "Poster",
+"Главные номера вечера — готовиться начинаем уже сегодня!": "The main numbers of the evening — we start preparing today!",
+"Обязательный номер": "Must-have number",
+"КВИЗ": "QUIZ",
+"«Мы в 2007-м»": "\"Us in 2007\"",
+"Ответственный": "Host",
+"Наурызбек отлично делает квизы, поэтому это обязательный номер вечера. Наурызбек, подготовь вопросы красиво и интересно! А одноклассники могут предложить темы и вопросы в поле ниже: набравшие больше всего 👍 поднимутся вверх.": "Nauryzbek makes great quizzes, so this is a must-have number of the evening. Nauryzbek, prepare the questions beautifully and with interest! Classmates can suggest topics and questions in the field below: the ones with the most 👍 rise to the top.",
+"Предложите тему или вопрос для квиза": "Suggest a quiz topic or question",
+"Например: какая песня была №1 в 2007-м?": "For example: what song was No. 1 in 2007?",
+"Отправить": "Send",
+"Пока нет предложений.": "No suggestions yet.",
+"Программа вечера": "Evening program",
+"ГИТАРА": "GUITAR",
+"В школе они играли на гитаре, и на встрече пора снова взять её в руки и спеть для всех. Готовиться начинаем с сегодняшнего дня: пальцы могли отвыкнуть, но пары вечеров хватит, чтобы всё вспомнить.": "They played guitar at school, and at the reunion it's time to pick it up again and sing for everyone. We start preparing today: fingers may be out of practice, but a couple of evenings are enough to remember everything.",
+"Какие песни споём?": "Which songs shall we sing?",
+"Название песни и исполнитель": "Song title and artist",
+"Пока нет песен.": "No songs yet.",
+"Ваш номер": "Your number",
+"ПОЖЕЛАНИЯ": "WISHES",
+"Что ещё добавим в программу?": "What else shall we add to the program?",
+"Квиз готовит Наурызбек, на гитаре играют ребята. А кто возьмёт остальные номера? Напишите своё предложение: какой номер хотите и готовы ли подготовить его сами.": "Nauryzbek prepares the quiz, the guys play guitar. Who will take the other numbers? Write your suggestion: what number you want and whether you're ready to prepare it yourself.",
+"Например: караоке, танцы, конкурс песен, воспоминания о школе, видео-поздравления, лотерея, фотовыставка…": "For example: karaoke, dancing, a song contest, school memories, video greetings, a raffle, a photo exhibition…",
+"Предложите свой номер": "Suggest your own number",
+"Например: караоке — организую я": "For example: karaoke — I'll organize it",
+"Пока нет предложений. Будьте первым!": "No suggestions yet. Be the first!",
+"20 лет выпуска · 25 мая 2027": "20 years since graduation · May 25, 2027",
+"дней": "days",
+"часов": "hours",
+"минут": "minutes",
+"секунд": "seconds",
+"20 лет выпуска": "20 years since graduation",
+"Выйти": "Sign out",
+"Полный экран": "Full screen",
+"Файл музыки не найден: ": "Music file not found: ",
+"Проверяю…": "Checking…",
+"Выберите себя из списка": "Choose yourself from the list",
+"Введите имя": "Enter your name",
+"Выберите вариант": "Choose an option",
+"Впишите свой вариант": "Enter your own option",
+"Введите сумму числом": "Enter the amount as a number",
+"Сначала выберите, кто вы": "First choose who you are",
+"Введите ФИО": "Enter the full name",
+"Вы придёте?": "Will you come?",
+"Нужно, чтобы понять масштаб": "We need it to understand the scale",
+"Обязательно буду!": "Definitely!",
+"Пока не знаю": "Don't know yet",
+"Подключусь онлайн (живу далеко)": "I'll join online (I live far away)",
+"К сожалению, не смогу": "Unfortunately, I can't",
+"Какая дата?": "Which date?",
+"25 мая 2027 — вторник, день последнего звонка": "May 25, 2027 — Tuesday, the Last Bell day",
+"25 мая (вторник) — ровно в день последнего звонка": "May 25 (Tuesday) — exactly on the Last Bell day",
+"Ближайшие выходные раньше: 22–23 мая": "The nearest earlier weekend: May 22–23",
+"Выходные позже: 29–30 мая": "A later weekend: May 29–30",
+"Сколько дней отмечаем?": "How many days do we celebrate?",
+"Выберите комфортный формат": "Choose a comfortable format",
+"1 день — торжественный вечер": "1 day — a festive evening",
+"2 дня — вечер + выезд на природу": "2 days — evening + a trip to nature",
+"3 дня — мини-путешествие всем классом": "3 days — a mini-trip for the whole class",
+"Где отмечаем?": "Where do we celebrate?",
+"Город, область или заграница": "City, region or abroad",
+"В Актау — ресторан / банкетный зал": "In Aktau — restaurant / banquet hall",
+"Актау + выезд за город (Каспий, Мангышлак, база отдыха)": "Aktau + a trip out of town (Caspian, Mangyshlak, a resort)",
+"Другой город Казахстана (Астана, Алматы…)": "Another city in Kazakhstan (Astana, Almaty…)",
+"За границей: Дубай": "Abroad: Dubai",
+"За границей: Турция / Грузия / Азербайджан": "Abroad: Turkey / Georgia / Azerbaijan",
+"Свой вариант": "Own option",
+"Куда бы вы поехали?": "Where would you go?",
+"Взнос с человека": "Contribution per person",
+"Какую сумму готовы вложить (₸)": "How much are you ready to contribute (₸)",
+"Около 20 000 ₸": "About 20,000 ₸",
+"Около 50 000 ₸": "About 50,000 ₸",
+"От 100 000 ₸": "From 100,000 ₸",
+"Своя сумма": "Own amount",
+"Например, 75000": "For example, 75000",
+"Что обязательно в программе?": "What must be in the program?",
+"Можно выбрать несколько": "You can choose several",
+"Встреча в родной школе, фото на ступенях": "Meeting at our old school, photo on the steps",
+"Слово учителям и приглашённые педагоги": "Words to the teachers and invited educators",
+"Видео-слайдшоу «Тогда и сейчас»": "Video slideshow \"Then and now\"",
+"Квиз «Мы в 2007-м»": "Quiz \"Us in 2007\"",
+"Капсула времени — письма себе на 10 лет": "Time capsule — letters to ourselves for 10 years",
+"Дискотека с музыкой 2000-х": "Disco with 2000s music",
+"Фотостена: школьные и детские фото": "Photo wall: school and childhood photos",
+"Профессиональный фотограф / видеограф": "Professional photographer / videographer",
+"Выезд на природу, шашлык, костёр": "A trip to nature, barbecue, campfire",
+"Активности: квадроциклы, яхта, спорт": "Activities: quad bikes, yacht, sports",
+"Подарок школе / помощь школе": "A gift to the school / helping the school",
+"Какие темы для квиза?": "Which quiz topics?",
+"Подскажем Наурызбеку · можно несколько": "We'll suggest to Nauryzbek · several allowed",
+"Школьные годы и учителя": "School years and teachers",
+"Музыка и фильмы 2000-х": "2000s music and movies",
+"Наш класс: «кто есть кто»": "Our class: \"who is who\"",
+"Казахстан, Актау и нефть": "Kazakhstan, Aktau and oil",
+"Логика и занимательная наука": "Logic and entertaining science",
+"Угадай по фото": "Guess by the photo",
+"Стиль и дресс-код": "Style and dress code",
+"Как одеваемся": "How do we dress",
+"Ретро 2007 — стиль выпускного": "Retro 2007 — graduation style",
+"Вечерний — костюмы и платья": "Evening — suits and dresses",
+"Свободный, главное — настроение": "Free style, mood matters most",
+"Формат гостей": "Guest format",
+"Только класс или с семьями?": "Class only or with families?",
+"Только одноклассники и учителя": "Classmates and teachers only",
+"Можно с супругом / супругой": "Spouses welcome",
+"С семьями, дети — отдельный семейный день": "With families, kids — a separate family day",
+"Приглашаем учителей?": "Do we invite the teachers?",
+"Кого хотим видеть рядом": "Whom we want to see with us",
+"Да, всех, кто сможет приехать": "Yes, everyone who can come",
+"Классного руководителя и самых близких": "The homeroom teacher and the closest ones",
+"Только на торжественную часть": "Only for the ceremonial part",
+"Сбор у родной школы": "Gathering at our old school",
+"Общее фото на ступенях, встреча с учителями, прогулка по коридорам и своему кабинету.": "A group photo on the steps, meeting the teachers, a walk through the corridors and our classroom.",
+"Классный час «как в 2007»": "Homeroom class \"like in 2007\"",
+"Перекличка, кто как изменился, 5 минут слова от каждого: чем занимаюсь, чем горжусь.": "Roll call, who has changed how, 5 minutes for each: what I do, what I'm proud of.",
+"Обед и перерыв": "Lunch and break",
+"Отдых, дорога в ресторан, время переодеться.": "Rest, the way to the restaurant, time to change.",
+"Welcome-зона": "Welcome zone",
+"Фотозона, стена со школьными фото, «капсула времени», бейджи с именами и школьными прозвищами.": "Photo zone, a wall of school photos, the \"time capsule\", name badges with school nicknames.",
+"Торжественная часть": "Ceremonial part",
+"Видео-слайдшоу «тогда и сейчас», слово учителям и классному руководителю, минута памяти и благодарности.": "Video slideshow \"then and now\", words to the teachers and the homeroom teacher, a minute of remembrance and gratitude.",
+"Ужин и тосты": "Dinner and toasts",
+"Свободная рассадка — чтобы пообщаться со всеми. Игра «Угадай по детскому фото».": "Free seating — to chat with everyone. The game \"Guess by the childhood photo\".",
+"Квиз Наурызбека Ерманова: музыка, фильмы, мода, цены. Команды «парни против девушек».": "Nauryzbek Ermanov's quiz: music, movies, fashion, prices. Teams \"boys vs girls\".",
+"Мәлік, Бағдат, Медет, Өркен и Кенжебек играют на гитаре, поём все вместе.": "Malik, Bagdat, Medet, Orken and Kenzhebek play guitar, we all sing together.",
+"Дискотека 2000-х": "2000s disco",
+"Плейлист, составленный всем классом заранее.": "A playlist put together by the whole class in advance.",
+"Финал": "Finale",
+"Запечатываем капсулу времени на 10 лет, общее фото, договариваемся о следующей встрече.": "We seal the time capsule for 10 years, a group photo, and agree on the next reunion.",
+"День 0 · вечер накануне": "Day 0 · the evening before",
+"Неформальная встреча для тех, кто приехал заранее: кафе, прогулка по набережной, чай и разговоры.": "An informal gathering for those who arrived early: a café, a walk along the embankment, tea and conversation.",
+"День 1 · 25 мая": "Day 1 · May 25",
+"Главная программа — как в расписании выше.": "The main program — as in the schedule above.",
+"День 2 · на природе": "Day 2 · in nature",
+"Выезд за город: шашлык, костёр, спортивные игры, квадроциклы или яхта, вечерняя гитара и общее прощальное фото.": "A trip out of town: barbecue, campfire, sports games, quad bikes or a yacht, evening guitar and a farewell group photo.",
+"Ноябрь 2026": "November 2026",
+"Создать общий чат, собрать контакты всех 20 одноклассников": "Create a group chat, collect contacts of all 20 classmates",
+"Кто не в чате — найти через друзей": "Find those not in the chat through friends",
+"Декабрь – январь": "December – January",
+"Пройти опросы: дата, формат, место, бюджет": "Complete the polls: date, format, place, budget",
+"Результаты видны в приложении": "Results are visible in the app",
+"Февраль": "February",
+"Назначить оргкомитет (3–4 человека) и казначея": "Appoint an organizing committee (3–4 people) and a treasurer",
+"Единый счёт или Kaspi, отчёт по тратам открытый": "A single account or Kaspi, open spending report",
+"Март": "March",
+"Забронировать площадку, договориться с ведущим и фотографом": "Book the venue, agree with a host and a photographer",
+"Для 20 человек + учителя + семьи, если решим": "For 20 people + teachers + families, if we decide so",
+"Найти и пригласить учителей, особенно классного руководителя": "Find and invite the teachers, especially the homeroom teacher",
+"Заполните вкладку «Учителя»": "Fill in the \"Teachers\" tab",
+"Апрель": "April",
+"Собрать детские и школьные фото, видео-поздравления от тех, кто не приедет": "Collect childhood and school photos, video greetings from those who won't come",
+"Из них сделаем слайдшоу": "We'll make a slideshow from them",
+"Подготовить квиз (ответственный — Наурызбек Ерманов), гитаристы разучивают репертуар": "Prepare the quiz (host — Nauryzbek Ermanov), guitarists learn the repertoire",
+"Вопросы и песни можно писать во вкладке «Афиша»": "Questions and songs can be written in the \"Poster\" tab",
+"Составить плейлист 2000-х и тосты": "Make a 2000s playlist and toasts",
+"Каждый присылает 3 песни": "Everyone sends 3 songs",
+"Май": "May",
+"Финальный список гостей, рассадка, сценарий, подарки": "Final guest list, seating, script, gifts",
+"Напомнить о трансфере и дресс-коде": "Remind about transfer and dress code",
+"Праздник": "Celebration",
+"Фото, видео, капсула времени": "Photos, video, time capsule",
+"Площадка и банкет": "Venue and banquet",
+"Фотограф и видео": "Photographer and video",
+"Ведущий, музыка, звук": "Host, music, sound",
+"Декор, подарки учителям, мелочи": "Decor, gifts for teachers, small things",
+"Резерв": "Reserve",
+"Главная": "Home",
+"Класс": "Class",
+"Идеи": "Ideas",
+"План": "Plan",
+"Учителя": "Teachers",
+"Музыка 1 · Магнитола": "Music 1 · Magnitola",
+"Музыка 2 · Школа": "Music 2 · School"
+};
+const K = (kk,ru,en)=>LANG==="kk"?kk:LANG==="ru"?ru:(en!==undefined?en:(EN[ru]!==undefined?EN[ru]:ru));
+const P = a=>LANG==="kk"?a[0]:LANG==="ru"?a[1]:(a[2]!==undefined?a[2]:(EN[a[1]]!==undefined?EN[a[1]]:a[1]));
+// имена одноклассников в английской версии — латиницей
+const TLIT = {"ә":"a","ғ":"g","қ":"k","ң":"n","ө":"o","ұ":"u","ү":"u","һ":"h","і":"i","а":"a","б":"b","в":"v","г":"g","д":"d","е":"e","ё":"yo","ж":"zh","з":"z","и":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"kh","ц":"ts","ч":"ch","ш":"sh","щ":"sh","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya"};
+const tl = w=>{let o="";for(const ch of w){const l=ch.toLowerCase(),t=TLIT[l];o+=t===undefined?ch:(ch===l?t:t.charAt(0).toUpperCase()+t.slice(1))}return o};
 
 /* ---------- ДАННЫЕ ---------- */
 const EVENT = new Date("2027-05-25T00:00:00+05:00");
@@ -256,7 +534,7 @@ const CLASSMATES = [
  ["Көбегенов","Ибрагим","m"],["Кенжеқұлова","Айгүл","f"],["Ізімбергенова","Айгүл","f"],["Сәдуақасова","Жазира","f"],
  ["Балықбаева","Гүлдана","f"],["Меңдіханова","Дина","f"],["Яева","Орынгүл","f"],["Нұрбасинова","Майя","f"],
  ["Тасболатова","Гүлназ","f"],["Жақсығатова","Гүлшат","f"],["Өтешева","Гаухар","f"],["Нуретова","Диана","f"]
-].map((c,i)=>({id:"c"+String(i+1).padStart(2,"0"),sn:c[0],n:c[1],g:c[2]}));
+].map((c,i)=>({id:"c"+String(i+1).padStart(2,"0"),get sn(){return LANG==="en"?tl(c[0]):c[0]},get n(){return LANG==="en"?tl(c[1]):c[1]},g:c[2]}));
 const QUIZ_BOSS = "c04";                              // Ерманов Наурызбек — ответственный за квиз
 const GUITAR = ["c08","c05","c02","c07","c06"];       // Мәлік, Бағдат, Медет, Өркен, Кенжебек
 
@@ -419,7 +697,7 @@ const S = {db:{}, me:lsGet("z20me",null), tab:lsGet("z20tab","home"), filter:"al
 const $ = s=>document.querySelector(s);
 const esc = s=>String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const fmt = n=>Math.round(n).toLocaleString("ru-RU");
+const fmt = n=>Math.round(n).toLocaleString(LANG==="en"?"en-US":"ru-RU");
 const cm = id=>CLASSMATES.find(c=>c.id===id);
 const ini = c=>c.n[0]+c.sn[0];
 function nameOf(id){
@@ -427,7 +705,7 @@ function nameOf(id){
   const g=(S.db.guests||{})[id]; return g?g.n+" "+K("(қонақ)","(гость)"):K("Қонақ","Гость");
 }
 const votesOf = pid => (S.db.votes||{})[pid]||{};
-const locale = ()=>"ru-RU";   // дд.мм.гггг для обоих языков
+const locale = ()=>LANG==="en"?"en-GB":"ru-RU";   // дд.мм.гггг для обоих языков
 
 /* ---------- РЕЗУЛЬТАТЫ ---------- */
 function results(p){
@@ -528,7 +806,7 @@ function viewHome(){
   <div class="card">
     <h3>${K("Дайындық қалай жүріп жатыр","Как идёт подготовка")}</h3>
     <div class="grid" style="margin:10px 0">
-      <div class="stat"><b>${voters.size}</b><span>${K(`${CLASSMATES.length}-ден дауыс бергені`,`из ${CLASSMATES.length} уже голосовали`)}</span></div>
+      <div class="stat"><b>${voters.size}</b><span>${K(`${CLASSMATES.length}-ден дауыс бергені`,`из ${CLASSMATES.length} уже голосовали`,`of ${CLASSMATES.length} have voted`)}</span></div>
       <div class="stat"><b>${yes}</b><span>${K("келуі мүмкін","скорее всего приедут")}</span></div>
     </div>
     ${leads}
@@ -708,7 +986,7 @@ function viewAfisha(){
     <div class="pn">${K("Гитарамен ән кеші","Песни под гитару")}</div>
     <div class="gtr">${GUITAR.map(id=>{const c=cm(id);return `<div class="g"><div class="av m">${esc(ini(c))}</div>${esc(c.n+" "+c.sn)}</div>`}).join("")}</div>
     <p>${K("Мектепте гитарада ойнаған жігіттер — кездесуде қайтадан гитара алып, бәрімізге ән айтатын уақыт келді! Дайындық бүгіннен басталады: саусақ үйренбей қалған шығар, бірақ бірер кештен кейін бәрі есіңе түседі.","В школе они играли на гитаре, и на встрече пора снова взять её в руки и спеть для всех. Готовиться начинаем с сегодняшнего дня: пальцы могли отвыкнуть, но пары вечеров хватит, чтобы всё вспомнить.")}</p>
-    <p class="sub" style="text-align:center;margin-top:8px">${K(`Кездесуге дейін ${days} күн — дайындалуға уақыт жеткілікті. Тізімде жоқ, бірақ гитарада ойнайсыз ба? Өзіңіз де қосылыңыз!`,`До встречи ${days} дн. — времени на подготовку достаточно. Нет в списке, но играете на гитаре? Присоединяйтесь!`)}</p>
+    <p class="sub" style="text-align:center;margin-top:8px">${K(`Кездесуге дейін ${days} күн — дайындалуға уақыт жеткілікті. Тізімде жоқ, бірақ гитарада ойнайсыз ба? Өзіңіз де қосылыңыз!`,`До встречи ${days} дн. — времени на подготовку достаточно. Нет в списке, но играете на гитаре? Присоединяйтесь!`,`${days} days until the reunion — plenty of time to prepare. Not on the list but play guitar? Join in too!`)}</p>
     <div class="sect"><h4>${K("Қандай ән айтамыз?","Какие песни споём?")}</h4>
       ${addRow("sg",K("Әннің аты және орындаушы","Название песни и исполнитель"),K("Қосу","Добавить"))}
       <div style="margin-top:6px">${listItems("sg","s_",K("Әзірше ән ұсынылған жоқ.","Пока нет песен."))}</div></div>
@@ -746,7 +1024,7 @@ function tick(){
 setInterval(tick,1000);
 
 function setLang(l){
-  LANG=l==="ru"?"ru":"kk"; lsSet("z20lang",LANG);
+  LANG=LANGS.includes(l)?l:"kk"; lsSet("z20lang",LANG);
   document.documentElement.lang=LANG;
   document.title=K("Түлектерге 20 жыл · 2027 жылғы 25 мамыр","20 лет выпуска · 25 мая 2027");
   renderTop(); render();
@@ -762,7 +1040,7 @@ let ti=0, started=false, drag=false;
 const mm=s=>{if(!isFinite(s)||s<0)return"0:00";s=Math.floor(s);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
 const isPlaying=()=>started&&!au.paused;
 function renderTop(){
-  $("#lang").innerHTML=["kk","ru"].map(l=>`<button type="button" data-act="lang" data-v="${l}" class="${LANG===l?"on":""}">${l==="kk"?"ҚАЗ":"РУС"}</button>`).join("");
+  $("#lang").innerHTML=LANGS.map(l=>`<button type="button" data-act="lang" data-v="${l}" class="${LANG===l?"on":""}">${LANG_LABEL[l]}</button>`).join("");
   $("#brand").textContent=K("Түлектерге 20 жыл","20 лет выпуска");
   renderNav(); renderFs();
 }
