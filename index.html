@@ -25,6 +25,7 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
+html{background:#080c26}
 body{
   min-height:100vh;color:var(--text);
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Helvetica Neue",Arial,sans-serif;
@@ -50,12 +51,15 @@ p{margin:.4em 0}
 .top .in{max-width:720px;margin:0 auto;padding:6px 8px 4px}
 .bar1{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
 .brand{font-family:Georgia,serif;font-size:14px;color:var(--gold2);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.bar-r{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.fsb{border:1px solid var(--gold);background:rgba(245,199,106,.12);color:var(--gold2);border-radius:99px;padding:7px 11px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
 .lang{display:flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;flex:0 0 auto}
 .lang button{background:none;border:0;color:var(--muted);padding:7px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;cursor:pointer}
 .lang button.on{background:linear-gradient(180deg,#ffe3a0,#e1a843);color:#2a1a00}
 .mus{margin:10px auto 2px;max-width:420px}
 .mrow{display:flex;gap:8px;justify-content:center}
 .mt{flex:1 1 0;min-width:0;border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:99px;padding:7px 8px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:380px){.mt{font-size:11px;padding:7px 4px}}
 .mt.on{border-color:var(--gold);background:rgba(245,199,106,.16);color:var(--gold2)}
 .mseek{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
 .mseek input[type=range]{flex:1;min-width:0;width:auto;padding:0;border:0;background:none;accent-color:#e1a843;height:24px;margin:0;box-shadow:none}
@@ -217,6 +221,7 @@ textarea{min-height:90px;resize:vertical}
 <header class="top"><div class="in">
   <div class="bar1">
     <span class="brand" id="brand"></span>
+    <button type="button" class="fsb hide" id="fs" data-act="fs"></button>
     <div class="lang" id="lang"></div>
   </div>
   <nav id="nav"></nav>
@@ -759,8 +764,26 @@ const isPlaying=()=>started&&!au.paused;
 function renderTop(){
   $("#lang").innerHTML=["kk","ru"].map(l=>`<button type="button" data-act="lang" data-v="${l}" class="${LANG===l?"on":""}">${l==="kk"?"ҚАЗ":"РУС"}</button>`).join("");
   $("#brand").textContent=K("Түлектерге 20 жыл","20 лет выпуска");
-  renderNav();
+  renderNav(); renderFs();
 }
+/* ---------- ПОЛНЫЙ ЭКРАН (Android Chrome; на iPhone — через «На экран Домой») ---------- */
+const FS_OK = !!(document.fullscreenEnabled||document.webkitFullscreenEnabled);
+const inFs = ()=>!!(document.fullscreenElement||document.webkitFullscreenElement);
+// «установленное приложение»: режим окна standalone/fullscreen, но не наш собственный полный экран
+const isApp = ()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true||(matchMedia("(display-mode: fullscreen)").matches&&!inFs());
+function renderFs(){
+  const b=$("#fs"); if(!b) return;
+  const show=FS_OK&&!isApp();                              // в установленном приложении кнопка не нужна
+  b.classList.toggle("hide",!show); $("#brand").classList.toggle("hide",show);   // слева: кнопка, а если её нет — название
+  b.textContent = inFs() ? "✕ "+K("Шығу","Выйти") : "⛶ "+K("Толық экран","Полный экран");
+}
+function toggleFs(){
+  const d=document, el=d.documentElement;
+  if(inFs()){ (d.exitFullscreen||d.webkitExitFullscreen).call(d); return; }
+  const rq=el.requestFullscreen||el.webkitRequestFullscreen; if(!rq) return;
+  const r=rq.call(el,{navigationUI:"hide"}); if(r&&r.catch) r.catch(()=>{});
+}
+["fullscreenchange","webkitfullscreenchange"].forEach(e=>document.addEventListener(e,renderFs));
 function renderMusic(){
   const el=$("#mus"); if(!el) return;
   const pl=isPlaying(), has=isFinite(au.duration)&&au.duration>0;
@@ -804,6 +827,7 @@ async function act(a,el){
     if(!LOCAL) refresh().then(()=>{ if(S.tab===el.dataset.v&&idle()) render(); });   // подтянуть свежие ответы других при входе на вкладку
     return}
   if(a==="lang"){setLang(el.dataset.v);return}
+  if(a==="fs"){toggleFs();return}
   if(a==="diag"){ S.diag=K("Тексеріліп жатыр…","Проверяю…"); render(); S.diag=await runDiag(); render(); return }
   if(a==="trk"){trackClick(+el.dataset.i);return}
   if(a==="filter"){S.filter=el.dataset.v;render();return}
